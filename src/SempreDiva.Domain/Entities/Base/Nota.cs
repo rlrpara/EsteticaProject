@@ -1,4 +1,4 @@
-﻿namespace SempreDiva.Domain.Entities.Base
+﻿namespace SempreDivas.Domain.Entities.Base
 {
     public class Nota : LayoutRana
     {

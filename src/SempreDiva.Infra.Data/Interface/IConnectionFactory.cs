@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace SempreDiva.Infra.Data.Interface
+namespace SempreDivas.Infra.Data.Interface
 {
     public interface IConnectionFactory
     {

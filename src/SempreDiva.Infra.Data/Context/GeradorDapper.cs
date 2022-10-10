@@ -6,10 +6,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using SempreDiva.Infra.Data.Enumerables;
-using SempreDiva.Domain.Entities.Base;
+using SempreDivas.Infra.Data.Enumerables;
+using SempreDivas.Domain.Entities.Base;
 
-namespace SempreDiva.Infra.Data.Context
+namespace SempreDivas.Infra.Data.Context
 {
     public static class GeradorDapper
     {

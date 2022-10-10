@@ -1,4 +1,4 @@
-﻿namespace SempreDiva.Domain.Enumerables
+﻿namespace SempreDivas.Domain.Enumerables
 {
     public enum EAlinhamento : int
     {

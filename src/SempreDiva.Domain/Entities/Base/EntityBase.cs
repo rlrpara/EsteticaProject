@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SempreDiva.Domain.Entities.Base
+namespace SempreDivas.Domain.Entities.Base
 {
     public class EntityBase
     {

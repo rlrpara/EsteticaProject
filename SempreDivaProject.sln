@@ -17,9 +17,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-01.Database", "04-01.Dat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-02.Data", "04-02.Data", "{B11FE8D6-D6A9-4B8F-92F5-37A09D8DB65F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SempreDiva.Infra.Data", "src\SempreDiva.Infra.Data\SempreDiva.Infra.Data.csproj", "{5635770E-1BD5-4F31-BD83-286DB278859C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SempreDivas.Infra.Data", "src\SempreDiva.Infra.Data\SempreDivas.Infra.Data.csproj", "{5635770E-1BD5-4F31-BD83-286DB278859C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SempreDiva.Domain", "src\SempreDiva.Domain\SempreDiva.Domain.csproj", "{3B79D121-3F1C-48DE-AF49-8C6F21BAD789}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SempreDivas.Domain", "src\SempreDiva.Domain\SempreDivas.Domain.csproj", "{3B79D121-3F1C-48DE-AF49-8C6F21BAD789}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SempreDivas.Api", "src\SempreDivas.Api\SempreDivas.Api.csproj", "{CA4769E5-27BA-4545-A967-A90F63440142}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SempreDivas.Service", "src\SempreDiva.Service\SempreDivas.Service.csproj", "{EF2AF24D-7A69-434C-A32C-7F042EA97EFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SempreDivas.Infra.Database", "src\SempreDiva.Infra.Database\SempreDivas.Infra.Database.csproj", "{A4A2E581-3207-43F8-B976-F9A20E01B6AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +41,18 @@ Global
 		{3B79D121-3F1C-48DE-AF49-8C6F21BAD789}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B79D121-3F1C-48DE-AF49-8C6F21BAD789}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B79D121-3F1C-48DE-AF49-8C6F21BAD789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA4769E5-27BA-4545-A967-A90F63440142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA4769E5-27BA-4545-A967-A90F63440142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA4769E5-27BA-4545-A967-A90F63440142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA4769E5-27BA-4545-A967-A90F63440142}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF2AF24D-7A69-434C-A32C-7F042EA97EFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF2AF24D-7A69-434C-A32C-7F042EA97EFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF2AF24D-7A69-434C-A32C-7F042EA97EFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF2AF24D-7A69-434C-A32C-7F042EA97EFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4A2E581-3207-43F8-B976-F9A20E01B6AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4A2E581-3207-43F8-B976-F9A20E01B6AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4A2E581-3207-43F8-B976-F9A20E01B6AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4A2E581-3207-43F8-B976-F9A20E01B6AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +62,9 @@ Global
 		{B11FE8D6-D6A9-4B8F-92F5-37A09D8DB65F} = {5654FA78-469E-405E-A9C2-ED8D42C0F092}
 		{5635770E-1BD5-4F31-BD83-286DB278859C} = {B11FE8D6-D6A9-4B8F-92F5-37A09D8DB65F}
 		{3B79D121-3F1C-48DE-AF49-8C6F21BAD789} = {ABD89201-A3F9-4DF7-B370-6021797EA4D8}
+		{CA4769E5-27BA-4545-A967-A90F63440142} = {530848E4-0C0E-4CA4-96AE-CA6247B5E576}
+		{EF2AF24D-7A69-434C-A32C-7F042EA97EFB} = {BF76C6D7-419F-4CC2-902B-D4FC96208F0B}
+		{A4A2E581-3207-43F8-B976-F9A20E01B6AD} = {698EAE25-3BD5-43F0-91CD-BB92F21D689F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {17B99B0F-57DA-4760-980B-26C6121ED0EE}

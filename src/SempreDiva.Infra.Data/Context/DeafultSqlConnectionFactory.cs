@@ -3,12 +3,12 @@ using Microsoft.Data.Sqlite;
 using MySql.Data.MySqlClient;
 using Npgsql;
 using Sap.Data.SQLAnywhere;
-using SempreDiva.Infra.Data.Enumerables;
-using SempreDiva.Infra.Data.Interface;
+using SempreDivas.Infra.Data.Enumerables;
+using SempreDivas.Infra.Data.Interface;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace SempreDiva.Infra.Data.Context
+namespace SempreDivas.Infra.Data.Context
 {
     public class DeafultSqlConnectionFactory : IConnectionFactory
     {

@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace SempreDiva.Infra.Data.Context
+namespace SempreDivas.Infra.Data.Context
 {
     public class ConnectionConfiguration
     {

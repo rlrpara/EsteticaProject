@@ -1,4 +1,4 @@
-﻿namespace SempreDiva.Infra.Data.Enumerables
+﻿namespace SempreDivas.Infra.Data.Enumerables
 {
     public enum ETipoBanco : int
     {

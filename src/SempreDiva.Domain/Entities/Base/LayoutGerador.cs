@@ -1,6 +1,6 @@
-﻿using SempreDiva.Domain.Enumerables;
+﻿using SempreDivas.Domain.Enumerables;
 
-namespace SempreDiva.Domain.Entities.Base
+namespace SempreDivas.Domain.Entities.Base
 {
     public class LayoutRana : Attribute
     {

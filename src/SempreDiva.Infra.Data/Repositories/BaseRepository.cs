@@ -96,7 +96,7 @@ namespace SempreDivas.Infra.Data.Repositories
             }
         }
 
-        public async Task<T> BuscarPorQueryGeradorAsync<T>(string sqlWhere = null) where T : class
+        public async Task<T> BuscarPorQueryGeradorAsync<T>(string? sqlWhere = null) where T : class
         {
             try
             {
@@ -109,7 +109,7 @@ namespace SempreDivas.Infra.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<T>> BuscarTodosPorQueryAsync<T>(string query = null) where T : class
+        public async Task<IEnumerable<T>> BuscarTodosPorQueryAsync<T>(string? query = null) where T : class
         {
             try
             {
@@ -122,7 +122,7 @@ namespace SempreDivas.Infra.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<T>> BuscarTodosPorQueryGeradorAsync<T>(string sqlWhere = null) where T : class
+        public async Task<IEnumerable<T>> BuscarTodosPorQueryGeradorAsync<T>(string? sqlWhere = null) where T : class
         {
             try
             {
@@ -147,12 +147,14 @@ namespace SempreDivas.Infra.Data.Repositories
             }
         }
 
-        public async Task<int?> ObterUltimoRegistroAsync<TEntity>() where TEntity : class
+        public async Task<int?> ObterUltimoRegistroAsync<T>() where T : class
         {
             try
             {
-                var sqlPesquisa = new StringBuilder()
-                    .AppendLine($"SELECT TOP 1 ID FROM {ObterNomeTabela<TEntity>()} ORDER BY ID DESC");
+                var sqlPesquisa = new StringBuilder();
+                sqlPesquisa.AppendLine($"  SELECT TOP 1 {GeradorDapper.ObterChavePrimaria<T>()}");
+                sqlPesquisa.AppendLine($"    FROM {ObterNomeTabela<T>()}");
+                sqlPesquisa.AppendLine($"ORDER BY {GeradorDapper.ObterChavePrimaria<T>()} DESC");
 
                 using var conn = ObterConexao();
                 return await conn.QueryFirstOrDefaultAsync<int?>(sqlPesquisa.ToString(), commandType: CommandType.Text);

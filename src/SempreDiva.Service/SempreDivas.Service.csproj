@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interface\" />
-    <Folder Include="Service\" />
-    <Folder Include="ViewModel\Entities\Filtros\" />
-    <Folder Include="ViewModel\Entities\" />
+    <PackageReference Include="AutoMapper.Collection" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SempreDiva.Domain\SempreDivas.Domain.csproj" />
+    <ProjectReference Include="..\SempreDiva.Infra.Data\SempreDivas.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>

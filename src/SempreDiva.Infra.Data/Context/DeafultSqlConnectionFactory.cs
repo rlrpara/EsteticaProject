@@ -2,7 +2,6 @@
 using Microsoft.Data.Sqlite;
 using MySql.Data.MySqlClient;
 using Npgsql;
-using Sap.Data.SQLAnywhere;
 using SempreDivas.Infra.Data.Enumerables;
 using SempreDivas.Infra.Data.Interface;
 using System.Data;
@@ -32,8 +31,6 @@ namespace SempreDivas.Infra.Data.Context
         }
         private FbConnection ObterStringConexaoFirebird()
             => new($"DataSource={_parametrosConexao.Host};Port={_parametrosConexao.Porta};Password={_parametrosConexao.Senha};User={_parametrosConexao.Usuario};{(!string.IsNullOrWhiteSpace(_parametrosConexao.NomeBanco) ? $"Database={_parametrosConexao.NomeBanco}" : "")};Charset=NONE;Pooling=True;");
-        private SAConnection ObterStringConexaoSqlAnywhere()
-            => new($"UID={_parametrosConexao.Usuario};PWD={_parametrosConexao.Senha};DBN={_parametrosConexao.NomeBanco};Server={_parametrosConexao.Host};CommBufferSize=16000;PrefetchRows=100;PrefetchBuffer=2M");
         #endregion
 
         #region [Construtor]
@@ -48,7 +45,6 @@ namespace SempreDivas.Infra.Data.Context
             ETipoBanco.MySql => ObterStringConexaoMySql(),
             ETipoBanco.SqLite => ObterStringConexaoSqlite(),
             ETipoBanco.Firebird => ObterStringConexaoFirebird(),
-            ETipoBanco.SqlAnywhere => ObterStringConexaoSqlAnywhere(),
             _ => null,
         };
         #endregion

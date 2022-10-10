@@ -4,7 +4,7 @@ using SempreDivas.Infra.Data.Context;
 using System.Data;
 using System.Text;
 
-namespace SempreDivas.Domain.Entities
+namespace SempreDivas.Infra.Data.Repositories
 {
     public class BaseRepository : IBaseRepository
     {
@@ -20,7 +20,7 @@ namespace SempreDivas.Domain.Entities
         private static string TableNameMapper(Type type)
         {
             dynamic tableattr = type.GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().Name == "TableAttribute");
-            return (tableattr != null ? tableattr.Name : string.Empty);
+            return tableattr != null ? tableattr.Name : string.Empty;
         }
         private IDbConnection ObterConexao() => ConnectionConfiguration.AbrirConexao(_parametrosConexao);
         private ParametrosConexao ObterParametrosConexao() => new()
@@ -47,7 +47,7 @@ namespace SempreDivas.Domain.Entities
             }
             catch
             {
-                return (default);
+                return default;
             }
         }
 
@@ -60,7 +60,7 @@ namespace SempreDivas.Domain.Entities
             }
             catch
             {
-                return (default);
+                return default;
             }
         }
 
@@ -79,7 +79,7 @@ namespace SempreDivas.Domain.Entities
             }
             catch
             {
-                return (default);
+                return default;
             }
         }
 
@@ -88,11 +88,11 @@ namespace SempreDivas.Domain.Entities
             try
             {
                 using var conn = ObterConexao();
-                return await SqlMapper.QueryFirstOrDefaultAsync<T>(conn, query, commandType: CommandType.Text, transaction: null);
+                return await conn.QueryFirstOrDefaultAsync<T>(query, commandType: CommandType.Text, transaction: null);
             }
             catch
             {
-                return (default);
+                return default;
             }
         }
 
@@ -105,7 +105,7 @@ namespace SempreDivas.Domain.Entities
             }
             catch
             {
-                return (default);
+                return default;
             }
         }
 
@@ -118,7 +118,7 @@ namespace SempreDivas.Domain.Entities
             }
             catch
             {
-                return (default);
+                return default;
             }
         }
 
@@ -130,7 +130,7 @@ namespace SempreDivas.Domain.Entities
             }
             catch
             {
-                return (default);
+                return default;
             }
         }
 
@@ -143,7 +143,7 @@ namespace SempreDivas.Domain.Entities
             }
             catch
             {
-                return (default);
+                return default;
             }
         }
 
@@ -159,7 +159,7 @@ namespace SempreDivas.Domain.Entities
             }
             catch
             {
-                return (default);
+                return default;
             }
         }
 
@@ -185,7 +185,7 @@ namespace SempreDivas.Domain.Entities
             }
             catch
             {
-                return (default);
+                return default;
             }
         }
         #endregion

@@ -3,7 +3,7 @@
     public enum ETipoBanco : int
     {
         SqlServer = 1,
-        Postgres = 2,
+        Postgresql = 2,
         MySql = 3,
         SqLite = 4,
         Firebird = 5,

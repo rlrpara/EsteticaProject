@@ -1,4 +1,5 @@
 using VendaFacil.Api;
+using VendaFacil.Infra.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 DotEnvLoad.Load();
+DatabaseConfiguration.GerenciarBanco();
 
 var app = builder.Build();
 app.MapControllers();

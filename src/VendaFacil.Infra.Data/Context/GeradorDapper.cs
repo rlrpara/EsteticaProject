@@ -44,7 +44,7 @@ namespace VendaFacil.Infra.Data.Context
         };
         private static string ObterParaData() => (ETipoBanco)_parametrosConexao.TipoBanco switch
         {
-            ETipoBanco.Postgres => "timestamp DEFAULT CURRENT_TIMESTAMP",
+            ETipoBanco.Postgresql => "timestamp DEFAULT CURRENT_TIMESTAMP",
             _ => "datetime DEFAULT CURRENT_TIMESTAMP"
         };
 
@@ -53,7 +53,7 @@ namespace VendaFacil.Infra.Data.Context
             ETipoBanco.SqlServer => "int(11) DEFAULT NULL",
             ETipoBanco.MySql => "int(11) DEFAULT NULL",
             ETipoBanco.Firebird => "int(11) DEFAULT NULL",
-            ETipoBanco.Postgres => "integer DEFAULT NULL",
+            ETipoBanco.Postgresql => "integer DEFAULT NULL",
             ETipoBanco.SqLite => "integer DEFAULT NULL",
             ETipoBanco.SqlAnywhere => "int(11) DEFAULT NULL",
             _ => "int(11) DEFAULT NULL",
@@ -63,7 +63,7 @@ namespace VendaFacil.Infra.Data.Context
             ETipoBanco.SqlServer => "tinyint(1) NOT NULL DEFAULT 1",
             ETipoBanco.MySql => "tinyint(1) NOT NULL DEFAULT 1",
             ETipoBanco.Firebird => "bit NOT NULL DEFAULT 1",
-            ETipoBanco.Postgres => "bool NOT NULL DEFAULT true",
+            ETipoBanco.Postgresql => "bool NOT NULL DEFAULT true",
             ETipoBanco.SqLite => "INTEGER NOT NULL DEFAULT 1",
             ETipoBanco.SqlAnywhere => "tinyint(1) NOT NULL DEFAULT 1",
             _ => "tinyint(1) NOT NULL DEFAULT 1",
@@ -282,7 +282,7 @@ namespace VendaFacil.Infra.Data.Context
                                 sqlConstraint.AppendLine($"");
                                 break;
 
-                            case ETipoBanco.Postgres:
+                            case ETipoBanco.Postgresql:
                                 sqlConstraint.AppendLine($"ALTER TABLE {ObterNomeTabela<T>()}");
                                 sqlConstraint.AppendLine($"ADD CONSTRAINT {nomeChave} FOREIGN KEY ({campoChaveEstrangeira})");
                                 sqlConstraint.AppendLine($"REFERENCES {_parametrosConexao.NomeBanco}.{tabelaChaveEstrangeira} (ID) ON DELETE NO ACTION ON UPDATE NO ACTION;{Environment.NewLine}");
@@ -337,7 +337,7 @@ namespace VendaFacil.Infra.Data.Context
                     sqlPesquisa.AppendLine($"");
                     break;
 
-                case ETipoBanco.Postgres:
+                case ETipoBanco.Postgresql:
                     sqlPesquisa.AppendLine($"CREATE TABLE IF NOT EXISTS {ObterNomeTabela<T>()} (");
                     sqlPesquisa.AppendLine($"  {ObterChavePrimaria<T>()} int NOT NULL GENERATED ALWAYS AS IDENTITY,");
                     sqlPesquisa.AppendLine($"  {string.Join($",{Environment.NewLine}   ", campos.ToArray())},");
@@ -368,6 +368,21 @@ namespace VendaFacil.Infra.Data.Context
             sqlPesquisa.AppendLine($"{(sqlWhere.Trim() == string.Empty ? string.Empty : $"WHERE {sqlWhere}")}");
 
             return sqlPesquisa.ToString();
+        }
+
+        public static string InserirDadosPadroes<T>() where T : class
+        {
+            var sqlPesquisa = new StringBuilder();
+
+            switch (typeof(T).Name.ToLower())
+            {
+                case "usuario":
+                    sqlPesquisa.AppendLine($"INSERT INTO usuario (           nome,       email,           senha,     data_cadastro,  data_atualizacao)");
+                    sqlPesquisa.AppendLine($"             VALUES ('ADMINISTRADOR', 'adm@admim', 'Postgres2022!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);");
+                    return sqlPesquisa.ToString();
+                default:
+                    return "";
+            }
         }
         #endregion
     }

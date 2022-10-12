@@ -25,7 +25,7 @@ namespace VendaFacil.Infra.Data.Repositories
         private IDbConnection ObterConexao() => ConnectionConfiguration.AbrirConexao(_parametrosConexao);
         private ParametrosConexao ObterParametrosConexao() => new()
         {
-            Host = string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DB_PRODUCAO")) ? Environment.GetEnvironmentVariable("DB_HOMOLOGACAO") : Environment.GetEnvironmentVariable("DB_PRODUCAO"),
+            Servidor = string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DB_PRODUCAO")) ? Environment.GetEnvironmentVariable("DB_HOMOLOGACAO") : Environment.GetEnvironmentVariable("DB_PRODUCAO"),
             Porta = Environment.GetEnvironmentVariable("DB_PORTA"),
             NomeBanco = Environment.GetEnvironmentVariable("DB_BANCO"),
             Usuario = Environment.GetEnvironmentVariable("DB_USUARIO"),

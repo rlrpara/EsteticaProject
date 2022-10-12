@@ -1,17 +1,17 @@
 using VendaFacil.Api;
+using VendaFacil.CrossCutting.Ioc;
 using VendaFacil.Infra.Database;
+using VendaFacil.Service.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(AutoMapperSetup));
 
 DotEnvLoad.Load();
 DatabaseConfiguration.GerenciarBanco();
+NativeInjector.RegisterServices(builder.Services);
 
 var app = builder.Build();
 app.MapControllers();

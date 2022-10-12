@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "SempreDivas.Api": {
+    "VendaFacil.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

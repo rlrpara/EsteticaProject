@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VendaFacil.CrossCutting.Ioc\VendaFacil.CrossCutting.Ioc.csproj" />
     <ProjectReference Include="..\VendaFacil.Infra.Database\VendaFacil.Infra.Database.csproj" />
     <ProjectReference Include="..\VendaFacil.Service\VendaFacil.Service.csproj" />
   </ItemGroup>

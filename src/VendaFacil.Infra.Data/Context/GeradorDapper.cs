@@ -242,6 +242,7 @@ namespace VendaFacil.Infra.Data.Context
             string chavePrimaria = string.Empty;
             List<string> campos = new();
             StringBuilder sqlConstraint = new();
+            StringBuilder sqlIndice = new();
 
             foreach (PropertyInfo item in typeof(T).GetProperties(BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public))
             {
@@ -297,6 +298,9 @@ namespace VendaFacil.Infra.Data.Context
                                 break;
                         }
                     }
+
+                    if (nota.Indice)
+                        sqlIndice.AppendLine($"CREATE INDEX {ObterNomeTabela<T>()}_{nomeCampo}_idx ON {ObterNomeTabela<T>()} USING btree ({nomeCampo});");
                 }
             }
 
@@ -342,7 +346,8 @@ namespace VendaFacil.Infra.Data.Context
                     sqlPesquisa.AppendLine($"  {ObterChavePrimaria<T>()} int NOT NULL GENERATED ALWAYS AS IDENTITY,");
                     sqlPesquisa.AppendLine($"  {string.Join($",{Environment.NewLine}   ", campos.ToArray())},");
                     sqlPesquisa.AppendLine($"  PRIMARY KEY ({ObterChavePrimaria<T>()})");
-                    sqlPesquisa.AppendLine($")");
+                    sqlPesquisa.AppendLine($");");
+                    sqlPesquisa.AppendLine(sqlIndice.ToString());
                     break;
 
                 case ETipoBanco.SqLite:

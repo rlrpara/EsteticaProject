@@ -6,7 +6,7 @@ namespace VendaFacil.Domain.Entities.Base
     public class EntityBase
     {
         [Key]
-        [Nota()]
+        [Nota(Indice = true)]
         [Column("ID", Order = 1)]
         public int Codigo { get; set; }
 

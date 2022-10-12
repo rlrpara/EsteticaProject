@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using VendaFacil.Api.Model;
 using VendaFacil.Domain.Interface;
 using VendaFacil.Service.Interface;
 using VendaFacil.Service.Service;
+using VendaFacil.Service.ViewModel.Entities;
 using VendaFacil.Service.ViewModel.Entities.Filtros;
 
 namespace VendaFacil.Api.Controllers
@@ -28,8 +30,21 @@ namespace VendaFacil.Api.Controllers
         [HttpPost("ObterTodos")]
         public IActionResult PostObterTodos([FromBody] filtroUsuarioViewModel filtro)
         {
-            //IEnumerable<UsuarioViewModel> modelo = _service.ObterTodos(filtro)
-            return Ok();
+            try
+            {
+                var resultadConsulta = _service.ObterTodos(filtro);
+
+                if (resultadConsulta is null)
+                    return Ok(new { Resultado = "Nenhum registro encontrado." });
+
+                var resultado = new ApiResult<UsuarioViewModel>(filtro.PaginaAtual, filtro.QuantidadePorPagina, resultadConsulta).Result;
+
+                return Ok(resultado);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
         #endregion
     }

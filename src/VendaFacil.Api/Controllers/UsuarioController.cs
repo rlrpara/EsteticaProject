@@ -20,6 +20,16 @@ namespace VendaFacil.Api.Controllers
         private readonly IUsuarioService _service;
         #endregion
 
+        #region [Métodos Privados]
+        private int ObterTotalPaginas(filtroUsuarioViewModel filtro)
+        {
+            var total = _service.ObterTotalRegistros(filtro) / filtro.QuantidadePorPagina;
+            if ((_service.ObterTotalRegistros(filtro) % filtro.QuantidadePorPagina) > 0)
+                total += 1;
+            return total.Equals(0) ? 1 : total;
+        }
+        #endregion
+
         #region [Contrutor]
         public UsuarioController(IMapper mapper)
         {
@@ -32,27 +42,15 @@ namespace VendaFacil.Api.Controllers
         [HttpPost("ObterTodos")]
         public IActionResult PostObterTodos([FromBody] filtroUsuarioViewModel filtro)
         {
-            try
-            {
-                var resultadConsulta = _service.ObterTodos(filtro);
+            var dadosRetorno = _service.ObterTodos(filtro).ToList();
 
-                if (resultadConsulta is null)
-                    return Ok(new { Resultado = "Nenhum registro encontrado." });
+            if (dadosRetorno is null)
+                return Ok(new { Resultado = "Nenhum registro encontrado." });
 
-                var resultado = new ApiResult<UsuarioViewModel>(filtro.PaginaAtual, filtro.QuantidadePorPagina, resultadConsulta);
+            var resultado = new ApiResult<UsuarioViewModel>();
+            resultado.AddPaginacao(filtro.PaginaAtual, filtro.QuantidadePorPagina, ObterTotalPaginas(filtro), _service.ObterTotalRegistros(filtro), dadosRetorno);
 
-                return Ok(
-                    new
-                    { 
-                        PaginaAtual = filtro.PaginaAtual,
-                        QuantidadePorPagina = filtro.QuantidadePorPagina,
-                        Dados = resultadConsulta
-                    });
-            }
-            catch
-            {
-                return BadRequest();
-            }
+            return Ok(resultado);
         }
 
         [HttpPost("")]
@@ -68,11 +66,11 @@ namespace VendaFacil.Api.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPut]
-        public IActionResult PutAtualizar([FromBody]UsuarioViewModel model)
-        {
+        //[HttpPut]
+        //public IActionResult PutAtualizar([FromBody]UsuarioViewModel model)
+        //{
 
-        }
+        //}
         #endregion
     }
 }

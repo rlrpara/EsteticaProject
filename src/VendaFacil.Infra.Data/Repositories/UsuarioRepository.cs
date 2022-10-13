@@ -11,6 +11,18 @@ namespace VendaFacil.Infra.Data.Repositories
         private readonly IBaseRepository _baseRepository;
         #endregion
 
+        #region [Métodos Privados]
+        private string ObterFiltros(filtroUsuario filtro)
+        {
+            var sqlPesquisa = new StringBuilder();
+
+            sqlPesquisa.AppendLine($" WHERE email ILIKE '%{filtro.Email}%'");
+            sqlPesquisa.AppendLine($"   AND nome ilike '%{filtro.Nome}%'");
+
+            return sqlPesquisa.ToString();
+        }
+        #endregion
+
         #region [Construtor]
         public UsuarioRepository(IBaseRepository baseRepository) => _baseRepository = baseRepository;
         #endregion
@@ -21,15 +33,12 @@ namespace VendaFacil.Infra.Data.Repositories
             var sqlPesquisa = new StringBuilder();
 
             sqlPesquisa.AppendLine($"DO $$");
-            sqlPesquisa.AppendLine($"	DECLARE PaginaAtual integer;");
-            sqlPesquisa.AppendLine($"	DECLARE QuantidadePorPagina integer;");
+            sqlPesquisa.AppendLine($"DECLARE QtdPorPagina INTEGER;");
+            sqlPesquisa.AppendLine($"        Pagina       INTEGER;");
             sqlPesquisa.AppendLine($"BEGIN");
-            sqlPesquisa.AppendLine($"");
-            sqlPesquisa.AppendLine($"	PaginaAtual := {filtro.PaginaAtual};");
-            sqlPesquisa.AppendLine($"	QuantidadePorPagina := {filtro.QuantidadePorPagina};");
-            sqlPesquisa.AppendLine($"	");
-            sqlPesquisa.AppendLine($"	DROP TABLE IF EXISTS TMP_TABLE;");
-            sqlPesquisa.AppendLine($"");
+            sqlPesquisa.AppendLine($"    SELECT {filtro.QuantidadePorPagina} INTO QtdPorPagina;");
+            sqlPesquisa.AppendLine($"    SELECT {filtro.PaginaAtual} INTO Pagina;");
+            sqlPesquisa.AppendLine($"	  DROP TABLE IF EXISTS TMP_TABLE;");
             sqlPesquisa.AppendLine($"	CREATE TEMP TABLE tmp_table AS");
             sqlPesquisa.AppendLine($"	SELECT id as Codigo,");
             sqlPesquisa.AppendLine($"	       nome as Nome,");
@@ -47,16 +56,15 @@ namespace VendaFacil.Infra.Data.Repositories
             sqlPesquisa.AppendLine($"	       data_atualizacao as DataAtualizacao,");
             sqlPesquisa.AppendLine($"	       ativo as Ativo");
             sqlPesquisa.AppendLine($"	  FROM usuario");
-            sqlPesquisa.AppendLine($"	 LIMIT QuantidadePorPagina");
-            sqlPesquisa.AppendLine($"	OFFSET(PaginaAtual - 1) * 10;");
+            sqlPesquisa.AppendLine(ObterFiltros(filtro));
+            sqlPesquisa.AppendLine($"     LIMIT QtdPorPagina");
+            sqlPesquisa.AppendLine($"    OFFSET (Pagina - 1) * QtdPorPagina;");
             sqlPesquisa.AppendLine($"END $$;");
-            sqlPesquisa.AppendLine($"");
             sqlPesquisa.AppendLine($"SELECT * FROM tmp_table;");
 
             return await _baseRepository.BuscarTodosPorQueryAsync<Usuario>(sqlPesquisa.ToString().Trim());
         }
         public async Task<bool> Inserir(Usuario usuario) => await _baseRepository.AdicionarAsync(usuario) > 0;
-
         public async Task<bool> JaCadastrado(Usuario usuario)
         {
             var sqlPesquisa = new StringBuilder();
@@ -69,6 +77,16 @@ namespace VendaFacil.Infra.Data.Repositories
             sqlPesquisa.AppendLine($"   AND id_empresa = {usuario.CodigoEmpresa}");
 
             return await _baseRepository.BuscarPorQueryAsync<Usuario>(sqlPesquisa.ToString()) is not null;
+        }
+        public async Task<int> TotalRegistros(filtroUsuario filtro)
+        {
+            var sqlPesquisa = new StringBuilder();
+
+            sqlPesquisa.AppendLine($"SELECT COUNT(ID) as Total");
+            sqlPesquisa.AppendLine($"  FROM usuario");
+            sqlPesquisa.AppendLine(ObterFiltros(filtro));
+
+            return await _baseRepository.BuscarPorQueryAsync<int>(sqlPesquisa.ToString());
         }
 
         #endregion

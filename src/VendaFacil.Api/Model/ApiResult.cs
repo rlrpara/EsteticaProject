@@ -2,23 +2,30 @@
 {
     public class ApiResult<T> where T : class
     {
-        #region [Propriedades Públicas]
-        public IEnumerable<T> Dados { get; private set; }
-        public int PaginaAtual { get; private set; }
-        public int QuantidadePorPagina { get; private set; }
-        #endregion
+        public Paginacao Paginacao { get; private set; }
+        public List<T> Dados { get; private set; }
 
-        #region [Construtor]
-        public ApiResult(int paginaAtual, int quantidadePorPagina, IEnumerable<T> dados)
+        public ApiResult()
         {
-            PaginaAtual = paginaAtual;
-            QuantidadePorPagina = quantidadePorPagina;
+            Paginacao = new Paginacao();
+        }
+
+        public void AddPaginacao(int paginaAtual, int quantidadePorPagina, int totalPaginas, int totalRegistros, List<T> dados)
+        {
+            Paginacao.PaginaAtual = paginaAtual;
+            Paginacao.QuantidadePorPagina = quantidadePorPagina;
+            Paginacao.TotalPagina = totalPaginas;
+            Paginacao.TotalRegistros = totalRegistros;
             Dados = dados;
         }
-        #endregion
+    }
 
-        #region [Métodos Públicos]
-        public dynamic Result() => new { PaginaAtual, QuantidadePorPagina, Dados };
-        #endregion
+    public class Paginacao
+    {
+        public int PaginaAtual { get; set; }
+        public int QuantidadePorPagina { get; set; }
+        public int TotalPagina { get; set; }
+        public int TotalRegistros { get; set; }
+
     }
 }

@@ -13,22 +13,24 @@ namespace VendaFacil.Service.Service
     {
         #region [Pripriedades Privadas]
         private readonly IMapper _mapper;
-        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IUsuarioRepository _service;
         #endregion
 
         #region [Construtor]
         public UsuarioService(IBaseRepository baseRepository, IMapper mapper) : base(baseRepository)
         {
             _mapper = mapper;
-            _usuarioRepository = new UsuarioRepository(baseRepository);
+            _service = new UsuarioRepository(baseRepository);
         }
         #endregion
 
         #region [Métodos Públicos]
+        public int ObterTotalRegistros(filtroUsuarioViewModel filtro)
+            => _mapper.Map<int>(_service.TotalRegistros(_mapper.Map<filtroUsuario>(filtro)).Result);
         public IEnumerable<UsuarioViewModel> ObterTodos(filtroUsuarioViewModel filtro)
-            => _mapper.Map<IEnumerable<UsuarioViewModel>>(_usuarioRepository.ObterTodos(_mapper.Map<filtroUsuario>(filtro)).Result);
-        public bool JaCadastrado(UsuarioViewModel model) =>  _usuarioRepository.JaCadastrado(_mapper.Map<Usuario>(model)).Result;
-        public bool Inserir(UsuarioViewModel model) => _usuarioRepository.Inserir(_mapper.Map<Usuario>(model)).Result;
+            => _mapper.Map<IEnumerable<UsuarioViewModel>>(_service.ObterTodos(_mapper.Map<filtroUsuario>(filtro)).Result);
+        public bool JaCadastrado(UsuarioViewModel model) =>  _service.JaCadastrado(_mapper.Map<Usuario>(model)).Result;
+        public bool Inserir(UsuarioViewModel model) => _service.Inserir(_mapper.Map<Usuario>(model)).Result;
 
         #endregion
     }

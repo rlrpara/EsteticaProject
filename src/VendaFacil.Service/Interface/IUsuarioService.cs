@@ -8,5 +8,6 @@ namespace VendaFacil.Service.Interface
         bool JaCadastrado(UsuarioViewModel model);
         IEnumerable<UsuarioViewModel> ObterTodos(filtroUsuarioViewModel filtro);
         bool Inserir(UsuarioViewModel model);
+        int ObterTotalRegistros(filtroUsuarioViewModel filtro);
     }
 }

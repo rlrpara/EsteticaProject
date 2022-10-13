@@ -2,6 +2,7 @@ using VendaFacil.Api;
 using VendaFacil.CrossCutting.Ioc;
 using VendaFacil.Infra.Database;
 using VendaFacil.Service.AutoMapper;
+using VendaFacil.Service.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -26,6 +27,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware(typeof(ErrorMiddleware));
 
 app.MapControllers();
 

@@ -1,0 +1,50 @@
+version: '3.4'
+
+services:
+  coletordados.api:
+    container_name: coletordados_api
+    image: ${DOCKER_REGISTRY-}coletordadosapi
+    build:
+      context: .
+      dockerfile: src/ColetorDados.Api/Dockerfile
+    environment:
+      SERVIDOR: "172.25.0.2"
+      PORTA: "5432"
+      USUARIO: "postgres"
+      SENHA: "Postgres2019!"
+      BANCO: "bd_coletor_deskmanager"
+    ports:
+      - 3001:80
+    networks:
+      hub_tech_coletor:
+        ipv4_address: 172.25.0.3
+    restart: always
+    depends_on:
+      - coletordados_database
+
+  coletordados_database:
+    image: postgres
+    container_name: coletordados_database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Postgres2019!
+      PGDATA: /data/postgres
+    ports:
+      - "5401:5432"
+    expose:
+      - 5432
+    networks:
+      hub_tech_coletor:
+        ipv4_address: 172.25.0.2
+    volumes:
+       - /D/Database/ColetorDadosApi/PostgreSQL:/var/lib/postgresql/data
+    restart: always
+
+networks:
+  hub_tech_coletor:
+    name: rede_tech_coletor
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.25.0.0/16
+         gateway: 172.25.0.1

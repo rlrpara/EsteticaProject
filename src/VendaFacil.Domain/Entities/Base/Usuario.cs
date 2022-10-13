@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VendaFacil.Domain.Entities.Base
 {
@@ -8,42 +7,46 @@ namespace VendaFacil.Domain.Entities.Base
     {
         [Nota()]
         [Column(name: "NOME", Order = 2)]
-        public string Nome { get; set; }
+        public string? Nome { get; set; }
 
         [Nota(Tamanho = 50)]
         [Column(name: "EMAIL", Order = 3)]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [Nota(Tamanho = 20)]
         [Column(name: "SENHA", Order = 4)]
-        public string Senha { get; set; }
+        public string? Senha { get; set; }
 
         [Nota(Tamanho = 100)]
         [Column(name: "SENHA_CRIPTOGRAFADA", Order = 5)]
-        public string SenhaCriptografada { get; set; }
+        public string? SenhaCriptografada { get; set; }
 
         [Nota(Tamanho = 20)]
         [Column(name: "TELEFONE", Order = 6)]
-        public string Telefone { get; set; }
+        public string? Telefone { get; set; }
 
         [Nota(Tamanho = 20)]
         [Column(name: "CELULAR", Order = 7)]
-        public string Celular { get; set; }
+        public string? Celular { get; set; }
 
         [Nota(Tamanho = 11)]
         [Column(name: "CPF", Order = 8)]
-        public string Cpf { get; set; }
+        public string? Cpf { get; set; }
 
         [Nota()]
         [Column(name: "ENDERECO", Order = 9)]
-        public string Endereco { get; set; }
+        public string? Endereco { get; set; }
 
         [Nota()]
         [Column(name: "FOTO", Order = 10)]
-        public string Foto { get; set; }
+        public string? Foto { get; set; }
 
         [Nota(Indice = true)]
-        [Column(name: "ID_NIVEL", Order = 11)]
+        [Column(name: "ID_EMPRESA", Order = 11)]
+        public int CodigoEmpresa { get; set; }
+
+        [Nota(Indice = true)]
+        [Column(name: "ID_NIVEL", Order = 12)]
         public int Nivel { get; set; }
 
     }

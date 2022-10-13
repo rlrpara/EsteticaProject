@@ -300,7 +300,7 @@ namespace VendaFacil.Infra.Data.Context
                     }
 
                     if (nota.Indice)
-                        sqlIndice.AppendLine($"CREATE INDEX {ObterNomeTabela<T>()}_{nomeCampo}_idx ON {ObterNomeTabela<T>()} USING btree ({nomeCampo});");
+                        sqlIndice.AppendLine($"CREATE INDEX IF NOT EXISTS {ObterNomeTabela<T>().ToLower()}_{nomeCampo.ToLower()}_idx ON {ObterNomeTabela<T>()} ({nomeCampo.ToLower()});");
                 }
             }
 
@@ -362,7 +362,7 @@ namespace VendaFacil.Infra.Data.Context
                     break;
             }
 
-            return sqlPesquisa.ToString();
+            return sqlPesquisa.ToString().Trim();
         }
         public static string GeralSqlSelecaoControles<T>(string sqlWhere, string nomeBanco) where T : class
         {
@@ -382,8 +382,8 @@ namespace VendaFacil.Infra.Data.Context
             switch (typeof(T).Name.ToLower())
             {
                 case "usuario":
-                    sqlPesquisa.AppendLine($"INSERT INTO usuario (           nome,       email,           senha,     data_cadastro,  data_atualizacao)");
-                    sqlPesquisa.AppendLine($"             VALUES ('ADMINISTRADOR', 'adm@admim', 'Postgres2022!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);");
+                    sqlPesquisa.AppendLine($"INSERT INTO usuario (                nome,                email,           senha, senha_criptografada,           cpf, id_empresa,     data_cadastro,  data_atualizacao, foto, ativo, id_nivel)");
+                    sqlPesquisa.AppendLine($"             VALUES ('Administrador SAAS', 'rlr.para@gmail.com', 'Postgres2022!',     'Postgres2022!', '00000000000',          0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,   '',  true,       92);");
                     return sqlPesquisa.ToString();
                 default:
                     return "";

@@ -2,7 +2,18 @@
 {
     public class filtroPaginacaoViewModel
     {
-        public int PaginaAtual { get; set; } = 1;
-        public int QuantidadePorPagina { get; set; } = 50;
+        private int _paginaAtual;
+        private int _quantidadePorPagina;
+
+        public int PaginaAtual
+        {
+            get { return _paginaAtual; }
+            set { _paginaAtual = value.Equals(0) ? 1 : value; }
+        }
+        public int QuantidadePorPagina
+        {
+            get { return _quantidadePorPagina; }
+            set { _quantidadePorPagina = value.Equals(0) ? 50 : value; }
+        }
     }
 }

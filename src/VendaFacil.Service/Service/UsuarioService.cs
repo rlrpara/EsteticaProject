@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using VendaFacil.Domain.Entities.Base;
 using VendaFacil.Domain.Entities.Filtros;
 using VendaFacil.Domain.Interface;
 using VendaFacil.Infra.Data.Repositories;
@@ -25,13 +26,9 @@ namespace VendaFacil.Service.Service
 
         #region [Métodos Públicos]
         public IEnumerable<UsuarioViewModel> ObterTodos(filtroUsuarioViewModel filtro)
-        {
-            var filtroNovo = _mapper.Map<filtroUsuario>(filtro);
-
-            var teste = _usuarioRepository.ObterTodos(filtroNovo);
-
-            return _mapper.Map<IEnumerable<UsuarioViewModel>>(teste);
-        }
+            => _mapper.Map<IEnumerable<UsuarioViewModel>>(_usuarioRepository.ObterTodos(_mapper.Map<filtroUsuario>(filtro)).Result);
+        public bool JaCadastrado(UsuarioViewModel model) =>  _usuarioRepository.JaCadastrado(_mapper.Map<Usuario>(model)).Result;
+        public bool Inserir(UsuarioViewModel model) => _usuarioRepository.Inserir(_mapper.Map<Usuario>(model)).Result;
 
         #endregion
     }

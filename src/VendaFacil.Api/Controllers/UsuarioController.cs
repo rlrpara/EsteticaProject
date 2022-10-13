@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Components.RenderTree;
 using Microsoft.AspNetCore.Mvc;
 using VendaFacil.Api.Model;
 using VendaFacil.Domain.Interface;
+using VendaFacil.Infra.Data.Repositories;
 using VendaFacil.Service.Interface;
 using VendaFacil.Service.Service;
 using VendaFacil.Service.ViewModel.Entities;
@@ -19,10 +21,10 @@ namespace VendaFacil.Api.Controllers
         #endregion
 
         #region [Contrutor]
-        public UsuarioController(IBaseRepository baseRepository, IMapper mapper)
+        public UsuarioController(IMapper mapper)
         {
             _mapper = mapper;
-            _service = new UsuarioService(baseRepository, _mapper);
+            _service = new UsuarioService(new BaseRepository(), _mapper);
         }
         #endregion
 
@@ -37,14 +39,39 @@ namespace VendaFacil.Api.Controllers
                 if (resultadConsulta is null)
                     return Ok(new { Resultado = "Nenhum registro encontrado." });
 
-                var resultado = new ApiResult<UsuarioViewModel>(filtro.PaginaAtual, filtro.QuantidadePorPagina, resultadConsulta).Result;
+                var resultado = new ApiResult<UsuarioViewModel>(filtro.PaginaAtual, filtro.QuantidadePorPagina, resultadConsulta);
 
-                return Ok(resultado);
+                return Ok(
+                    new
+                    { 
+                        PaginaAtual = filtro.PaginaAtual,
+                        QuantidadePorPagina = filtro.QuantidadePorPagina,
+                        Dados = resultadConsulta
+                    });
             }
             catch
             {
                 return BadRequest();
             }
+        }
+
+        [HttpPost("")]
+        public IActionResult PostInserir([FromBody]UsuarioViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_service.JaCadastrado(model))
+                    return Ok(new { Resultado = "Usuário já cadastrado." });
+
+                return Created("", _service.Inserir(model));
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpPut]
+        public IActionResult PutAtualizar([FromBody]UsuarioViewModel model)
+        {
+
         }
         #endregion
     }

@@ -5,6 +5,8 @@ namespace VendaFacil.Domain.Interface
 {
     public interface IUsuarioRepository : IBaseRepository
     {
-        IEnumerable<Usuario> ObterTodos(filtroUsuario filtroNovo);
+        Task<bool> Inserir(Usuario usuario);
+        Task<bool> JaCadastrado(Usuario usuario);
+        Task<IEnumerable<Usuario>> ObterTodos(filtroUsuario filtro);
     }
 }

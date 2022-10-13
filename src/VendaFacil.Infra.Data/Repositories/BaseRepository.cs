@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using System.Data;
+using System.Reflection;
 using System.Text;
 using VendaFacil.Domain.Interface;
 using VendaFacil.Infra.Data.Context;
@@ -25,11 +26,12 @@ namespace VendaFacil.Infra.Data.Repositories
         private IDbConnection ObterConexao() => ConnectionConfiguration.AbrirConexao(_parametrosConexao);
         private ParametrosConexao ObterParametrosConexao() => new()
         {
-            Servidor = string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DB_PRODUCAO")) ? Environment.GetEnvironmentVariable("DB_HOMOLOGACAO") : Environment.GetEnvironmentVariable("DB_PRODUCAO"),
-            Porta = Environment.GetEnvironmentVariable("DB_PORTA"),
-            NomeBanco = Environment.GetEnvironmentVariable("DB_BANCO"),
-            Usuario = Environment.GetEnvironmentVariable("DB_USUARIO"),
-            Senha = Environment.GetEnvironmentVariable("DB_SENHA")
+            Servidor = Environment.GetEnvironmentVariable("SERVIDOR"),
+            Porta = Environment.GetEnvironmentVariable("PORTA"),
+            NomeBanco = Environment.GetEnvironmentVariable("BANCO"),
+            Usuario = Environment.GetEnvironmentVariable("USUARIO"),
+            Senha = Environment.GetEnvironmentVariable("SENHA"),
+            TipoBanco = Convert.ToInt32(Environment.GetEnvironmentVariable("TIPO_BANCO"))
         };
         #endregion
 

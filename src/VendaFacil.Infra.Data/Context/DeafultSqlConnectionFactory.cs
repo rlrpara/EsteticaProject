@@ -21,7 +21,7 @@ namespace VendaFacil.Infra.Data.Context
         private MySqlConnection ObterStringConexaoMySql()
             => new($"Server={_parametrosConexao.Servidor}; User Id={_parametrosConexao.Usuario}; Password={_parametrosConexao.Senha}; Allow User Variables=True");
         private NpgsqlConnection ObterStringConexaoPostgres()
-            => new($"Server={_parametrosConexao.Servidor};Port={_parametrosConexao.Porta};User ID={_parametrosConexao.Usuario};Password={_parametrosConexao.Senha};{(!string.IsNullOrWhiteSpace(_parametrosConexao.NomeBanco) ? $"Database={_parametrosConexao.NomeBanco}" : "")}");
+            => new($"Server={_parametrosConexao.Servidor};Port={_parametrosConexao.Porta};User ID={_parametrosConexao.Usuario};Password={_parametrosConexao.Senha};{(!string.IsNullOrWhiteSpace(_parametrosConexao.NomeBanco) ? $"Database={_parametrosConexao.NomeBanco?.ToLower()}" : "")}");
         private SqliteConnection ObterStringConexaoSqlite()
         {
             var caminho = Path.Combine($"{Directory.GetCurrentDirectory()}", _parametrosConexao.NomeBanco);

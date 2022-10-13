@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Components.RenderTree;
 using Microsoft.AspNetCore.Mvc;
 using VendaFacil.Api.Model;
-using VendaFacil.Domain.Interface;
 using VendaFacil.Infra.Data.Repositories;
 using VendaFacil.Service.Interface;
 using VendaFacil.Service.Service;

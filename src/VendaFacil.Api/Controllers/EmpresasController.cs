@@ -9,17 +9,17 @@ using VendaFacil.Service.ViewModel.Entities.Filtros;
 
 namespace VendaFacil.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class UsuarioController : ControllerBase
+    [ApiController]
+    public class EmpresasController : ControllerBase
     {
         #region [Propriedades Privadas]
         private readonly IMapper _mapper;
-        private readonly IUsuarioService _service;
+        private readonly IEmpresaService _service;
         #endregion
 
         #region [Métodos Privados]
-        private int ObterTotalPaginas(filtroUsuarioViewModel filtro)
+        private int ObterTotalPaginas(filtroEmpresaViewModel filtro)
         {
             var total = _service.ObterTotalRegistros(filtro) / filtro.QuantidadePorPagina;
             if ((_service.ObterTotalRegistros(filtro) % filtro.QuantidadePorPagina) > 0)
@@ -29,30 +29,30 @@ namespace VendaFacil.Api.Controllers
         #endregion
 
         #region [Contrutor]
-        public UsuarioController(IMapper mapper)
+        public EmpresasController(IMapper mapper)
         {
             _mapper = mapper;
-            _service = new UsuarioService(new BaseRepository(), _mapper);
+            _service = new EmpresaService(new BaseRepository(), _mapper);
         }
         #endregion
 
         #region [Propriedades Públicas]
         [HttpPost("ObterTodos")]
-        public IActionResult PostObterTodos([FromBody] filtroUsuarioViewModel filtro)
+        public IActionResult PostObterTodos([FromBody] filtroEmpresaViewModel filtro)
         {
             var dadosRetorno = _service.ObterTodos(filtro).ToList();
 
             if (dadosRetorno is null)
                 return Ok(new { Resultado = "Registro não encontrado." });
 
-            var resultado = new ApiResult<UsuarioViewModel>();
+            var resultado = new ApiResult<EmpresaViewModel>();
             resultado.AddPaginacao(filtro.PaginaAtual, filtro.QuantidadePorPagina, ObterTotalPaginas(filtro), _service.ObterTotalRegistros(filtro), dadosRetorno);
 
             return Ok(resultado);
         }
 
         [HttpPost("Inserir")]
-        public IActionResult PostInserir([FromBody]UsuarioViewModel model)
+        public IActionResult PostInserir([FromBody] EmpresaViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -65,15 +65,15 @@ namespace VendaFacil.Api.Controllers
         }
 
         [HttpPut("Atualizar")]
-        public IActionResult PutAtualizar([FromBody] UsuarioViewModel model)
+        public IActionResult PutAtualizar([FromBody] EmpresaViewModel model)
         {
             if (ModelState.IsValid)
             {
-                if(model.Codigo.Equals(0))
+                if (model.Codigo.Equals(0))
                     return Ok(new { Resultado = "Registro não encontrado" });
-                
+
                 var consulta = _service.ObterPorCodigo(model.Codigo);
-                
+
                 if (consulta is not null)
 
                     return Ok(_service.Atualizar(model));
@@ -92,7 +92,7 @@ namespace VendaFacil.Api.Controllers
 
             var consulta = _service.ObterPorCodigo(Codigo);
 
-            if(consulta.Ativo is not null && !(consulta.Ativo??false))
+            if (consulta.Ativo is not null && !(consulta.Ativo ?? false))
                 return Ok(new { Resultado = "Registro ja deletado" });
 
             if (consulta is not null)

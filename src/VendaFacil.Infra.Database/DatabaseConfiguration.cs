@@ -151,6 +151,7 @@ namespace VendaFacil.Infra.Database
         {
             Criar(ObterParametrosConexao(), ObterProcedureDropConstraint(_parametrosConexao.NomeBanco));
             Criar(ObterParametrosConexao(), GeradorDapper.CriaTabela<Usuario>(ObterParametrosConexao()));
+            Criar(ObterParametrosConexao(), GeradorDapper.CriaTabela<Empresa>(ObterParametrosConexao()));
         }
         private static void InsereDadosPadroes()
         {

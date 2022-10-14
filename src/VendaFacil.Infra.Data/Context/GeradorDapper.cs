@@ -124,27 +124,27 @@ namespace VendaFacil.Infra.Data.Context
             foreach (PropertyInfo item in entidade.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order))
             {
                 var tipoCampo = item.PropertyType;
-                var notaBase = (Nota)item.GetCustomAttribute(typeof(Nota));
+                Nota? notaBase = item.GetCustomAttribute(typeof(Nota)) as Nota;
 
                 if (notaBase is not null && notaBase.UsarNoBancoDeDados && (!notaBase.ChavePrimaria || item.GetCustomAttributes().FirstOrDefault() is not KeyAttribute))
                 {
                     var valor = item.GetValue(entidade);
 
-                    if (valor != null)
+                    if (valor is not null && !notaBase.ChavePrimaria && item.GetCustomAttributes().FirstOrDefault() is not KeyAttribute)
                     {
                         campos.Add(item.GetCustomAttribute<ColumnAttribute>().Name);
 
-                        if (tipoCampo.Name.Contains("string"))
-                            valores.Add($"'{valor.ToString().Replace("'", "`")}'");
+                        if (tipoCampo.Name.ToLower().Contains("string"))
+                            valores.Add($"'{valor?.ToString().Replace("'", "`")}'");
 
-                        else if (tipoCampo.Name.Contains("datetime"))
+                        else if (tipoCampo.Name.ToLower().Contains("datetime"))
                             valores.Add($"'{Convert.ToDateTime(valor):yyyy-MM-dd HH:mm:ss}'");
 
-                        else if (tipoCampo.Name.Contains("nullable`1"))
+                        else if (tipoCampo.Name.ToLower().Contains("nullable`1"))
                             if (tipoCampo.ToString().Contains("datetime"))
                                 valores.Add($"'{Convert.ToDateTime(valor):yyyy-MM-dd HH:mm:ss}'");
 
-                            else if (tipoCampo.ToString().Contains("int32"))
+                            else if (tipoCampo.Name.ToLower().Contains("int32"))
                                 valores.Add($"{valor}");
 
                             else
@@ -181,7 +181,7 @@ namespace VendaFacil.Infra.Data.Context
                     if (notaBase.ChavePrimaria || item.GetCustomAttributes().FirstOrDefault() is KeyAttribute)
                         campoChave = item.GetCustomAttribute<ColumnAttribute>().Name;
 
-                    if (valor is not null)
+                    if (!string.IsNullOrWhiteSpace(valor?.ToString()) && !notaBase.ChavePrimaria && item.GetCustomAttributes().FirstOrDefault() is not KeyAttribute && !campo.ToLower().Equals("data_cadastro"))
                     {
                         if (tipoCampo.Contains("string"))
                             condicao.Add($"{campo} = '{valor}'");
@@ -203,9 +203,7 @@ namespace VendaFacil.Infra.Data.Context
                     }
                 }
                 else if (notaBase is not null && (notaBase.ChavePrimaria || item.GetCustomAttributes().FirstOrDefault() is KeyAttribute))
-                {
                     campoChave = item.GetCustomAttribute<ColumnAttribute>().Name;
-                }
             }
 
             var sqlAtualizar = new StringBuilder();
@@ -382,8 +380,8 @@ namespace VendaFacil.Infra.Data.Context
             switch (typeof(T).Name.ToLower())
             {
                 case "usuario":
-                    sqlPesquisa.AppendLine($"INSERT INTO usuario (                nome,                email,           senha, senha_criptografada,           cpf, id_empresa,     data_cadastro,  data_atualizacao, foto, ativo, id_nivel)");
-                    sqlPesquisa.AppendLine($"             VALUES ('Administrador SAAS', 'rlr.para@gmail.com', 'Postgres2022!',     'Postgres2022!', '00000000000',          0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,   '',  true,       92);");
+                    sqlPesquisa.AppendLine($"INSERT INTO usuario (                nome,             email,           senha, senha_criptografada,           cpf, id_empresa,     data_cadastro,  data_atualizacao, foto, ativo, id_nivel)");
+                    sqlPesquisa.AppendLine($"             VALUES ('Administrador SAAS', 'admin@email.com', 'Postgres2022!',     'Postgres2022!', '00000000000',          0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,   '',  true,       92);");
                     return sqlPesquisa.ToString();
                 default:
                     return "";

@@ -43,11 +43,11 @@ namespace VendaFacil.Domain.Entities.Base
 
         [Nota(Indice = true)]
         [Column(name: "ID_EMPRESA", Order = 11)]
-        public int CodigoEmpresa { get; set; }
+        public int? CodigoEmpresa { get; set; }
 
         [Nota(Indice = true)]
         [Column(name: "ID_NIVEL", Order = 12)]
-        public int Nivel { get; set; }
+        public int? Nivel { get; set; }
 
     }
 }

@@ -28,6 +28,26 @@ namespace VendaFacil.Infra.Data.Repositories
         #endregion
 
         #region [Métodos Públicos]
+        public async Task<int> TotalRegistros(filtroUsuario filtro)
+        {
+            var sqlPesquisa = new StringBuilder();
+
+            sqlPesquisa.AppendLine($"SELECT COUNT(ID) as Total");
+            sqlPesquisa.AppendLine($"  FROM usuario");
+            sqlPesquisa.AppendLine(ObterFiltros(filtro));
+
+            return await _baseRepository.BuscarPorQueryAsync<int>(sqlPesquisa.ToString());
+        }
+        public async Task<Usuario> ObterPorCodigo(int Codigo) => await _baseRepository.BuscarPorIdAsync<Usuario>(Codigo);
+        public async Task<bool> ObterEntidade(Usuario usuario)
+        {
+            var sqlPesquisa = new StringBuilder();
+
+            sqlPesquisa.AppendLine($" (nome = '{usuario.Nome}' OR cpf = '{usuario.Cpf}' OR email = '{usuario.Email}')");
+            sqlPesquisa.AppendLine($"   AND id_empresa = {usuario.CodigoEmpresa}");
+
+            return await _baseRepository.BuscarPorQueryGeradorAsync<Usuario>(sqlPesquisa.ToString()) is not null;
+        }
         public async Task<IEnumerable<Usuario>> ObterTodos(filtroUsuario filtro)
         {
             var sqlPesquisa = new StringBuilder();
@@ -51,7 +71,7 @@ namespace VendaFacil.Infra.Data.Repositories
             sqlPesquisa.AppendLine($"	       endereco as Endereco,");
             sqlPesquisa.AppendLine($"	       foto as Foto,");
             sqlPesquisa.AppendLine($"	       id_empresa as CodigoEmpresa,");
-            sqlPesquisa.AppendLine($"	       id_nivel as CodigoNivel,");
+            sqlPesquisa.AppendLine($"	       id_nivel as Nivel,");
             sqlPesquisa.AppendLine($"	       data_cadastro as DataCadastro,");
             sqlPesquisa.AppendLine($"	       data_atualizacao as DataAtualizacao,");
             sqlPesquisa.AppendLine($"	       ativo as Ativo");
@@ -65,29 +85,7 @@ namespace VendaFacil.Infra.Data.Repositories
             return await _baseRepository.BuscarTodosPorQueryAsync<Usuario>(sqlPesquisa.ToString().Trim());
         }
         public async Task<bool> Inserir(Usuario usuario) => await _baseRepository.AdicionarAsync(usuario) > 0;
-        public async Task<bool> JaCadastrado(Usuario usuario)
-        {
-            var sqlPesquisa = new StringBuilder();
-
-            sqlPesquisa.AppendLine($"SELECT id as Codigo,");
-            sqlPesquisa.AppendLine($"       nome as Nome,");
-            sqlPesquisa.AppendLine($"       email as Email");
-            sqlPesquisa.AppendLine($"  FROM usuario");
-            sqlPesquisa.AppendLine($" WHERE (nome = '{usuario.Nome}' OR cpf = '{usuario.Cpf}' OR email = '{usuario.Email}')");
-            sqlPesquisa.AppendLine($"   AND id_empresa = {usuario.CodigoEmpresa}");
-
-            return await _baseRepository.BuscarPorQueryAsync<Usuario>(sqlPesquisa.ToString()) is not null;
-        }
-        public async Task<int> TotalRegistros(filtroUsuario filtro)
-        {
-            var sqlPesquisa = new StringBuilder();
-
-            sqlPesquisa.AppendLine($"SELECT COUNT(ID) as Total");
-            sqlPesquisa.AppendLine($"  FROM usuario");
-            sqlPesquisa.AppendLine(ObterFiltros(filtro));
-
-            return await _baseRepository.BuscarPorQueryAsync<int>(sqlPesquisa.ToString());
-        }
+        public async Task<bool> Atualizar(Usuario usuario) => await _baseRepository.AtualizarAsync(usuario.Codigo, usuario) > 0;
 
         #endregion
     }

@@ -5,9 +5,12 @@ namespace VendaFacil.Service.Interface
 {
     public interface IUsuarioService : IBaseService
     {
-        bool JaCadastrado(UsuarioViewModel model);
+        bool ObterEntidade(UsuarioViewModel model);
+        UsuarioViewModel ObterPorCodigo(int Codigo);
         IEnumerable<UsuarioViewModel> ObterTodos(filtroUsuarioViewModel filtro);
-        bool Inserir(UsuarioViewModel model);
         int ObterTotalRegistros(filtroUsuarioViewModel filtro);
+        bool Inserir(UsuarioViewModel model);
+        bool Atualizar(UsuarioViewModel model);
+        bool Deletar(UsuarioViewModel model);
     }
 }

@@ -27,10 +27,24 @@ namespace VendaFacil.Service.Service
         #region [Métodos Públicos]
         public int ObterTotalRegistros(filtroUsuarioViewModel filtro)
             => _mapper.Map<int>(_service.TotalRegistros(_mapper.Map<filtroUsuario>(filtro)).Result);
+        public UsuarioViewModel ObterPorCodigo(int codigo)
+            => _mapper.Map<UsuarioViewModel>(_service.ObterPorCodigo(codigo).Result);
         public IEnumerable<UsuarioViewModel> ObterTodos(filtroUsuarioViewModel filtro)
             => _mapper.Map<IEnumerable<UsuarioViewModel>>(_service.ObterTodos(_mapper.Map<filtroUsuario>(filtro)).Result);
-        public bool JaCadastrado(UsuarioViewModel model) =>  _service.JaCadastrado(_mapper.Map<Usuario>(model)).Result;
-        public bool Inserir(UsuarioViewModel model) => _service.Inserir(_mapper.Map<Usuario>(model)).Result;
+        public bool ObterEntidade(UsuarioViewModel model)
+            => _service.ObterEntidade(_mapper.Map<Usuario>(model)).Result;
+        public bool Inserir(UsuarioViewModel model)
+            => _service.Inserir(_mapper.Map<Usuario>(model)).Result;
+        public bool Atualizar(UsuarioViewModel model)
+        {
+            model.Ativo ??= ObterPorCodigo(model.Codigo).Ativo;
+            return _service.Atualizar(_mapper.Map<Usuario>(model)).Result;
+        }
+        public bool Deletar(UsuarioViewModel model)
+        {
+            model.Ativo = false;
+            return _service.Atualizar(_mapper.Map<Usuario>(model)).Result;
+        }
 
         #endregion
     }

@@ -11,15 +11,19 @@ namespace VendaFacil.Service.AutoMapper
         public AutoMapperSetup()
         {
             #region [ViewModelToDomain]
-            CreateMap<UsuarioViewModel, Usuario>();
             CreateMap<filtroUsuarioViewModel, filtroUsuario>();
+
+            CreateMap<UsuarioViewModel, Usuario>();
+            CreateMap<EmpresaViewModel, Empresa>();
             #endregion
 
 
 
             #region [DomainToViewModel]
-            CreateMap<Usuario, UsuarioViewModel>();
             CreateMap<filtroUsuario, filtroUsuarioViewModel>();
+
+            CreateMap<Usuario, UsuarioViewModel>();
+            CreateMap<Empresa, EmpresaViewModel>();
             #endregion
         }
     }

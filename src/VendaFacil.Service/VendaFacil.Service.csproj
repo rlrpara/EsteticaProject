@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VendaFacil.CrossCutting.Util\VendaFacil.CrossCutting.Util.csproj" />
     <ProjectReference Include="..\VendaFacil.Domain\VendaFacil.Domain.csproj" />
     <ProjectReference Include="..\VendaFacil.Infra.Data\VendaFacil.Infra.Data.csproj" />
   </ItemGroup>

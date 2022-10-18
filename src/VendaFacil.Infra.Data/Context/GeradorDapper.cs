@@ -7,48 +7,39 @@ using VendaFacil.Infra.Data.Enumerables;
 
 namespace VendaFacil.Infra.Data.Context
 {
-    public static class GeradorDapper
+    public class GeradorDapper
     {
         #region [Propriedades Privadas]
-        private static ParametrosConexao _parametrosConexao;
+        private  ParametrosConexao _parametrosConexao;
+        #endregion
+
+        #region [Construtor]
+        public GeradorDapper(ParametrosConexao parametrosConexao) => _parametrosConexao = parametrosConexao;
         #endregion
 
         #region Métodos Privados
-        public static string ObterChavePrimaria<T>() where T : class
+        private Nota? ObterAtributoNota(PropertyInfo x) => x.GetCustomAttribute(typeof(Nota)) as Nota;
+        private IOrderedEnumerable<PropertyInfo> ObterListaPropriedadesClasse<T>() where T : class => typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => (p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault() as ColumnAttribute)?.Order);
+        private  string TipoPropriedade(PropertyInfo item, Nota nota)
+            => item.PropertyType.Name.ToLower() switch
         {
-            string chavePrimaria = string.Empty;
-
-            List<string> campos = new();
-
-            foreach (PropertyInfo item in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order))
-            {
-                var opcoesBase = (Nota)item.GetCustomAttribute(typeof(Nota));
-
-                if (opcoesBase != null)
-                    if (opcoesBase.ChavePrimaria || item.GetCustomAttributes().FirstOrDefault() is KeyAttribute)
-                        chavePrimaria = item.GetCustomAttribute<ColumnAttribute>().Name;
-            }
-            return chavePrimaria;
-        }
-        private static string TipoPropriedade(PropertyInfo item, Nota nota) => item.PropertyType.Name switch
-        {
-            "Int32" => ObtemParaInteiro(nota),
-            "Int64" => "bigint DEFAULT NULL",
-            "Double" => "decimal(18,2)",
-            "Single" => "float",
-            "Guid" => "integer DEFAULT NULL",
-            "DateTime" => ObterParaData(),
-            "Boolean" => ObtemParaBoleando(),
-            "Nullable`1" => ObtemParaTipoNulo(item.PropertyType.FullName, nota),
-            _ => $"varchar({nota.Tamanho}) NULL",
+            "int32" => ObterParaInteiro(nota),
+            "int64" => "bigint DEFAULT NULL",
+            "double" => "decimal(18,2)",
+            "single" => "float",
+            "guid" => "integer DEFAULT NULL",
+            "datetime" => ObterParaData(),
+            "boolean" => ObtemParaBoleando(),
+            "nullable`1" => ObtemParaTipoNulo(item.PropertyType.FullName, nota),
+            _ => $"varchar({nota.Tamanho}) default null",
         };
-        private static string ObterParaData() => (ETipoBanco)_parametrosConexao.TipoBanco switch
+        private  string ObterParaData() => (ETipoBanco)_parametrosConexao.TipoBanco switch
         {
             ETipoBanco.Postgresql => "timestamp DEFAULT CURRENT_TIMESTAMP",
             _ => "datetime DEFAULT CURRENT_TIMESTAMP"
         };
 
-        private static string ObtemParaInteiro(Nota nota) => (ETipoBanco)_parametrosConexao.TipoBanco switch
+        private  string ObterParaInteiro(Nota nota) => (ETipoBanco)_parametrosConexao.TipoBanco switch
         {
             ETipoBanco.SqlServer => "int(11) DEFAULT NULL",
             ETipoBanco.MySql => "int(11) DEFAULT NULL",
@@ -58,7 +49,7 @@ namespace VendaFacil.Infra.Data.Context
             ETipoBanco.SqlAnywhere => "int(11) DEFAULT NULL",
             _ => "int(11) DEFAULT NULL",
         };
-        private static string ObtemParaBoleando() => (ETipoBanco)_parametrosConexao.TipoBanco switch
+        private  string ObtemParaBoleando() => (ETipoBanco)_parametrosConexao.TipoBanco switch
         {
             ETipoBanco.SqlServer => "tinyint(1) NOT NULL DEFAULT 1",
             ETipoBanco.MySql => "tinyint(1) NOT NULL DEFAULT 1",
@@ -68,10 +59,10 @@ namespace VendaFacil.Infra.Data.Context
             ETipoBanco.SqlAnywhere => "tinyint(1) NOT NULL DEFAULT 1",
             _ => "tinyint(1) NOT NULL DEFAULT 1",
         };
-        private static string ObtemParaTipoNulo(string fullName, Nota nota)
+        private  string ObtemParaTipoNulo(string fullName, Nota nota)
         {
             if (fullName.ToLower().Contains("int32"))
-                return ObtemParaInteiro(nota);
+                return ObterParaInteiro(nota);
             else if (fullName.ToLower().Contains("datetime"))
                 return ObterParaData();
             else
@@ -84,44 +75,27 @@ namespace VendaFacil.Infra.Data.Context
         #endregion
 
         #region Métodos Públicos
-        public static string ObterNomeTabela<T>() where T : class
+        public string? ObterChavePrimaria<T>() where T : class => ObterListaPropriedadesClasse<T>()
+            .Where(x => (x.GetCustomAttribute(typeof(Nota)) as Nota) is not null)
+            .Where(x => (x.GetCustomAttribute(typeof(Nota)) as Nota).ChavePrimaria || x.GetCustomAttributes().FirstOrDefault() is KeyAttribute)
+            .Select(x => x.GetCustomAttribute<ColumnAttribute>()?.Name ?? "")
+            .FirstOrDefault();
+        public  string ObterNomeTabela<T>() where T : class
         {
-            dynamic tableattr = typeof(T).GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().Name == "TableAttribute");
+            dynamic nomeTabela = (dynamic)typeof(T).GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().Name is TableAttribute);
 
-            return (tableattr is not null ? tableattr.Name : "");
+            return nomeTabela?.Name ?? "";
         }
-        public static string RetornaSelect<T>(string nomeBanco = "") where T : class
-        {
-            string chavePrimaria = string.Empty;
-            List<string> campos = new();
-
-            foreach (PropertyInfo item in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order))
-            {
-                var notaBase = (Nota)item.GetCustomAttribute(typeof(Nota));
-
-                if (notaBase is not null && notaBase.UsarNoBancoDeDados)
-                {
-                    var tipoCampo = item.PropertyType.Name;
-
-                    if (notaBase.ChavePrimaria || item.GetCustomAttributes().FirstOrDefault() is KeyAttribute)
-                        chavePrimaria = item.GetCustomAttribute<ColumnAttribute>().Name;
-
-                    if (notaBase.UsarParaBuscar && (item.GetCustomAttribute<ColumnAttribute>()?.Name != ""))
-                    {
-                        var coluna = item.GetCustomAttribute<ColumnAttribute>()?.Name;
-                        campos.Add($"{coluna} AS {item.Name}");
-                    }
-                }
-            }
-
-            return string.Join($",{Environment.NewLine}       ", campos.ToArray());
-        }
-        public static string RetornaInsert<T>(T entidade) where T : class
+        public string RetornaSelect<T>(string nomeBanco = "") where T : class => string.Join($", {Environment.NewLine}       ", ObterListaPropriedadesClasse<T>()
+            .Where(x => (ObterAtributoNota(x)?.UsarParaBuscar ?? false && ObterAtributoNota(x) is not null))
+            .Select(x => $"{x.GetCustomAttribute<ColumnAttribute>()?.Name?.Trim()??""} AS {x.Name}")
+            .ToList());
+        public  string RetornaInsert<T>(T entidade) where T : class
         {
             List<string> campos = new();
             List<string> valores = new();
 
-            foreach (PropertyInfo item in entidade.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order))
+            foreach (PropertyInfo item in ObterListaPropriedadesClasse<T>())
             {
                 var tipoCampo = item.PropertyType;
                 Nota? notaBase = item.GetCustomAttribute(typeof(Nota)) as Nota;
@@ -163,7 +137,7 @@ namespace VendaFacil.Infra.Data.Context
 
             return sqlInsert.ToString();
         }
-        public static string RetornaUpdate<T>(int id, T entidade) where T : class
+        public  string RetornaUpdate<T>(int id, T entidade) where T : class
         {
             string campoChave = string.Empty;
             List<string> condicao = new();
@@ -214,7 +188,7 @@ namespace VendaFacil.Infra.Data.Context
 
             return sqlAtualizar.ToString();
         }
-        public static string RetornaDelete<T>(int id) where T : class
+        public  string RetornaDelete<T>(int id) where T : class
         {
             string campoChave = string.Empty;
 
@@ -234,7 +208,7 @@ namespace VendaFacil.Infra.Data.Context
 
             return sqlDelete.ToString();
         }
-        public static string CriaTabela<T>(ParametrosConexao parametrosConexao) where T : class
+        public  string CriaTabela<T>(ParametrosConexao parametrosConexao) where T : class
         {
             _parametrosConexao = parametrosConexao;
             string chavePrimaria = string.Empty;
@@ -362,7 +336,7 @@ namespace VendaFacil.Infra.Data.Context
 
             return sqlPesquisa.ToString().Trim();
         }
-        public static string GeralSqlSelecaoControles<T>(string sqlWhere, string nomeBanco) where T : class
+        public  string GeralSqlSelecaoControles<T>(string sqlWhere, string nomeBanco) where T : class
         {
             var sqlPesquisa = new StringBuilder();
 
@@ -373,7 +347,7 @@ namespace VendaFacil.Infra.Data.Context
             return sqlPesquisa.ToString();
         }
 
-        public static string InserirDadosPadroes<T>() where T : class
+        public  string InserirDadosPadroes<T>() where T : class
         {
             var sqlPesquisa = new StringBuilder();
 

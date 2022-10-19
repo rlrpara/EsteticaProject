@@ -1,6 +1,4 @@
-﻿using Moq;
-using System.ComponentModel.DataAnnotations;
-using VendaFacil.Domain.Entities.Base;
+﻿using VendaFacil.Domain.Entities.Base;
 using VendaFacil.Infra.Data.Context;
 using VendaFacil.Infra.Data.Interface;
 

@@ -4,7 +4,7 @@ namespace VendaFacil.CrossCutting.Util.ExtensionMethods
 {
     public static class StringExtension
     {
-        public static string SepararTitulo(this string valor)
+        public static string SepararTitulo(this string? valor)
         {
             var texto = "";
 
@@ -13,7 +13,7 @@ namespace VendaFacil.CrossCutting.Util.ExtensionMethods
 
             return texto.Trim();
         }
-        public static string RemoverAcentos(this string texto)
+        public static string RemoverAcentos(this string? texto)
         {
             /** Troca os caracteres acentuados por não acentuados **/
             string[] acentos = new string[] { "ç", "Ç", "á", "é", "í", "ó", "ú", "ý", "Á", "É", "Í", "Ó", "Ú", "Ý", "à", "è", "ì", "ò", "ù", "À", "È", "Ì", "Ò", "Ù", "ã", "õ", "ñ", "ä", "ë", "ï", "ö", "ü", "ÿ", "Ä", "Ë", "Ï", "Ö", "Ü", "Ã", "Õ", "Ñ", "â", "ê", "î", "ô", "û", "Â", "Ê", "Î", "Ô", "Û" };
@@ -34,13 +34,13 @@ namespace VendaFacil.CrossCutting.Util.ExtensionMethods
             }
 
             /** Troca os caracteres especiais da string por " " **/
-            if (!string.IsNullOrWhiteSpace(texto))
-                texto = Regex.Replace(texto, @"[^\w\.@-]", " ", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+            //if (!string.IsNullOrWhiteSpace(texto))
+            //    texto = Regex.Replace(texto, @"[^\w\.@-]", " ", RegexOptions.None, TimeSpan.FromSeconds(1.5));
 
             return texto?.Trim().ToUpper() ?? "";
         }
-        public static string ApenasTexto(this string valor) => (valor == null) ? "" : new Regex(@"[^a-zA-Z]").Replace(valor, "").ToString();
-        public static string ApenasNumeros(this string valor, string valorPadrao = "0")
+        public static string ApenasTexto(this string? valor) => (valor == null) ? "" : new Regex(@"[^a-zA-Z]").Replace(valor, "").ToString();
+        public static string ApenasNumeros(this string? valor, string valorPadrao = "0")
         {
             if (!string.IsNullOrEmpty(valor?.Trim()))
             {

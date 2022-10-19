@@ -37,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-02.Util", "05-02.Util", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendaFacil.CrossCutting.Util", "src\VendaFacil.CrossCutting.Util\VendaFacil.CrossCutting.Util.csproj", "{5AB621E6-4B5E-4F7D-9F3D-8F3B30B9FFBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendaFacil.Tests", "tests\VendaFacil.Tests\VendaFacil.Tests.csproj", "{C61C6BBD-66AE-4288-8378-3B8A431B8FAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendaFacil.Tests", "tests\VendaFacil.Tests\VendaFacil.Tests.csproj", "{C61C6BBD-66AE-4288-8378-3B8A431B8FAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

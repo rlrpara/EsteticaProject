@@ -115,10 +115,10 @@ namespace VendaFacil.Infra.Data.Context
                             valores.Add($"'{Convert.ToDateTime(valor):yyyy-MM-dd HH:mm:ss}'");
 
                         else if (tipoCampo.Name.ToLower().Contains("nullable`1"))
-                            if (tipoCampo.ToString().Contains("datetime"))
+                            if (tipoCampo.ToString().ToLower().Contains("datetime"))
                                 valores.Add($"'{Convert.ToDateTime(valor):yyyy-MM-dd HH:mm:ss}'");
 
-                            else if (tipoCampo.Name.ToLower().Contains("int32"))
+                            else if (tipoCampo.ToString().ToLower().Contains("int32"))
                                 valores.Add($"{valor}");
 
                             else

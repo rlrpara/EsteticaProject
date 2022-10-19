@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\VendaFacil.CrossCutting.Util\VendaFacil.CrossCutting.Util.csproj" />
-  </ItemGroup>
-
 </Project>

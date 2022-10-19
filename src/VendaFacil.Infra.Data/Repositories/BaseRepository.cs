@@ -41,7 +41,7 @@ namespace VendaFacil.Infra.Data.Repositories
             try
             {
                 using var conn = ObterConexao();
-                return await conn.ExecuteAsync(_geradorDapper.ObterInsert(entidade));
+                return await conn.ExecuteAsync(_geradorDapper.GeralSqlInsertControles(entidade));
             }
             catch
             {
@@ -53,7 +53,7 @@ namespace VendaFacil.Infra.Data.Repositories
             try
             {
                 using var conn = ObterConexao();
-                return await conn.ExecuteAsync(_geradorDapper.RetornaUpdate(id, entidade), commandType: CommandType.Text);
+                return await conn.ExecuteAsync(_geradorDapper.GeralSqlUpdateControles(id, entidade), commandType: CommandType.Text);
             }
             catch
             {
@@ -130,7 +130,7 @@ namespace VendaFacil.Infra.Data.Repositories
             try
             {
                 using var conn = ObterConexao();
-                return await conn.ExecuteAsync($"{_geradorDapper.RetornaDelete<T>(id)}", commandType: CommandType.Text);
+                return await conn.ExecuteAsync($"{_geradorDapper.ObterDelete<T>(id)}", commandType: CommandType.Text);
             }
             catch
             {

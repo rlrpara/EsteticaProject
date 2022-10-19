@@ -7,12 +7,15 @@ namespace VendaFacil.Tests.InfraTests.DataTests.ContextsTests
     [Trait("Data", "GeradorDapper")]
     public class GeradorDapperTests : GeradorDapperBaseTests
     {
+        #region [Propriedades Privadas]
         private readonly IGeradorDapper _geradorDapper;
+        #endregion
 
         #region [Construtor]
         public GeradorDapperTests() =>_geradorDapper = new GeradorDapper(new ParametrosConexao());
         #endregion
 
+        #region [Métodos Públicos]
         [Fact(DisplayName = "Deve gerar um nova instância")]
         public void DeveGerarNovaInstacia() => Assert.True(_geradorDapper is not null);
 
@@ -23,6 +26,8 @@ namespace VendaFacil.Tests.InfraTests.DataTests.ContextsTests
         public void DeveObterNomeTabelaClasse() => Assert.Equal("EMPRESA", _geradorDapper.ObterNomeTabela<Empresa>());
 
         [Fact(DisplayName = "Deve retornar o insert de uma classe")]
-        public void DeveRetornarInsertUmaClasse() => Assert.Equal(ObterSqlInsertEmpresaGerado(), _geradorDapper.ObterInsert(ObterEmpresa()));
+        public void DeveRetornarInsertUmaClasse() => Assert.Equal(ObterSqlInsertEmpresaGerado(), _geradorDapper.GeralSqlInsertControles(ObterEmpresa()));
+
+        #endregion
     }
 }

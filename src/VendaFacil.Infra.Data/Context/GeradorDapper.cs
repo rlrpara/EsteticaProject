@@ -20,7 +20,13 @@ namespace VendaFacil.Infra.Data.Context
 
         #region Métodos Privados
         private Nota? ObterAtributoNota(PropertyInfo x) => x.GetCustomAttribute(typeof(Nota)) as Nota;
-        private IOrderedEnumerable<PropertyInfo> ObterListaPropriedadesClasse<T>() where T : class => typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => (p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault() as ColumnAttribute)?.Order);
+        private IOrderedEnumerable<PropertyInfo> ObterListaPropriedadesClasse<T>(T entidade = null) where T : class
+        {
+            if (entidade is null)
+                return typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order);
+            else
+                return entidade.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order);
+        }
         private string? TipoPropriedade(PropertyInfo item, Nota nota)
             => item.PropertyType.Name.ToLower() switch
         {
@@ -72,6 +78,36 @@ namespace VendaFacil.Infra.Data.Context
                     _ => $"varchar({nota.Tamanho}) NULL",
                 };
         }
+        private string FormataValor<T>(PropertyInfo x, T entidade) where T : class
+        {
+            var propriedade = x.PropertyType.Name.ToLower();
+
+            if (propriedade.Contains("string"))
+                return $"'{x.GetValue(entidade)}'";
+            else if (propriedade.Contains("datetime"))
+                return $"'{Convert.ToDateTime(x.GetValue(entidade)):yyyy-MM-dd HH:mm:ss}'";
+            else if (propriedade.Contains("nullable`1"))
+                if (propriedade.Contains("datetime"))
+                    return $"'{Convert.ToDateTime(x.GetValue(entidade)):yyyy-MM-dd HH:mm:ss}'";
+                else if (propriedade.Contains("string"))
+                    return $"'{x.GetValue(entidade)}'";
+                else
+                    return $"{x.GetValue(entidade)}";
+            else
+                return $"{x.GetValue(entidade)}";
+        }
+        private string ObterValorInsert<T>(T entidade) where T : class
+            => string.Join($", ", ObterListaPropriedadesClasse(entidade)
+                    .Where(x => ObterAtributoNota(x)?.UsarParaBuscar??false && !string.IsNullOrWhiteSpace(x.GetCustomAttribute<ColumnAttribute>().Name))
+                    .Select(x => $"{FormataValor(x, entidade)}")
+                    .ToList());
+        private string ObterColunasInsert<T>() where T : class
+            => string.Join($", ", ObterListaPropriedadesClasse<T>()
+                    .Where(x => ObterAtributoNota(x).UsarParaBuscar && !ObterAtributoNota(x).ChavePrimaria && x.GetCustomAttributes().FirstOrDefault() is not KeyAttribute)
+                    .Select(x => $"{x.GetCustomAttribute<ColumnAttribute>()?.Name}")
+                    .ToList());
+        private string ObterUseNomeBanco()
+            => _parametrosConexao.TipoBanco.Equals(ETipoBanco.MySql) ? $"USE {_parametrosConexao.NomeBanco};" : "";
         #endregion
 
         #region Métodos Públicos
@@ -85,128 +121,33 @@ namespace VendaFacil.Infra.Data.Context
 
             return nomeTabela?.Name;
         }
+        public string ObterColunasSelect<T>(bool paraGrid = false, T? entidade = null, bool quebraLinha = true) where T : class
+        {
+            if (!paraGrid && entidade is null)
+                return string.Join($", {(quebraLinha ? Environment.NewLine : "")}       ", ObterListaPropriedadesClasse<T>()
+                    .Where(x => ObterAtributoNota(x)?.UsarParaBuscar ?? false && (x.GetCustomAttribute(typeof(Nota)) is not null))
+                    .Select(x => $"{x.GetCustomAttribute<ColumnAttribute>()?.Name?.Trim()} AS {x.Name}")
+                    .ToList());
+            else
+                return string.Join($", {Environment.NewLine}       ", ObterListaPropriedadesClasse(entidade)
+                    .Where(x => ObterAtributoNota(x)?.UsarParaBuscar ?? false && !string.IsNullOrWhiteSpace(x.GetCustomAttribute<ColumnAttribute>().Name))
+                    .Select(x => $"{x.GetCustomAttribute<ColumnAttribute>()?.Name?.Trim()} = {FormataValor(x, entidade)}")
+                    .ToList());
+        }
         public string? RetornaCamposSelect<T>() where T : class
             => string.Join($", {Environment.NewLine}       ",ObterListaPropriedadesClasse<T>()
                 .Where(x => ObterAtributoNota(x)?.UsarParaBuscar ?? false && ObterAtributoNota(x) is not null)
                 .Select(x => $"{x.GetCustomAttribute<ColumnAttribute>()?.Name?.Trim()??""} AS {x.Name}")
                 .ToList())?.Trim();
-        public string? ObterInsert<T>(T entidade) where T : class
+        public string? ObterDelete<T>(int id) where T : class
         {
-            List<string> campos = new();
-            List<string> valores = new();
-
-            foreach (PropertyInfo item in ObterListaPropriedadesClasse<T>())
-            {
-                var tipoCampo = item.PropertyType;
-                Nota? notaBase = item.GetCustomAttribute(typeof(Nota)) as Nota;
-
-                if (notaBase is not null && notaBase.UsarNoBancoDeDados && (!notaBase.ChavePrimaria || item.GetCustomAttributes().FirstOrDefault() is not KeyAttribute))
-                {
-                    var valor = item.GetValue(entidade);
-
-                    if (valor is not null && !notaBase.ChavePrimaria && item.GetCustomAttributes().FirstOrDefault() is not KeyAttribute)
-                    {
-                        campos.Add(item.GetCustomAttribute<ColumnAttribute>().Name);
-
-                        if (tipoCampo.Name.ToLower().Contains("string"))
-                            valores.Add($"'{valor?.ToString().Replace("'", "`")}'");
-
-                        else if (tipoCampo.Name.ToLower().Contains("datetime"))
-                            valores.Add($"'{Convert.ToDateTime(valor):yyyy-MM-dd HH:mm:ss}'");
-
-                        else if (tipoCampo.Name.ToLower().Contains("nullable`1"))
-                            if (tipoCampo.ToString().ToLower().Contains("datetime"))
-                                valores.Add($"'{Convert.ToDateTime(valor):yyyy-MM-dd HH:mm:ss}'");
-
-                            else if (tipoCampo.ToString().ToLower().Contains("int32"))
-                                valores.Add($"{valor}");
-
-                            else
-                                valores.Add($"'{valor}'");
-
-                        else
-                            valores.Add($"{valor}");
-                    }
-                }
-            }
-
-            var sqlInsert = new StringBuilder();
-
-            sqlInsert.AppendLine($"INSERT INTO {ObterNomeTabela<T>()} ({string.Join(", ", campos.ToArray())})");
-            sqlInsert.AppendLine($"            VALUES ({string.Join(", ", valores.ToArray())});");
-
-            return sqlInsert.ToString();
-        }
-        public string? RetornaUpdate<T>(int id, T entidade) where T : class
-        {
-            string campoChave = string.Empty;
-            List<string> condicao = new();
-
-            foreach (PropertyInfo item in entidade.GetType().GetProperties(BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order))
-            {
-                Nota notaBase = (Nota)item.GetCustomAttribute(typeof(Nota));
-
-                if (notaBase is not null && notaBase.UsarNoBancoDeDados && (!notaBase.ChavePrimaria || item.GetCustomAttributes().FirstOrDefault() is not KeyAttribute))
-                {
-                    var valor = item.GetValue(entidade);
-                    var campo = item.GetCustomAttribute<ColumnAttribute>().Name;
-                    var tipoCampo = item.PropertyType.Name.ToLower();
-
-                    if (notaBase.ChavePrimaria || item.GetCustomAttributes().FirstOrDefault() is KeyAttribute)
-                        campoChave = item.GetCustomAttribute<ColumnAttribute>().Name;
-
-                    if (!string.IsNullOrWhiteSpace(valor?.ToString()) && !notaBase.ChavePrimaria && item.GetCustomAttributes().FirstOrDefault() is not KeyAttribute && !campo.ToLower().Equals("data_cadastro"))
-                    {
-                        if (tipoCampo.Contains("string"))
-                            condicao.Add($"{campo} = '{valor}'");
-
-                        else if (tipoCampo.Contains("datetime"))
-                            condicao.Add($"{campo} = '{Convert.ToDateTime(valor):yyyy-MM-dd HH:mm:ss}'");
-
-                        else if (tipoCampo.Contains("nullable`1"))
-                            if (tipoCampo.ToString().Contains("datetime"))
-                                condicao.Add($"{campo} = '{Convert.ToDateTime(valor):yyyy-MM-dd HH:mm:ss}'");
-
-                            else if (tipoCampo.ToString().Contains("int32"))
-                                condicao.Add($"{campo} = {valor}");
-
-                            else
-                                condicao.Add($"{campo} = '{valor}'");
-                        else
-                            condicao.Add($"{campo} = {valor}");
-                    }
-                }
-                else if (notaBase is not null && (notaBase.ChavePrimaria || item.GetCustomAttributes().FirstOrDefault() is KeyAttribute))
-                    campoChave = item.GetCustomAttribute<ColumnAttribute>().Name;
-            }
-
-            var sqlAtualizar = new StringBuilder();
-
-            sqlAtualizar.AppendLine($"UPDATE {ObterNomeTabela<T>()}");
-            sqlAtualizar.AppendLine($"   SET {(string.Join($",{Environment.NewLine}       ", condicao.ToArray()))}");
-            sqlAtualizar.AppendLine($" WHERE {campoChave} = {id}");
-
-            return sqlAtualizar.ToString();
-        }
-        public string? RetornaDelete<T>(int id) where T : class
-        {
-            string campoChave = string.Empty;
-
-            foreach (PropertyInfo item in typeof(T).GetProperties(BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order))
-            {
-                Nota notaBase = (Nota)item.GetCustomAttribute(typeof(Nota));
-
-                if (notaBase != null && notaBase.UsarNoBancoDeDados && notaBase.ChavePrimaria)
-                    campoChave = item.GetCustomAttribute<ColumnAttribute>().Name;
-            }
-
             var sqlDelete = new StringBuilder();
 
-            sqlDelete.AppendLine($"USE {_parametrosConexao.NomeBanco};");
+            sqlDelete.AppendLine(ObterUseNomeBanco());
             sqlDelete.AppendLine($"DELETE FROM {ObterNomeTabela<T>()}");
-            sqlDelete.AppendLine($" WHERE {campoChave} = {id}");
+            sqlDelete.AppendLine($" WHERE {ObterChavePrimaria<T>()} = {id}");
 
-            return sqlDelete.ToString();
+            return sqlDelete?.ToString()?.Trim();
         }
         public string? CriaTabela<T>() where T : class
         {
@@ -339,11 +280,32 @@ namespace VendaFacil.Infra.Data.Context
         {
             var sqlPesquisa = new StringBuilder();
 
-            sqlPesquisa.AppendLine($"SELECT {RetornaCamposSelect<T>()}");
+            sqlPesquisa.AppendLine($"SELECT {ObterColunasSelect<T>()}");
             sqlPesquisa.AppendLine($"  FROM {ObterNomeTabela<T>()}");
-            sqlPesquisa.AppendLine($"{(sqlWhere.Trim() == string.Empty ? string.Empty : $"WHERE {sqlWhere}")}");
+            sqlPesquisa.AppendLine($"{(string.IsNullOrWhiteSpace(sqlWhere?.Trim()) ? string.Empty : $"WHERE {sqlWhere}")}");
 
-            return sqlPesquisa.ToString();
+            return sqlPesquisa?.ToString()?.Trim();
+        }
+        public string? GeralSqlUpdateControles<T>(int id, T entidade) where T : class
+        {
+            var sqlPesquisa = new StringBuilder();
+
+            sqlPesquisa.AppendLine(ObterUseNomeBanco());
+            sqlPesquisa.AppendLine($"UPDATE {ObterNomeTabela<T>()}");
+            sqlPesquisa.AppendLine($"   SET {string.Join($",{Environment.NewLine}       ", ObterColunasSelect(true, entidade))}");
+            sqlPesquisa.AppendLine($" WHERE {ObterChavePrimaria<T>()} = {id}");
+
+            return sqlPesquisa?.ToString()?.Trim();
+        }
+        public string? GeralSqlInsertControles<T>(T entidade) where T : class
+        {
+            var sqlPesquisa = new StringBuilder();
+
+            sqlPesquisa.AppendLine(ObterUseNomeBanco());
+            sqlPesquisa.AppendLine($"INSERT INTO {ObterNomeTabela<T>()} ({ObterColunasInsert<T>()})");
+            sqlPesquisa.AppendLine($"                     VALUES ({string.Join($", ", ObterValorInsert(entidade))})");
+
+            return sqlPesquisa?.ToString()?.Trim();
         }
         public string? InserirDadosPadroes<T>() where T : class
         {

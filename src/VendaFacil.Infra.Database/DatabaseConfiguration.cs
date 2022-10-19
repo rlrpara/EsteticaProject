@@ -169,7 +169,7 @@ namespace VendaFacil.Infra.Database
         private void InsereDadosPadroes()
         {
             if (!ExisteDados<Usuario>())
-                Criar(_geradorDapper.ObterInsert(ObterUsuarioPadrao()));
+                Criar(_geradorDapper.GeralSqlInsertControles(ObterUsuarioPadrao()));
         }
         private bool ServidorAtivo()
         {

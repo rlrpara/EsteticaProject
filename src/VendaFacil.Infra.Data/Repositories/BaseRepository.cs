@@ -1,9 +1,9 @@
 ﻿using Dapper;
 using System.Data;
-using System.Reflection;
 using System.Text;
 using VendaFacil.Domain.Interface;
 using VendaFacil.Infra.Data.Context;
+using VendaFacil.Infra.Data.Interface;
 
 namespace VendaFacil.Infra.Data.Repositories
 {
@@ -11,18 +11,10 @@ namespace VendaFacil.Infra.Data.Repositories
     {
         #region [Propriedades Privadas]
         private ParametrosConexao _parametrosConexao;
+        private readonly IGeradorDapper _geradorDapper;
         #endregion
 
         #region [Métodos Privados]
-        private static string ObterNomeTabela<T>()
-        {
-            return TableNameMapper(typeof(T));
-        }
-        private static string TableNameMapper(Type type)
-        {
-            dynamic tableattr = type.GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().Name == "TableAttribute");
-            return tableattr != null ? tableattr.Name : string.Empty;
-        }
         private IDbConnection ObterConexao() => ConnectionConfiguration.AbrirConexao(_parametrosConexao);
         private ParametrosConexao ObterParametrosConexao() => new()
         {
@@ -36,7 +28,11 @@ namespace VendaFacil.Infra.Data.Repositories
         #endregion
 
         #region [Construtor]
-        public BaseRepository() => _parametrosConexao = ObterParametrosConexao();
+        public BaseRepository()
+        {
+            _parametrosConexao = ObterParametrosConexao();
+            _geradorDapper = new GeradorDapper(_parametrosConexao);
+        }
         #endregion
 
         #region [Métodos Públicos]
@@ -45,36 +41,34 @@ namespace VendaFacil.Infra.Data.Repositories
             try
             {
                 using var conn = ObterConexao();
-                return await conn.ExecuteAsync(GeradorDapper.RetornaInsert(entidade));
+                return await conn.ExecuteAsync(_geradorDapper.RetornaInsert(entidade));
             }
             catch
             {
                 return default;
             }
         }
-
         public async Task<int> AtualizarAsync<T>(int id, T entidade) where T : class
         {
             try
             {
                 using var conn = ObterConexao();
-                return await conn.ExecuteAsync(GeradorDapper.RetornaUpdate(id, entidade), commandType: CommandType.Text);
+                return await conn.ExecuteAsync(_geradorDapper.RetornaUpdate(id, entidade), commandType: CommandType.Text);
             }
             catch
             {
                 return default;
             }
         }
-
         public async Task<T> BuscarPorIdAsync<T>(int id) where T : class
         {
             try
             {
                 var sqlPesquisa = new StringBuilder();
 
-                sqlPesquisa.AppendLine($"SELECT {GeradorDapper.RetornaSelect<T>(_parametrosConexao.NomeBanco)}");
-                sqlPesquisa.AppendLine($"  FROM {ObterNomeTabela<T>()}");
-                sqlPesquisa.AppendLine($" WHERE {GeradorDapper.ObterChavePrimaria<T>()} = {id}");
+                sqlPesquisa.AppendLine($"SELECT {_geradorDapper.RetornaCamposSelect<T>()}");
+                sqlPesquisa.AppendLine($"  FROM {_geradorDapper.ObterNomeTabela<T>()}");
+                sqlPesquisa.AppendLine($" WHERE {_geradorDapper.ObterChavePrimaria<T>()} = {id}");
 
                 using var conn = ObterConexao();
                 return await conn.QueryFirstOrDefaultAsync<T>(sqlPesquisa.ToString(), commandType: CommandType.Text);
@@ -84,7 +78,6 @@ namespace VendaFacil.Infra.Data.Repositories
                 return default;
             }
         }
-
         public async Task<T> BuscarPorQueryAsync<T>(string query)
         {
             try
@@ -97,20 +90,18 @@ namespace VendaFacil.Infra.Data.Repositories
                 return default;
             }
         }
-
         public async Task<T> BuscarPorQueryGeradorAsync<T>(string? sqlWhere = null) where T : class
         {
             try
             {
                 using var conn = ObterConexao();
-                return await conn.QueryFirstOrDefaultAsync<T>(GeradorDapper.GeralSqlSelecaoControles<T>(sqlWhere, _parametrosConexao.NomeBanco), commandType: CommandType.Text);
+                return await conn.QueryFirstOrDefaultAsync<T>(_geradorDapper.GeralSqlSelecaoControles<T>(sqlWhere), commandType: CommandType.Text);
             }
             catch
             {
                 return default;
             }
         }
-
         public async Task<IEnumerable<T>> BuscarTodosPorQueryAsync<T>(string? query = null) where T : class
         {
             try
@@ -123,40 +114,37 @@ namespace VendaFacil.Infra.Data.Repositories
                 return default;
             }
         }
-
         public async Task<IEnumerable<T>> BuscarTodosPorQueryGeradorAsync<T>(string? sqlWhere = null) where T : class
         {
             try
             {
-                return await BuscarTodosPorQueryAsync<T>(GeradorDapper.GeralSqlSelecaoControles<T>(sqlWhere, _parametrosConexao.NomeBanco));
+                return await BuscarTodosPorQueryAsync<T>(_geradorDapper.GeralSqlSelecaoControles<T>(sqlWhere));
             }
             catch
             {
                 return default;
             }
         }
-
         public async Task<int> ExcluirAsync<T>(int id) where T : class
         {
             try
             {
                 using var conn = ObterConexao();
-                return await conn.ExecuteAsync($"{GeradorDapper.RetornaDelete<T>(id)}", commandType: CommandType.Text);
+                return await conn.ExecuteAsync($"{_geradorDapper.RetornaDelete<T>(id)}", commandType: CommandType.Text);
             }
             catch
             {
                 return default;
             }
         }
-
         public async Task<int?> ObterUltimoRegistroAsync<T>() where T : class
         {
             try
             {
                 var sqlPesquisa = new StringBuilder();
-                sqlPesquisa.AppendLine($"  SELECT TOP 1 {GeradorDapper.ObterChavePrimaria<T>()}");
-                sqlPesquisa.AppendLine($"    FROM {ObterNomeTabela<T>()}");
-                sqlPesquisa.AppendLine($"ORDER BY {GeradorDapper.ObterChavePrimaria<T>()} DESC");
+                sqlPesquisa.AppendLine($"  SELECT TOP 1 {_geradorDapper.ObterChavePrimaria<T>()}");
+                sqlPesquisa.AppendLine($"    FROM {_geradorDapper.ObterNomeTabela<T>()}");
+                sqlPesquisa.AppendLine($"ORDER BY {_geradorDapper.ObterChavePrimaria<T>()} DESC");
 
                 using var conn = ObterConexao();
                 return await conn.QueryFirstOrDefaultAsync<int?>(sqlPesquisa.ToString(), commandType: CommandType.Text);
@@ -166,7 +154,6 @@ namespace VendaFacil.Infra.Data.Repositories
                 return default;
             }
         }
-
         public void QueryAsync(string sql)
         {
             try
@@ -179,7 +166,6 @@ namespace VendaFacil.Infra.Data.Repositories
                 throw;
             }
         }
-
         public async Task<IEnumerable<T>> QueryAsync<T>(string where) where T : class
         {
             try
@@ -192,6 +178,7 @@ namespace VendaFacil.Infra.Data.Repositories
                 return default;
             }
         }
+
         #endregion
     }
 }

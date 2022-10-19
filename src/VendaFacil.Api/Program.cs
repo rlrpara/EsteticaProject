@@ -11,7 +11,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(AutoMapperSetup));
 
 DotEnvLoad.Load();
-DatabaseConfiguration.GerenciarBanco();
+new DatabaseConfiguration().GerenciarBanco();
+
 NativeInjector.RegisterServices(builder.Services);
 
 var app = builder.Build();

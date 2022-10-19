@@ -4,17 +4,28 @@ using System.Text;
 using VendaFacil.Domain.Entities.Base;
 using VendaFacil.Infra.Data.Context;
 using VendaFacil.Infra.Data.Enumerables;
+using VendaFacil.Infra.Data.Interface;
+using VendaFacil.Infra.Database.Interface;
 
 namespace VendaFacil.Infra.Database
 {
-    public static class DatabaseConfiguration
+    public class DatabaseConfiguration : DatabaseConfigurationBase, IDatabaseConfiguration
     {
         #region [Propriedades Privadas]
-        private static ParametrosConexao _parametrosConexao;
+        private ParametrosConexao _parametrosConexao;
+        private readonly IGeradorDapper _geradorDapper;
         #endregion
 
-        #region Métodos Privados
-        private static ParametrosConexao ObterParametrosConexao(bool RemoverNomeBanco = false) => new()
+        #region [Construtor]
+        public DatabaseConfiguration()
+        {
+            _parametrosConexao = ObterParametrosConexao();
+            _geradorDapper = new GeradorDapper(_parametrosConexao);
+        }
+        #endregion
+
+        #region [Métodos Privados]
+        private ParametrosConexao ObterParametrosConexao(bool RemoverNomeBanco = false) => new()
         {
             Servidor = Environment.GetEnvironmentVariable("SERVIDOR"),
             NomeBanco = RemoverNomeBanco ? "" : Environment.GetEnvironmentVariable("BANCO").ToLower(),
@@ -23,9 +34,10 @@ namespace VendaFacil.Infra.Database
             Senha = Environment.GetEnvironmentVariable("SENHA"),
             TipoBanco = Convert.ToInt32(Environment.GetEnvironmentVariable("TIPO_BANCO"))
         };
-        private static string ObterProcedureDropConstraint(string nomeBanco)
+        private string ObterProcedureDropConstraint()
         {
             var sqlPessquisa = new StringBuilder();
+            var nomeBanco = _parametrosConexao.NomeBanco;
 
             switch ((ETipoBanco)_parametrosConexao.TipoBanco)
             {
@@ -62,33 +74,32 @@ namespace VendaFacil.Infra.Database
                     sqlPessquisa.AppendLine($"");
                     break;
                 default:
+                    sqlPessquisa.AppendLine($"");
                     break;
             }
             return sqlPessquisa.ToString();
         }
-        private static string ObterSqlCriarBanco()
+        private string ObterSqlCriarBanco()
         {
-            var parametro = ObterParametrosConexao();
-
             var sqlPesquisa = new StringBuilder();
 
             switch ((ETipoBanco)_parametrosConexao.TipoBanco)
             {
                 case ETipoBanco.MySql:
-                    sqlPesquisa.AppendLine($"CREATE DATABASE {parametro.NomeBanco}");
+                    sqlPesquisa.AppendLine($"CREATE DATABASE {_parametrosConexao.NomeBanco}");
                     sqlPesquisa.AppendLine($"CHARACTER SET utf8");
                     sqlPesquisa.AppendLine($"COLLATE utf8_general_ci;");
                     break;
                 case ETipoBanco.SqlServer:
-                    sqlPesquisa.AppendLine($"CREATE DATABASE {parametro.NomeBanco};");
+                    sqlPesquisa.AppendLine($"CREATE DATABASE {_parametrosConexao.NomeBanco};");
                     break;
                 case ETipoBanco.Firebird:
                     break;
                 case ETipoBanco.Postgresql:
-                    sqlPesquisa.AppendLine($"CREATE DATABASE {parametro.NomeBanco};");
+                    sqlPesquisa.AppendLine($"CREATE DATABASE {_parametrosConexao.NomeBanco};");
                     break;
                 case ETipoBanco.SqLite:
-                    var caminho = Path.Combine(Directory.GetCurrentDirectory(), parametro.NomeBanco??"");
+                    var caminho = Path.Combine(Directory.GetCurrentDirectory(), _parametrosConexao.NomeBanco??"");
                     if (!File.Exists(caminho))
                         File.Create(caminho).Close();
                     sqlPesquisa.AppendLine($"");
@@ -98,7 +109,7 @@ namespace VendaFacil.Infra.Database
             }
             return sqlPesquisa.ToString();
         }
-        private static bool ExisteBanco()
+        private bool ExisteBanco()
         {
             _parametrosConexao = ObterParametrosConexao();
 
@@ -124,7 +135,7 @@ namespace VendaFacil.Infra.Database
 
                     break;
                 case ETipoBanco.SqLite:
-                    var caminho = Path.Combine(Directory.GetCurrentDirectory(), _parametrosConexao.NomeBanco);
+                    var caminho = Path.Combine(Directory.GetCurrentDirectory(), _parametrosConexao.NomeBanco??"");
                     if (!File.Exists(caminho))
                         sqlPesquisa.AppendLine($"");
                     else
@@ -137,33 +148,33 @@ namespace VendaFacil.Infra.Database
             using var conexao = ConnectionConfiguration.AbrirConexao(ObterParametrosConexao(true));
             return conexao.Query<string>(sqlPesquisa.ToString()).ToList().Count > 0;
         }
-        private static void Criar(ParametrosConexao parametrosConexao, string sqlCondicao)
+        private void Criar(string? sqlCondicao)
         {
-            using var conexao = ConnectionConfiguration.AbrirConexao(parametrosConexao);
+            using var conexao = ConnectionConfiguration.AbrirConexao(_parametrosConexao);
             conexao.Execute(sqlCondicao);
         }
-        private static bool ExisteDados<T>() where T : class
+        private bool ExisteDados<T>() where T : class
         {
-            using var conexao = ConnectionConfiguration.AbrirConexao(ObterParametrosConexao());
-            return conexao.QueryFirstOrDefault<int>($"SELECT COUNT(*) AS Total FROM {GeradorDapper.ObterNomeTabela<T>()};") > 0;
+            using var conexao = ConnectionConfiguration.AbrirConexao(_parametrosConexao);
+            return conexao.QueryFirstOrDefault<int>($"SELECT COUNT(*) AS Total FROM {_geradorDapper.ObterNomeTabela<T>()};") > 0;
         }
-        private static void CriaBaseDados()
+        private void CriaBaseDados()
         {
-            Criar(ObterParametrosConexao(), ObterProcedureDropConstraint(_parametrosConexao.NomeBanco));
-            Criar(ObterParametrosConexao(), GeradorDapper.CriaTabela<Usuario>(ObterParametrosConexao()));
-            Criar(ObterParametrosConexao(), GeradorDapper.CriaTabela<Empresa>(ObterParametrosConexao()));
+            Criar(ObterProcedureDropConstraint());
+            Criar(_geradorDapper.CriaTabela<Usuario>());
+            Criar(_geradorDapper.CriaTabela<Empresa>());
         }
-        private static void InsereDadosPadroes()
+        private void InsereDadosPadroes()
         {
             if (!ExisteDados<Usuario>())
-                Criar(ObterParametrosConexao(), GeradorDapper.InserirDadosPadroes<Usuario>());
+                Criar(_geradorDapper.RetornaInsert(ObterUsuarioPadrao()));
         }
-        private static bool ServidorAtivo()
+        private bool ServidorAtivo()
         {
             using var conexao = ConnectionConfiguration.AbrirConexao(ObterParametrosConexao(true));
             return conexao.State == ConnectionState.Open;
         }
-        private static void ExecutarScripts()
+        private void ExecutarScripts()
         {
             using var conexao = ConnectionConfiguration.AbrirConexao(_parametrosConexao);
 
@@ -184,16 +195,14 @@ namespace VendaFacil.Infra.Database
         #endregion
 
         #region Métodos Públicos
-        public static void GerenciarBanco()
+        public void GerenciarBanco()
         {
-            _parametrosConexao = ObterParametrosConexao();
-
             try
             {
                 if (ServidorAtivo())
                 {
                     if (!ExisteBanco())
-                        Criar(ObterParametrosConexao(true), ObterSqlCriarBanco());
+                        Criar(ObterSqlCriarBanco());
 
                     //Criar tabelas
                     CriaBaseDados();

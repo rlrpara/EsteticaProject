@@ -41,7 +41,7 @@ namespace VendaFacil.Infra.Data.Repositories
             try
             {
                 using var conn = ObterConexao();
-                return await conn.ExecuteAsync(_geradorDapper.RetornaInsert(entidade));
+                return await conn.ExecuteAsync(_geradorDapper.ObterInsert(entidade));
             }
             catch
             {

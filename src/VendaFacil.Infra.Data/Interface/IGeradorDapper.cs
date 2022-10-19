@@ -7,7 +7,7 @@ namespace VendaFacil.Infra.Data.Interface
         string? ObterChavePrimaria<T>() where T : class;
         string? ObterNomeTabela<T>() where T : class;
         string? RetornaCamposSelect<T>() where T : class;
-        string? RetornaInsert<T>(T entidade) where T : class;
+        string? ObterInsert<T>(T entidade) where T : class;
         string? RetornaUpdate<T>(int id, T entidade) where T : class;
         string? RetornaDelete<T>(int id) where T : class;
         string? CriaTabela<T>() where T : class;

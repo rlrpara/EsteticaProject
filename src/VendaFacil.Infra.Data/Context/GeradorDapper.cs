@@ -76,13 +76,12 @@ namespace VendaFacil.Infra.Data.Context
 
         #region Métodos Públicos
         public string? ObterChavePrimaria<T>() where T : class => ObterListaPropriedadesClasse<T>()
-            .Where(x => ObterAtributoNota(x) is not null)
-            .Where(x => ObterAtributoNota(x)?.ChavePrimaria??false || x.GetCustomAttributes().FirstOrDefault() is KeyAttribute)
+            .Where(x => ObterAtributoNota(x) is not null && (ObterAtributoNota(x).ChavePrimaria || x.GetCustomAttributes().FirstOrDefault() is KeyAttribute))
             .Select(x => x.GetCustomAttribute<ColumnAttribute>()?.Name ?? "")
             .FirstOrDefault();
         public string? ObterNomeTabela<T>() where T : class
         {
-            dynamic nomeTabela = (dynamic)typeof(T).GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().Name is TableAttribute);
+            dynamic nomeTabela = typeof(T).GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().Name == "TableAttribute");
 
             return nomeTabela?.Name;
         }
@@ -91,7 +90,7 @@ namespace VendaFacil.Infra.Data.Context
                 .Where(x => ObterAtributoNota(x)?.UsarParaBuscar ?? false && ObterAtributoNota(x) is not null)
                 .Select(x => $"{x.GetCustomAttribute<ColumnAttribute>()?.Name?.Trim()??""} AS {x.Name}")
                 .ToList())?.Trim();
-        public string? RetornaInsert<T>(T entidade) where T : class
+        public string? ObterInsert<T>(T entidade) where T : class
         {
             List<string> campos = new();
             List<string> valores = new();

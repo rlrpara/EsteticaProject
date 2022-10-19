@@ -5,9 +5,15 @@ namespace VendaFacil.Domain.Entities.Base
     [Table(name: "EMPRESA")]
     public class Empresa : EntityBase
     {
+        private string? _nome;
+
         [Nota()]
         [Column(name: "NOME", Order = 2)]
-        public string Nome { get; set; }
+        public string? Nome
+        {
+            get { return _nome; }
+            set { _nome = value.RemoverAcentos(); }
+        }
 
         [Nota(Tamanho = 11)]
         [Column(name: "CPF_CNPJ", Order = 3)]
@@ -31,6 +37,6 @@ namespace VendaFacil.Domain.Entities.Base
 
         [Nota()]
         [Column(name: "DATA_PAGAMENTO", Order = 7)]
-        public DateTime DataPagamento { get; set; }
+        public int DataPagamento { get; set; }
     }
 }

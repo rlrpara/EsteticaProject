@@ -14,6 +14,7 @@ namespace VendaFacil.Infra.Database
         #region [Propriedades Privadas]
         private ParametrosConexao _parametrosConexao;
         private readonly IGeradorDapper _geradorDapper;
+        private string? _errorMessage;
         #endregion
 
         #region [Construtor]
@@ -21,6 +22,7 @@ namespace VendaFacil.Infra.Database
         {
             _parametrosConexao = ObterParametrosConexao();
             _geradorDapper = new GeradorDapper(_parametrosConexao);
+            _errorMessage = null;
         }
         #endregion
 
@@ -171,8 +173,17 @@ namespace VendaFacil.Infra.Database
         }
         private bool ServidorAtivo()
         {
-            using var conexao = ConnectionConfiguration.AbrirConexao(ObterParametrosConexao(true));
-            return conexao.State == ConnectionState.Open;
+            try
+            {
+                _errorMessage = null;
+                using var conexao = ConnectionConfiguration.AbrirConexao(ObterParametrosConexao(true));
+                return conexao.State.Equals(ConnectionState.Open);
+            }
+            catch(Exception ex)
+            {
+                _errorMessage = ex.Message;
+                return false;
+            }
         }
         private void ExecutarScripts()
         {
@@ -192,6 +203,7 @@ namespace VendaFacil.Infra.Database
                 }
             }
         }
+
         #endregion
 
         #region Métodos Públicos
@@ -204,16 +216,14 @@ namespace VendaFacil.Infra.Database
                     if (!ExisteBanco())
                         Criar(ObterSqlCriarBanco());
 
-                    //Criar tabelas
                     CriaBaseDados();
 
-                    //Adicionar registros base
                     InsereDadosPadroes();
+
+                    ExecutarScripts();
                 }
                 else
-                {
-                    throw new Exception("Base de dados Offline.");
-                }
+                    throw new Exception($"Base de dados Offline/Erro. Erro: {_errorMessage}");
             }
             catch (Exception ex)
             {

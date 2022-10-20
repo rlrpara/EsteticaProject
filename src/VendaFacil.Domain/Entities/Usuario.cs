@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using VendaFacil.Domain.Entities.Base;
 
-namespace VendaFacil.Domain.Entities.Base
+namespace VendaFacil.Domain.Entities
 {
     [Table(name: "USUARIO")]
     public class Usuario : EntityBase

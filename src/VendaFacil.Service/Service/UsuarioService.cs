@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using VendaFacil.Domain.Entities.Base;
+using VendaFacil.Domain.Entities;
 using VendaFacil.Domain.Entities.Filtros;
 using VendaFacil.Domain.Interface;
 using VendaFacil.Infra.Data.Repositories;

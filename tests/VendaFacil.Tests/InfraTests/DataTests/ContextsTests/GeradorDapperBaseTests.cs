@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using VendaFacil.Domain.Entities.Base;
+using VendaFacil.Domain.Entities;
 
 namespace VendaFacil.Tests.InfraTests.DataTests.ContextsTests
 {

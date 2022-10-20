@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using System.Data;
 using System.Text;
-using VendaFacil.Domain.Entities.Base;
+using VendaFacil.Domain.Entities;
 using VendaFacil.Infra.Data.Context;
 using VendaFacil.Infra.Data.Enumerables;
 using VendaFacil.Infra.Data.Interface;
@@ -147,12 +147,12 @@ namespace VendaFacil.Infra.Database
                     break;
             }
 
-            using var conexao = ConnectionConfiguration.AbrirConexao(ObterParametrosConexao(true));
+            using var conexao = ConnectionConfiguration.AbrirConexao(ObterParametrosConexao(RemoverNomeBanco: true));
             return conexao.Query<string>(sqlPesquisa.ToString()).ToList().Count > 0;
         }
-        private void Criar(string? sqlCondicao)
+        private void Criar(string? sqlCondicao, bool removerNomeBanco = false)
         {
-            using var conexao = ConnectionConfiguration.AbrirConexao(_parametrosConexao);
+            using var conexao = ConnectionConfiguration.AbrirConexao(ObterParametrosConexao(removerNomeBanco));
             conexao.Execute(sqlCondicao);
         }
         private bool ExisteDados<T>() where T : class
@@ -163,8 +163,10 @@ namespace VendaFacil.Infra.Database
         private void CriaBaseDados()
         {
             Criar(ObterProcedureDropConstraint());
-            Criar(_geradorDapper.CriaTabela<Usuario>());
-            Criar(_geradorDapper.CriaTabela<Empresa>());
+            Criar(_geradorDapper.CriaTabela<Usuario>(), false);
+            Criar(_geradorDapper.CriaTabela<Empresa>(), false);
+            Criar(_geradorDapper.CriaTabela<ProdutoServicoCategoria>(), false);
+            Criar(_geradorDapper.CriaTabela<ProdutoServico>(), false);
         }
         private void InsereDadosPadroes()
         {
@@ -189,16 +191,21 @@ namespace VendaFacil.Infra.Database
         {
             using var conexao = ConnectionConfiguration.AbrirConexao(_parametrosConexao);
 
-            foreach (var script in Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "scripts"), "*.sql"))
+            var diretorio = Path.Combine(Directory.GetCurrentDirectory(), "scripts");
+
+            if (Directory.Exists(diretorio))
             {
-                foreach (var item in new StreamReader(script).ReadToEnd().Split("GO"))
+                foreach (var script in Directory.GetFiles(diretorio, "*.sql"))
                 {
-                    if (!string.IsNullOrWhiteSpace(item))
+                    foreach (var item in new StreamReader(script).ReadToEnd().Split("GO"))
                     {
-                        var linha = item.Split("|");
-                        if (linha.Length > 0)
-                            if (!conexao.QueryFirstOrDefault<bool>(linha[0]))
-                                conexao.Query<string>(linha[1]);
+                        if (!string.IsNullOrWhiteSpace(item))
+                        {
+                            var linha = item.Split("|");
+                            if (linha.Length > 0)
+                                if (!conexao.QueryFirstOrDefault<bool>(linha[0]))
+                                    conexao.Query<string>(linha[1]);
+                        }
                     }
                 }
             }
@@ -214,7 +221,7 @@ namespace VendaFacil.Infra.Database
                 if (ServidorAtivo())
                 {
                     if (!ExisteBanco())
-                        Criar(ObterSqlCriarBanco());
+                        Criar(ObterSqlCriarBanco(), true);
 
                     CriaBaseDados();
 

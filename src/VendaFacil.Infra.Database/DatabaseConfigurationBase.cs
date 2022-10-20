@@ -1,4 +1,4 @@
-﻿using VendaFacil.Domain.Entities.Base;
+﻿using VendaFacil.Domain.Entities;
 
 namespace VendaFacil.Infra.Database
 {

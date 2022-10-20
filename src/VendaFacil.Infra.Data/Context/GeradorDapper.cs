@@ -98,7 +98,7 @@ namespace VendaFacil.Infra.Data.Context
         }
         private string ObterValorInsert<T>(T entidade) where T : class
             => string.Join($", ", ObterListaPropriedadesClasse(entidade)
-                    .Where(x => ObterAtributoNota(x)?.UsarParaBuscar??false && !string.IsNullOrWhiteSpace(x.GetCustomAttribute<ColumnAttribute>().Name))
+                    .Where(x => ObterAtributoNota(x).UsarParaBuscar && !ObterAtributoNota(x).ChavePrimaria && x.GetCustomAttributes().FirstOrDefault() is not KeyAttribute)
                     .Select(x => $"{FormataValor(x, entidade)}")
                     .ToList());
         private string ObterColunasInsert<T>() where T : class

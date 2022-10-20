@@ -1,4 +1,4 @@
-﻿using VendaFacil.Domain.Entities.Base;
+﻿using VendaFacil.Domain.Entities;
 using VendaFacil.Infra.Data.Context;
 using VendaFacil.Infra.Data.Interface;
 

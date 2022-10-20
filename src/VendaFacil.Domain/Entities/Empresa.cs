@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using VendaFacil.CrossCutting.Util.ExtensionMethods;
+using VendaFacil.Domain.Entities.Base;
 
-namespace VendaFacil.Domain.Entities.Base
+namespace VendaFacil.Domain.Entities
 {
     [Table(name: "EMPRESA")]
     public class Empresa : EntityBase
@@ -40,7 +41,7 @@ namespace VendaFacil.Domain.Entities.Base
         [Nota(Tamanho = 50)]
         [Column(name: "EMAIL", Order = 5)]
         public string? Email
-    {
+        {
             get { return _email; }
             set { _email = value?.ToLower(); }
         }

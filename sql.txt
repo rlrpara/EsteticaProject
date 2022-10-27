@@ -12911,3 +12911,19 @@ namespace ConversorDados.Data.Context
         #endregion
     }
 }
+
+
+
+
+
+
+
+
+dotnet-sonarscanner.exe begin /k:"ConversorDadosPipeline" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="3ad78af2d2984fc9a8920887253be90532b91207" /d:sonar.cs.opencover.reportsPaths="ConversorDados.Tests\TestResults\**\*.coveragexml"
+
+dotnet test ConversorDados.Tests\ConversorDados.Tests.csproj /p:CollectCoverage=true /p:CoverletOutput="ConversorDados.Tests\TestResults\" /p:CoverletOutputFormat=opencover
+
+dotnet-coverageconverter --CoverageFilesFolder ConversorDados.Tests\TestResults
+
+
+dotnet-sonarscanner.exe end /d:sonar.login="3ad78af2d2984fc9a8920887253be90532b91207"

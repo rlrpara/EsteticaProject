@@ -12927,3 +12927,4 @@ dotnet-coverageconverter --CoverageFilesFolder ConversorDados.Tests\TestResults
 
 
 dotnet-sonarscanner.exe end /d:sonar.login="3ad78af2d2984fc9a8920887253be90532b91207"
+

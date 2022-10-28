@@ -27,34 +27,37 @@ namespace VendaFacil.Infra.Data.Context
             else
                 return entidade.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order);
         }
-        private string? TipoPropriedade(PropertyInfo item, Nota nota)
-            => item.PropertyType.Name.ToLower() switch
+        private string? TipoPropriedade(PropertyInfo item)
         {
-            "int32" => ObterParaInteiro(nota),
-            "int64" => "bigint DEFAULT NULL",
-            "double" => "decimal(18,2)",
-            "single" => "float",
-            "guid" => "integer DEFAULT NULL",
-            "datetime" => ObterParaData(),
-            "boolean" => ObtemParaBoleando(),
-            "nullable`1" => ObtemParaTipoNulo(item.PropertyType.FullName, nota),
-            _ => $"varchar({nota.Tamanho}) default null",
-        };
+            return item.PropertyType.Name switch
+            {
+                "Int32" => ObtemParaInteiro(),
+                "Int64" => "bigint DEFAULT NULL",
+                "Double" => "decimal(18,2)",
+                "Single" => "float",
+                "DateTime" => "date DEFAULT CURRENT_TIMESTAMP",
+                "Boolean" => ObtemParaBoleando(),
+                "Nullable`1" => ObtemParaTipoNulo(item.PropertyType.FullName),
+                _ => "varchar(255) NULL",
+            };
+        }
         private string? ObterParaData() => (ETipoBanco)_parametrosConexao.TipoBanco switch
         {
             ETipoBanco.Postgresql => "timestamp DEFAULT CURRENT_TIMESTAMP",
             _ => "datetime DEFAULT CURRENT_TIMESTAMP"
         };
-        private string? ObterParaInteiro(Nota nota) => (ETipoBanco)_parametrosConexao.TipoBanco switch
+        private string ObtemParaInteiro()
         {
-            ETipoBanco.SqlServer => "int(11) DEFAULT NULL",
-            ETipoBanco.MySql => "int(11) DEFAULT NULL",
-            ETipoBanco.Firebird => "int(11) DEFAULT NULL",
-            ETipoBanco.Postgresql => "integer DEFAULT NULL",
-            ETipoBanco.SqLite => "integer DEFAULT NULL",
-            ETipoBanco.SqlAnywhere => "int(11) DEFAULT NULL",
-            _ => "int(11) DEFAULT NULL",
-        };
+            return (ETipoBanco)_parametrosConexao.TipoBanco switch
+            {
+                ETipoBanco.SqlServer => "int(11) DEFAULT NULL",
+                ETipoBanco.MySql => "int(11) DEFAULT NULL",
+                ETipoBanco.Firebird => "int(11) DEFAULT NULL",
+                ETipoBanco.Postgresql => "int4 DEFAULT NULL",
+                ETipoBanco.SqLite => "INTEGER DEFAULT NULL",
+                _ => "int(11) DEFAULT NULL",
+            };
+        }
         private string? ObtemParaBoleando() => (ETipoBanco)_parametrosConexao.TipoBanco switch
         {
             ETipoBanco.SqlServer => "tinyint(1) NOT NULL DEFAULT 1",
@@ -65,18 +68,34 @@ namespace VendaFacil.Infra.Data.Context
             ETipoBanco.SqlAnywhere => "tinyint(1) NOT NULL DEFAULT 1",
             _ => "tinyint(1) NOT NULL DEFAULT 1",
         };
-        private string? ObtemParaTipoNulo(string? fullName, Nota nota)
+        private string ObtemParaTipoNulo(string fullName)
         {
-            if (fullName.ToLower().Contains("int32"))
-                return ObterParaInteiro(nota);
-            else if (fullName.ToLower().Contains("datetime"))
-                return ObterParaData();
-            else
+            if (fullName.Contains("Int32"))
+            {
                 return (ETipoBanco)_parametrosConexao.TipoBanco switch
                 {
-                    ETipoBanco.SqLite => "TEXT NULL",
-                    _ => $"varchar({nota.Tamanho}) NULL",
+                    ETipoBanco.SqlServer => "int DEFAULT NULL",
+                    ETipoBanco.MySql => "int DEFAULT NULL",
+                    ETipoBanco.Firebird => "int DEFAULT NULL",
+                    ETipoBanco.Postgresql => "int4 DEFAULT NULL",
+                    ETipoBanco.SqLite => "INTEGER DEFAULT NULL",
+                    _ => "int DEFAULT NULL",
                 };
+            }
+            else if (fullName.Contains("DateTime"))
+                return "date DEFAULT NULL";
+            else
+            {
+                return (ETipoBanco)_parametrosConexao.TipoBanco switch
+                {
+                    ETipoBanco.SqlServer => "varchar(255) NULL",
+                    ETipoBanco.MySql => "varchar(255) NULL",
+                    ETipoBanco.Firebird => "varchar(255) NULL",
+                    ETipoBanco.Postgresql => "varchar(255) NULL",
+                    ETipoBanco.SqLite => "TEXT NULL",
+                    _ => "varchar(255) NULL",
+                };
+            }
         }
         private string FormataValor<T>(PropertyInfo x, T entidade) where T : class
         {
@@ -108,6 +127,34 @@ namespace VendaFacil.Infra.Data.Context
                     .ToList());
         private string ObterUseNomeBanco()
             => _parametrosConexao.TipoBanco.Equals(ETipoBanco.MySql) ? $"USE {_parametrosConexao.NomeBanco};" : "";
+        private void ObterConstraintSql<T>(StringBuilder sqlConstraint, Nota opcoesBase, string nomeCampo) where T : class
+        {
+            string tabelaChaveEstrangeira = $"{opcoesBase.ChaveEstrangeira.ToLower()}";
+            string nomeChave = $"FK_{ObterNomeTabela<T>()}_{nomeCampo}".ToUpper();
+
+            switch ((ETipoBanco)_parametrosConexao.TipoBanco)
+            {
+                case ETipoBanco.MySql:
+                    sqlConstraint.AppendLine($"CALL PROC_DROP_FOREIGN_KEY('{ObterNomeTabela<T>()}', '{nomeChave}');");
+                    sqlConstraint.AppendLine($"ALTER TABLE {_parametrosConexao.NomeBanco}.{ObterNomeTabela<T>()}");
+                    sqlConstraint.AppendLine($"ADD CONSTRAINT {nomeChave} FOREIGN KEY ({nomeCampo})");
+                    sqlConstraint.AppendLine($"REFERENCES {_parametrosConexao.NomeBanco}.{tabelaChaveEstrangeira} (ID) ON DELETE NO ACTION ON UPDATE NO ACTION;{Environment.NewLine}");
+                    break;
+                case ETipoBanco.SqlServer:
+                    break;
+                case ETipoBanco.Firebird:
+                    break;
+                case ETipoBanco.Postgresql:
+                    sqlConstraint.AppendLine($"ALTER TABLE {ObterNomeTabela<T>()} DROP CONSTRAINT IF EXISTS {nomeChave};");
+                    sqlConstraint.AppendLine($"ALTER TABLE {ObterNomeTabela<T>()} ADD CONSTRAINT {nomeChave} FOREIGN KEY ({nomeCampo})");
+                    sqlConstraint.AppendLine($"REFERENCES {tabelaChaveEstrangeira} (ID);{Environment.NewLine}");
+                    break;
+                case ETipoBanco.SqLite:
+                    break;
+                default:
+                    break;
+            }
+        }
         #endregion
 
         #region Métodos Públicos
@@ -151,68 +198,23 @@ namespace VendaFacil.Infra.Data.Context
         }
         public string? CriaTabela<T>() where T : class
         {
-            string chavePrimaria = string.Empty;
             List<string> campos = new();
             StringBuilder sqlConstraint = new();
             StringBuilder sqlIndice = new();
 
-            foreach (PropertyInfo item in typeof(T).GetProperties(BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public))
+            foreach (PropertyInfo item in ObterListaPropriedadesClasse<T>())
             {
-                var nota = ObterAtributoNota(item);
+                var opcoesBase = ObterAtributoNota(item);
 
-                if (nota is not null && nota.UsarParaBuscar)
+                if (opcoesBase is not null && opcoesBase.UsarNoBancoDeDados)
                 {
-                    var nomeCampo = item.GetCustomAttribute<ColumnAttribute>()?.Name;
+                    var nomeCampo = item.GetCustomAttribute<ColumnAttribute>().Name;
 
-                    if (nota.UsarNoBancoDeDados)
-                    {
-                        if (nota.ChavePrimaria || item.GetCustomAttributes().FirstOrDefault() is KeyAttribute)
-                            chavePrimaria = $"{nomeCampo}";
+                    if (!string.IsNullOrWhiteSpace(nomeCampo) && !ObterAtributoNota(item).ChavePrimaria && item.GetCustomAttributes().FirstOrDefault() is not KeyAttribute)
+                        campos.Add($"{nomeCampo} {TipoPropriedade(item)}");
 
-                        else if (nomeCampo != "")
-                            campos.Add($"{nomeCampo} {TipoPropriedade(item, nota)}");
-                    }
-
-                    if (!string.IsNullOrEmpty(nota.ChaveEstrangeira))
-                    {
-                        string tabelaChaveEstrangeira = $"{nota.ChaveEstrangeira.ToLower()}";
-                        string campoChaveEstrangeira = $"{nomeCampo}";
-                        string nomeChave = $"FK_{ObterNomeTabela<T>()}_{campoChaveEstrangeira}".ToUpper();
-                        switch ((ETipoBanco)_parametrosConexao.TipoBanco)
-                        {
-                            case ETipoBanco.MySql:
-                                sqlConstraint.AppendLine($"CALL PROC_DROP_FOREIGN_KEY('{ObterNomeTabela<T>()}', '{nomeChave}');");
-                                sqlConstraint.AppendLine($"ALTER TABLE {_parametrosConexao.NomeBanco}.{ObterNomeTabela<T>()}");
-                                sqlConstraint.AppendLine($"ADD CONSTRAINT {nomeChave} FOREIGN KEY ({campoChaveEstrangeira})");
-                                sqlConstraint.AppendLine($"REFERENCES {_parametrosConexao.NomeBanco}.{tabelaChaveEstrangeira} (ID) ON DELETE NO ACTION ON UPDATE NO ACTION;{Environment.NewLine}");
-                                break;
-
-                            case ETipoBanco.SqlServer:
-                                sqlConstraint.AppendLine($"");
-                                break;
-
-                            case ETipoBanco.Firebird:
-                                sqlConstraint.AppendLine($"");
-                                break;
-
-                            case ETipoBanco.Postgresql:
-                                sqlConstraint.AppendLine($"ALTER TABLE {ObterNomeTabela<T>()}");
-                                sqlConstraint.AppendLine($"ADD CONSTRAINT {nomeChave} FOREIGN KEY ({campoChaveEstrangeira})");
-                                sqlConstraint.AppendLine($"REFERENCES {_parametrosConexao.NomeBanco}.{tabelaChaveEstrangeira} (ID) ON DELETE NO ACTION ON UPDATE NO ACTION;{Environment.NewLine}");
-                                break;
-
-                            case ETipoBanco.SqLite:
-                                sqlConstraint.AppendLine($"");
-                                break;
-
-                            default:
-                                sqlConstraint.AppendLine($"");
-                                break;
-                        }
-                    }
-
-                    if (nota.Indice)
-                        sqlIndice.AppendLine($"CREATE INDEX IF NOT EXISTS {ObterNomeTabela<T>().ToLower()}_{nomeCampo.ToLower()}_idx ON {ObterNomeTabela<T>()} ({nomeCampo.ToLower()});");
+                    if (!string.IsNullOrEmpty(opcoesBase.ChaveEstrangeira))
+                        ObterConstraintSql<T>(sqlConstraint, opcoesBase, nomeCampo);
                 }
             }
 
@@ -255,10 +257,12 @@ namespace VendaFacil.Infra.Data.Context
 
                 case ETipoBanco.Postgresql:
                     sqlPesquisa.AppendLine($"CREATE TABLE IF NOT EXISTS {ObterNomeTabela<T>()} (");
-                    sqlPesquisa.AppendLine($"  {ObterChavePrimaria<T>()} int NOT NULL GENERATED ALWAYS AS IDENTITY,");
+                    sqlPesquisa.AppendLine($"  {ObterChavePrimaria<T>()} int4 NOT NULL GENERATED ALWAYS AS IDENTITY,");
                     sqlPesquisa.AppendLine($"  {string.Join($",{Environment.NewLine}   ", campos.ToArray())},");
                     sqlPesquisa.AppendLine($"  PRIMARY KEY ({ObterChavePrimaria<T>()})");
                     sqlPesquisa.AppendLine($");");
+                    if (!string.IsNullOrEmpty(sqlConstraint.ToString()))
+                        sqlPesquisa.AppendLine(sqlConstraint.ToString());
                     sqlPesquisa.AppendLine(sqlIndice.ToString());
                     break;
 

@@ -11,7 +11,7 @@ namespace VendaFacil.Domain.Entities
         private int _numeroSessoes;
 
 
-        [Nota(ChaveEstrangeira = "PRODUTO_SERVICO_CATEGORIA")]
+        [Nota(ChaveEstrangeira = "PRODUTO_SERVICO_CATEGORIA", Indice = true)]
         [Column(name: "ID_CATEGORIA", Order = 2)]
         public int CodigoCategoria { get; set; }
 

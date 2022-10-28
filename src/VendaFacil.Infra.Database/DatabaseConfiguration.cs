@@ -167,6 +167,8 @@ namespace VendaFacil.Infra.Database
             Criar(_geradorDapper.CriaTabela<Empresa>(), false);
             Criar(_geradorDapper.CriaTabela<ProdutoServicoCategoria>(), false);
             Criar(_geradorDapper.CriaTabela<ProdutoServico>(), false);
+            Criar(_geradorDapper.CriaTabela<Tipo>(), false);
+            Criar(_geradorDapper.CriaTabela<Categoria>(), false);
         }
         private void InsereDadosPadroes()
         {

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using VendaFacil.CrossCutting.Util.ExtensionMethods;
 using VendaFacil.Domain.Entities.Base;
 
 namespace VendaFacil.Domain.Entities
@@ -6,49 +7,67 @@ namespace VendaFacil.Domain.Entities
     [Table(name: "USUARIO")]
     public class Usuario : EntityBase
     {
-        [Nota()]
-        [Column(name: "NOME", Order = 2)]
-        public string? Nome { get; set; }
+        #region [Propriedades Privadas]
+        private string? _nome;
+        private string? _email;
+        private string? _senha;
+        #endregion
 
-        [Nota(Tamanho = 50)]
+
+        [Nota(Indice = true)]
+        [Column(name: "NOME", Order = 2)]
+        public string? Nome
+        {
+            get { return _nome; }
+            set { _nome = value.RemoverAcentos(); }
+        }
+
+        [Nota(Tamanho = 50, Indice = true)]
         [Column(name: "EMAIL", Order = 3)]
-        public string? Email { get; set; }
+        public string? Email
+        {
+            get { return _email; }
+            set { _email = value?.ToLower(); }
+        }
 
         [Nota(Tamanho = 20)]
         [Column(name: "SENHA", Order = 4)]
-        public string? Senha { get; set; }
-
-        [Nota(Tamanho = 100)]
-        [Column(name: "SENHA_CRIPTOGRAFADA", Order = 5)]
-        public string? SenhaCriptografada { get; set; }
+        public string? Senha
+        {
+            get { return _senha; }
+            set { _senha = value; }
+        }
 
         [Nota(Tamanho = 20)]
-        [Column(name: "TELEFONE", Order = 6)]
+        [Column(name: "TELEFONE", Order = 5)]
         public string? Telefone { get; set; }
 
         [Nota(Tamanho = 20)]
-        [Column(name: "CELULAR", Order = 7)]
+        [Column(name: "CELULAR", Order = 6)]
         public string? Celular { get; set; }
 
-        [Nota(Tamanho = 11)]
-        [Column(name: "CPF", Order = 8)]
+        [Nota(Tamanho = 11, Indice = true)]
+        [Column(name: "CPF", Order = 7)]
         public string? Cpf { get; set; }
 
         [Nota()]
-        [Column(name: "ENDERECO", Order = 9)]
+        [Column(name: "ENDERECO", Order = 8)]
         public string? Endereco { get; set; }
 
         [Nota()]
-        [Column(name: "FOTO", Order = 10)]
+        [Column(name: "FOTO", Order = 9)]
         public string? Foto { get; set; }
 
-        [Nota(Indice = true)]
-        [Column(name: "ID_EMPRESA", Order = 11)]
+        [Nota(ChaveEstrangeira = "EMPRESA", Indice = true)]
+        [Column(name: "ID_EMPRESA", Order = 10)]
         public int? CodigoEmpresa { get; set; }
 
         [Nota(Indice = true)]
-        [Column(name: "ID_NIVEL", Order = 12)]
+        [Column(name: "ID_NIVEL", Order = 11)]
         public int? Nivel { get; set; }
 
+        [Nota(Indice = true)]
+        [Column(name: "PROFISSAO", Order = 11)]
+        public string Profissao { get; set; }
     }
 }

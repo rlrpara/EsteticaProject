@@ -1,36 +1,47 @@
+using System.Text.Json.Serialization;
 using VendaFacil.Api;
 using VendaFacil.CrossCutting.Ioc;
 using VendaFacil.Infra.Database;
 using VendaFacil.Service.AutoMapper;
 using VendaFacil.Service.Middleware;
 
+DotEnvLoad.Load();
+
+#region [Propriedades Privadas]
+string pastaFront = Environment.GetEnvironmentVariable("PASTA_FRONT") ?? "";
+string urlFront = Environment.GetEnvironmentVariable("URL_FRONT") ?? "";
+#endregion
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
+builder.Services.AddCors();
+builder.Services.AddSpaStaticFiles(x => { x.RootPath = pastaFront; });
+builder.Services.AddControllers()
+    .AddJsonOptions(x => { x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull; })
+    .AddNewtonsoftJson(x => { x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(AutoMapperSetup));
 
-DotEnvLoad.Load();
 new DatabaseConfiguration().GerenciarBanco();
-
 NativeInjector.RegisterServices(builder.Services);
 
 var app = builder.Build();
 app.MapControllers();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyMethod());
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
+app.UseStaticFiles();
+app.UseSpaStaticFiles();
 app.UseMiddleware(typeof(ErrorMiddleware));
-
 app.MapControllers();
-
+app.UseSpa(x =>
+{
+    x.Options.SourcePath = Path.Combine(Directory.GetCurrentDirectory(), pastaFront);
+    x.UseProxyToSpaDevelopmentServer(urlFront);
+});
 app.Run();

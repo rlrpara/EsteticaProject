@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+using VendaFacil.CrossCutting.Util.Criptografia;
 
 namespace VendaFacil.CrossCutting.Util.ExtensionMethods
 {
@@ -33,10 +35,6 @@ namespace VendaFacil.CrossCutting.Util.ExtensionMethods
                     texto = texto.Replace(caracteresEspeciais[i], "");
             }
 
-            /** Troca os caracteres especiais da string por " " **/
-            //if (!string.IsNullOrWhiteSpace(texto))
-            //    texto = Regex.Replace(texto, @"[^\w\.@-]", " ", RegexOptions.None, TimeSpan.FromSeconds(1.5));
-
             return texto?.Trim().ToUpper() ?? "";
         }
         public static string ApenasTexto(this string? valor) => (valor == null) ? "" : new Regex(@"[^a-zA-Z]").Replace(valor, "").ToString();
@@ -70,6 +68,12 @@ namespace VendaFacil.CrossCutting.Util.ExtensionMethods
             else
                 resto = 11 - resto;
             return numeroPis.EndsWith(resto.ToString());
+        }
+        public static string AplicarCriptografia(this string valor)
+        {
+            if (!string.IsNullOrWhiteSpace(valor))
+                return new CriptoHash(SHA512.Create()).CriptografarSenha(valor);
+            return valor;
         }
     }
 }

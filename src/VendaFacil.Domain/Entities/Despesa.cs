@@ -72,6 +72,5 @@ namespace VendaFacil.Domain.Entities
 			get { return _codigoUsuario; }
 			set { _codigoUsuario = value; }
 		}
-
 	}
 }

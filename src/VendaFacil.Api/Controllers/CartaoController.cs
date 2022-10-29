@@ -4,22 +4,22 @@ using VendaFacil.Api.Model;
 using VendaFacil.Infra.Data.Repositories;
 using VendaFacil.Service.Interface;
 using VendaFacil.Service.Service;
-using VendaFacil.Service.ViewModel.Entities;
 using VendaFacil.Service.ViewModel.Entities.Filtros;
+using VendaFacil.Service.ViewModel.Entities;
 
 namespace VendaFacil.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmpresasController : ControllerBase
+    public class CartaoController : ControllerBase
     {
         #region [Propriedades Privadas]
         private readonly IMapper _mapper;
-        private readonly IEmpresaService _service;
+        private readonly ICartaoService _service;
         #endregion
 
         #region [Métodos Privados]
-        private int ObterTotalPaginas(filtroEmpresaViewModel filtro)
+        private int ObterTotalPaginas(filtroCartaoViewModel filtro)
         {
             var total = _service.ObterTotalRegistros(filtro) / filtro.QuantidadePorPagina;
             if ((_service.ObterTotalRegistros(filtro) % filtro.QuantidadePorPagina) > 0)
@@ -29,30 +29,30 @@ namespace VendaFacil.Api.Controllers
         #endregion
 
         #region [Contrutor]
-        public EmpresasController(IMapper mapper)
+        public CartaoController(IMapper mapper)
         {
             _mapper = mapper;
-            _service = new EmpresaService(new BaseRepository(), _mapper);
+            _service = new CartaoService(new BaseRepository(), _mapper);
         }
         #endregion
 
         #region [Propriedades Públicas]
         [HttpPost("ObterTodos")]
-        public IActionResult PostObterTodos([FromBody] filtroEmpresaViewModel filtro)
+        public IActionResult PostObterTodos([FromBody] filtroCartaoViewModel filtro)
         {
-            var dadosRetorno = _service.ObterTodos(filtro).ToList();
+            List<CartaoViewModel> dadosRetorno = _service.ObterTodos(filtro).ToList();
 
             if (dadosRetorno is null)
                 return Ok(new { Resultado = "Registro não encontrado." });
 
-            var resultado = new ApiResult<EmpresaViewModel>();
+            var resultado = new ApiResult<CartaoViewModel>();
             resultado.AddPaginacao(filtro.PaginaAtual, filtro.QuantidadePorPagina, ObterTotalPaginas(filtro), _service.ObterTotalRegistros(filtro), dadosRetorno);
 
             return Ok(resultado);
         }
 
         [HttpPost("Inserir")]
-        public IActionResult PostInserir([FromBody] EmpresaViewModel model)
+        public IActionResult PostInserir([FromBody] CartaoViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace VendaFacil.Api.Controllers
         }
 
         [HttpPut("Atualizar")]
-        public IActionResult PutAtualizar([FromBody] EmpresaViewModel model)
+        public IActionResult PutAtualizar([FromBody] CartaoViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -100,7 +100,5 @@ namespace VendaFacil.Api.Controllers
             else
                 return BadRequest(new { Resultado = "Registro não encontrado" });
         }
-
-        #endregion
     }
 }

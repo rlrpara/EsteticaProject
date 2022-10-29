@@ -80,6 +80,7 @@ namespace VendaFacil.Infra.Data.Repositories
             sqlPesquisa.AppendLine($"     LIMIT QtdPorPagina");
             sqlPesquisa.AppendLine($"    OFFSET (Pagina - 1) * QtdPorPagina;");
             sqlPesquisa.AppendLine($"END $$;");
+            sqlPesquisa.AppendLine($"");
             sqlPesquisa.AppendLine($"SELECT * FROM tmp_table;");
 
             return await _baseRepository.BuscarTodosPorQueryAsync<Usuario>(sqlPesquisa.ToString().Trim());

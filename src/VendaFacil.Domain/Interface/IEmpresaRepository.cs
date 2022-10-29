@@ -5,7 +5,7 @@ namespace VendaFacil.Domain.Interface
 {
     public interface IEmpresaRepository : IBaseRepository
     {
-        Task<int> ObterPorCodigo(int codigo);
+        Task<Empresa> ObterPorCodigo(int codigo);
         Task<int> TotalRegistros(filtroEmpresa filtro);
         Task<IEnumerable<Empresa>> ObterTodos(filtroEmpresa filtro);
         Task<bool> ObterEntidade(Empresa empresa);

@@ -8,10 +8,10 @@
         public string? Telefone { get; set; }
         public string? Email { get; set; }
         public string? Endereco { get; set; }
-        public double ValorMensal { get; set; }
+        public double? ValorMensal { get; set; }
         public DateTime? DataPagamento { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime DataAtualizacao { get; set; }
-        public bool Ativo { get; set; }
+        public bool? Ativo { get; set; }
     }
 }

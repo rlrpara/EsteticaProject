@@ -1,5 +1,5 @@
 ﻿using VendaFacil.Domain.Interface;
-using VendaFacil.Infra.Data.Context;
+using VendaFacil.Domain.ValueObject;
 using VendaFacil.Service.Interface;
 
 namespace VendaFacil.Service.Service

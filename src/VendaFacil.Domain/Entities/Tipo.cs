@@ -19,7 +19,5 @@ namespace VendaFacil.Domain.Entities
             get { return _nome; }
             set { _nome = value.RemoverAcentos(); }
         }
-
-
     }
 }

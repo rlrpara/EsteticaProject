@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using Npgsql;
 using System.Data;
 using System.Data.SqlClient;
+using VendaFacil.Domain.ValueObject;
 using VendaFacil.Infra.Data.Enumerables;
 using VendaFacil.Infra.Data.Interface;
 

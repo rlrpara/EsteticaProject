@@ -1,4 +1,4 @@
-﻿namespace VendaFacil.Infra.Data.Context
+﻿namespace VendaFacil.Domain.ValueObject
 {
     public class ParametrosConexao
     {

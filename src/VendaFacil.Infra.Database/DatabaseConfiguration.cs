@@ -2,6 +2,7 @@
 using System.Data;
 using System.Text;
 using VendaFacil.Domain.Entities;
+using VendaFacil.Domain.ValueObject;
 using VendaFacil.Infra.Data.Context;
 using VendaFacil.Infra.Data.Enumerables;
 using VendaFacil.Infra.Data.Interface;

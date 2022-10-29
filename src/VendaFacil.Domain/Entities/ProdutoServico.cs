@@ -7,7 +7,7 @@ namespace VendaFacil.Domain.Entities
     [Table(name: "PRODUTO_SERVICO")]
     public class ProdutoServico : EntityBase
     {
-        private string _descricao;
+        private string? _descricao;
         private int _numeroSessoes;
 
 
@@ -17,7 +17,7 @@ namespace VendaFacil.Domain.Entities
 
         [Nota()]
         [Column(name: "DESCRICAO", Order = 3)]
-        public string Descricao
+        public string? Descricao
         {
             get { return _descricao; }
             set { _descricao = value.RemoverAcentos(); }
@@ -30,7 +30,6 @@ namespace VendaFacil.Domain.Entities
             get { return _numeroSessoes; }
             set { _numeroSessoes = value; }
         }
-
 
         [Nota()]
         [Column(name: "VALOR_UNITARIO", Order = 5)]

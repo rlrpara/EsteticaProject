@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text;
 using VendaFacil.Domain.Entities.Base;
+using VendaFacil.Domain.ValueObject;
 using VendaFacil.Infra.Data.Enumerables;
 using VendaFacil.Infra.Data.Interface;
 

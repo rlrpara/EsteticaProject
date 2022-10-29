@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using VendaFacil.Domain.ValueObject;
 
 namespace VendaFacil.Infra.Data.Context
 {

@@ -17,7 +17,6 @@ namespace VendaFacil.Infra.Data.Repositories
             var sqlPesquisa = new StringBuilder();
 
             sqlPesquisa.AppendLine($" WHERE email ILIKE '%{filtro.Nome}%'");
-            sqlPesquisa.AppendLine($"   AND nome ilike '%{filtro.Nome}%'");
 
             return sqlPesquisa.ToString();
         }
@@ -28,35 +27,51 @@ namespace VendaFacil.Infra.Data.Repositories
         #endregion
 
         #region [Métodos Públicos]
-        public Task<int> Atualizar(Categoria model)
+        public async Task<int> ObterTotalRegistros(filtroCategoria filtro)
         {
-            throw new NotImplementedException();
-        }
+            var sqlPesquisa = new StringBuilder();
 
-        public Task<int> Inserir(Categoria model)
-        {
-            throw new NotImplementedException();
-        }
+            sqlPesquisa.AppendLine($"SELECT COUNT(ID) as Total");
+            sqlPesquisa.AppendLine($"  FROM categoria");
+            sqlPesquisa.AppendLine(ObterFiltros(filtro));
 
-        public Task<int> ObterEntidade(Categoria model)
-        {
-            throw new NotImplementedException();
+            return await _baseRepository.BuscarPorQueryAsync<int>(sqlPesquisa.ToString());
         }
+        public async Task<Categoria> ObterPorCodigo(int codigo) => await _baseRepository.BuscarPorIdAsync<Categoria>(codigo);
+        public async Task<IEnumerable<Categoria>> ObterTodos(filtroCategoria filtro)
+        {
+            var sqlPesquisa = new StringBuilder();
 
-        public Task<Categoria> ObterPorCodigo(int codigo)
-        {
-            throw new NotImplementedException();
-        }
+            sqlPesquisa.AppendLine($"DO $$");
+            sqlPesquisa.AppendLine($"DECLARE QtdPorPagina INTEGER;");
+            sqlPesquisa.AppendLine($"        Pagina       INTEGER;");
+            sqlPesquisa.AppendLine($"BEGIN");
+            sqlPesquisa.AppendLine($"    SELECT {filtro.QuantidadePorPagina} INTO QtdPorPagina;");
+            sqlPesquisa.AppendLine($"    SELECT {filtro.PaginaAtual} INTO Pagina;");
+            sqlPesquisa.AppendLine($"");
+            sqlPesquisa.AppendLine($"    DROP TABLE IF EXISTS TMP_TABLE;");
+            sqlPesquisa.AppendLine($"    CREATE TEMP TABLE tmp_table AS");
+            sqlPesquisa.AppendLine($"    SELECT id as Codigo,");
+            sqlPesquisa.AppendLine($"           nome as Nome,");
+            sqlPesquisa.AppendLine($"           icone as Icone,");
+            sqlPesquisa.AppendLine($"           id_tipo as CodigoTipo,");
+            sqlPesquisa.AppendLine($"           data_cadastro as DataCadastro,");
+            sqlPesquisa.AppendLine($"           data_atualizacao as DataAtualizacao,");
+            sqlPesquisa.AppendLine($"           ativo as Ativo");
+            sqlPesquisa.AppendLine($"      FROM categoria");
+            sqlPesquisa.AppendLine(ObterFiltros(filtro));
+            sqlPesquisa.AppendLine($"     LIMIT QtdPorPagina");
+            sqlPesquisa.AppendLine($"    OFFSET (Pagina - 1) * QtdPorPagina;");
+            sqlPesquisa.AppendLine($"END $$;");
+            sqlPesquisa.AppendLine($"");
+            sqlPesquisa.AppendLine($"SELECT * FROM tmp_table;");
 
-        public Task<IEnumerable<Categoria>> ObterTodos(filtroCategoria filtro)
-        {
-            throw new NotImplementedException();
+            return await _baseRepository.BuscarTodosPorQueryAsync<Categoria>(sqlPesquisa.ToString().Trim());
         }
-
-        public Task<int> ObterTotalRegistros(filtroCategoria filtro)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<bool> Atualizar(Categoria model) => await _baseRepository.AtualizarAsync(model.Codigo, model) > 0;
+        public async Task<bool> Inserir(Categoria model) => await _baseRepository.AdicionarAsync(model) > 0;
+        public async Task<bool> ObterEntidade(Categoria model) => await _baseRepository.BuscarPorQueryGeradorAsync<Categoria>(" nome = '{model.Nome}'") is not null;
+        
         #endregion
     }
 }

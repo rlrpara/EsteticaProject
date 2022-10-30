@@ -26,7 +26,7 @@ namespace VendaFacil.Service.Service
         #endregion
 
         #region [Métodos Públivos]
-        public int Atualizar(CategoriaViewModel model)
+        public bool Atualizar(CategoriaViewModel model)
         {
             model.Ativo ??= ObterPorCodigo(model.Codigo).Ativo;
             return _service.Atualizar(_mapper.Map<Categoria>(model)).Result;
@@ -36,7 +36,7 @@ namespace VendaFacil.Service.Service
             model.Ativo = false;
             return _service.Atualizar(_mapper.Map<Categoria>(model)).Result;
         }
-        public int Inserir(CategoriaViewModel model) => _service.Inserir(_mapper.Map<Categoria>(model)).Result;
+        public bool Inserir(CategoriaViewModel model) => _service.Inserir(_mapper.Map<Categoria>(model)).Result;
         public bool ObterEntidade(CategoriaViewModel model) => _service.ObterEntidade(_mapper.Map<Categoria>(model)).Result;
         public CategoriaViewModel ObterPorCodigo(int codigo) => _mapper.Map<CategoriaViewModel>(_service.ObterPorCodigo(_mapper.Map<int>(codigo)).Result);
         public IEnumerable<CategoriaViewModel> ObterTodos(filtroCategoriaViewModel filtro) => _mapper.Map<IEnumerable<CategoriaViewModel>>(_service.ObterTodos(_mapper.Map<filtroCategoria>(filtro)).Result);

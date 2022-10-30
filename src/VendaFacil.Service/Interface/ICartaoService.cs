@@ -5,9 +5,9 @@ namespace VendaFacil.Service.Interface
 {
     public interface ICartaoService : IBaseService
     {
-        int Atualizar(CartaoViewModel model);
-        int Deletar(CartaoViewModel model);
-        int Inserir(CartaoViewModel model);
+        bool Atualizar(CartaoViewModel model);
+        bool Deletar(CartaoViewModel model);
+        bool Inserir(CartaoViewModel model);
         bool ObterEntidade(CartaoViewModel model);
         CartaoViewModel ObterPorCodigo(int codigo);
         IEnumerable<CartaoViewModel> ObterTodos(filtroCartaoViewModel filtro);

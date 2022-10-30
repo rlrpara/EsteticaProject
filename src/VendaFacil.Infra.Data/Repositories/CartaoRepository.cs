@@ -39,7 +39,7 @@ namespace VendaFacil.Infra.Data.Repositories
 
             return await _baseRepository.BuscarPorQueryAsync<int>(sqlPesquisa.ToString());
         }
-        public async Task<Cartao> ObterPorCodigo(int Codigo) => await _baseRepository.BuscarPorIdAsync<Cartao>(Codigo);
+        public async Task<Cartao> ObterPorCodigo(int codigo) => await _baseRepository.BuscarPorIdAsync<Cartao>(codigo);
         public async Task<IEnumerable<Cartao>> ObterTodos(FiltroCartao filtro)
         {
             var sqlPesquisa = new StringBuilder();

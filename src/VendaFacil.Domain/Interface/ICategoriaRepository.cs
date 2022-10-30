@@ -5,9 +5,9 @@ namespace VendaFacil.Domain.Interface
 {
     public interface ICategoriaRepository : IBaseRepository
     {
-        Task<int> Atualizar(Categoria model);
-        Task<int> Inserir(Categoria model);
-        Task<int> ObterEntidade(Categoria model);
+        Task<bool> Atualizar(Categoria model);
+        Task<bool> Inserir(Categoria model);
+        Task<bool> ObterEntidade(Categoria model);
         Task<Categoria> ObterPorCodigo(int codigo);
         Task<IEnumerable<Categoria>> ObterTodos(filtroCategoria filtro);
         Task<int> ObterTotalRegistros(filtroCategoria filtro);

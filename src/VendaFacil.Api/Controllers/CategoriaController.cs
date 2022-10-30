@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VendaFacil.Api.Model;
 using VendaFacil.Infra.Data.Repositories;
 using VendaFacil.Service.Interface;
 using VendaFacil.Service.Service;
-using VendaFacil.Service.ViewModel.Entities.Filtros;
 using VendaFacil.Service.ViewModel.Entities;
+using VendaFacil.Service.ViewModel.Entities.Filtros;
 
 namespace VendaFacil.Api.Controllers
 {
@@ -46,7 +45,7 @@ namespace VendaFacil.Api.Controllers
             if (dadosRetorno is null)
                 return Ok(new { Resultado = "Registro não encontrado." });
 
-            var resultado = new ApiResult<CartaoViewModel>();
+            var resultado = new ApiResult<CategoriaViewModel>();
             resultado.AddPaginacao(filtro.PaginaAtual, filtro.QuantidadePorPagina, ObterTotalPaginas(filtro), _service.ObterTotalRegistros(filtro), dadosRetorno);
 
             return Ok(resultado);
@@ -101,6 +100,7 @@ namespace VendaFacil.Api.Controllers
             else
                 return BadRequest(new { Resultado = "Registro não encontrado" });
         }
+
         #endregion
     }
 }

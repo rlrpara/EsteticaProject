@@ -11,7 +11,7 @@ namespace VendaFacil.Domain.Entities
 		private string? _nome;
         private string? _bandeira;
         private string? _numero;
-        private double _limite;
+        private double? _limite;
         private int _codigoUsuario;
         #endregion
 
@@ -36,12 +36,12 @@ namespace VendaFacil.Domain.Entities
         public string? Numero
 		{
 			get { return _numero; }
-			set { _numero = value.ApenasNumeros(); }
+			set { _numero = value.ApenasNumeros().Equals("0") ? null : value.ApenasNumeros(); }
 		}
 
         [Nota()]
         [Column(name: "LIMITE", Order = 5)]
-        public double Limite
+        public double? Limite
 		{
 			get { return _limite; }
 			set { _limite = value; }

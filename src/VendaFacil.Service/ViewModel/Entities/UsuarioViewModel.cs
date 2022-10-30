@@ -63,8 +63,8 @@ namespace VendaFacil.Service.ViewModel.Entities
             get { return _nivel; }
             set { _nivel = value.Equals(null) ? 0 : value; }
         }
-        public DateTime? DataCadastro { get; set; } = DateTime.Now;
-        public DateTime? DataAtualizacao { get; set; } = DateTime.Now;
+        public DateTime? DataCadastro { get; set; }
+        public DateTime? DataAtualizacao { get; set; }
         public bool? Ativo { get; set; }
     }
 }

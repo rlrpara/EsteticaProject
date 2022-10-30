@@ -37,6 +37,15 @@ namespace VendaFacil.Api.Controllers
         #endregion
 
         #region [Propriedades Públicas]
+        [HttpGet("ObterPorId/{id}")]
+        public IActionResult GetObterPorId(int? id)
+        {
+            if (id is not null)
+                return Ok(new { Resultado = _service.ObterPorCodigo(id ?? 0) });
+            else
+                return Ok(new { Resultado = "Código não informado." });
+        }
+
         [HttpPost("ObterTodos")]
         public IActionResult PostObterTodos([FromBody] filtroCategoriaViewModel filtro)
         {

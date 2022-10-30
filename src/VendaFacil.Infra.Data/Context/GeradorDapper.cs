@@ -107,9 +107,9 @@ namespace VendaFacil.Infra.Data.Context
             else if (propriedade.Contains("datetime"))
                 return $"'{Convert.ToDateTime(x.GetValue(entidade)):yyyy-MM-dd HH:mm:ss}'";
             else if (propriedade.Contains("nullable`1"))
-                if (propriedade.Contains("datetime"))
+                if (x.PropertyType.FullName.ToLower().Contains("datetime"))
                     return $"'{Convert.ToDateTime(x.GetValue(entidade)):yyyy-MM-dd HH:mm:ss}'";
-                else if (propriedade.Contains("string"))
+                else if (x.PropertyType.FullName.ToLower().Contains("string"))
                     return $"'{x.GetValue(entidade)}'";
                 else
                     return $"{x.GetValue(entidade)}";
@@ -178,7 +178,7 @@ namespace VendaFacil.Infra.Data.Context
                     .ToList());
             else
                 return string.Join($", {Environment.NewLine}       ", ObterListaPropriedadesClasse(entidade)
-                    .Where(x => ObterAtributoNota(x)?.UsarParaBuscar ?? false && !string.IsNullOrWhiteSpace(x.GetCustomAttribute<ColumnAttribute>().Name))
+                    .Where(x => ObterAtributoNota(x).UsarParaBuscar && !string.IsNullOrWhiteSpace(x.GetCustomAttribute<ColumnAttribute>().Name) && !string.IsNullOrWhiteSpace(x.GetValue(entidade)?.ToString()) && (!ObterAtributoNota(x).ChavePrimaria && x.GetCustomAttributes().FirstOrDefault() is not KeyAttribute))
                     .Select(x => $"{x.GetCustomAttribute<ColumnAttribute>()?.Name?.Trim()} = {FormataValor(x, entidade)}")
                     .ToList());
         }

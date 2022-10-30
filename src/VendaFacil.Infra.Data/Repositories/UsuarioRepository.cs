@@ -64,7 +64,6 @@ namespace VendaFacil.Infra.Data.Repositories
             sqlPesquisa.AppendLine($"	       nome as Nome,");
             sqlPesquisa.AppendLine($"	       email as Email,");
             sqlPesquisa.AppendLine($"	       senha as Senha,");
-            sqlPesquisa.AppendLine($"	       senha_criptografada as SenhaCriptografada,");
             sqlPesquisa.AppendLine($"	       telefone as Telefone,");
             sqlPesquisa.AppendLine($"	       celular as Celular,");
             sqlPesquisa.AppendLine($"	       cpf as Cpf,");

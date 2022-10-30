@@ -37,6 +37,15 @@ namespace VendaFacil.Api.Controllers
         #endregion
 
         #region [Propriedades Públicas]
+        [HttpGet("ObterPorId/{id}")]
+        public IActionResult GetObterPorId(int? id)
+        {
+            if(id is not null)
+                return Ok(new { Resultado = _service.ObterPorCodigo(id ?? 0) });
+            else
+                return Ok(new { Resultado = "Código não informado." });
+        }
+
         [HttpPost("ObterTodos")]
         public IActionResult PostObterTodos([FromBody] filtroCartaoViewModel filtro)
         {
@@ -84,21 +93,22 @@ namespace VendaFacil.Api.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpDelete("Excluir")]
-        public IActionResult DeleteExcluir(int Codigo)
+        [HttpDelete("Excluir/{id}")]
+        public IActionResult DeleteExcluir(int id)
         {
-            if (Codigo.Equals(0))
+            if (id.Equals(0))
                 return Ok(new { Resultado = "Registro não encontrado" });
 
-            var consulta = _service.ObterPorCodigo(Codigo);
-
-            if (consulta.Ativo is not null && !(consulta.Ativo ?? false))
-                return Ok(new { Resultado = "Registro ja deletado" });
+            var consulta = _service.ObterPorCodigo(id);
 
             if (consulta is not null)
+            {
+                if (!(consulta.Ativo ?? false))
+                    return Ok(new { Resultado = "Registro ja deletado" });
                 return Ok(_service.Deletar(consulta));
+            }
             else
-                return BadRequest(new { Resultado = "Registro não encontrado" });
+                return Ok(new { Resultado = "Registro não encontrado" });
         }
         #endregion
     }

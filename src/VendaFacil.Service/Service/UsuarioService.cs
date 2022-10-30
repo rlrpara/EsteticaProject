@@ -38,6 +38,7 @@ namespace VendaFacil.Service.Service
         public bool Atualizar(UsuarioViewModel model)
         {
             model.Ativo ??= ObterPorCodigo(model.Codigo).Ativo;
+            model.DataAtualizacao = DateTime.Now;
             return _service.Atualizar(_mapper.Map<Usuario>(model)).Result;
         }
         public bool Deletar(UsuarioViewModel model)

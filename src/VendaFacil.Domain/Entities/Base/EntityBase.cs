@@ -12,11 +12,11 @@ namespace VendaFacil.Domain.Entities.Base
 
         [Nota()]
         [Column("DATA_CADASTRO", Order = 100)]
-        public DateTime DataCadastro { get; set; } = DateTime.Now;
+        public DateTime? DataCadastro { get; set; }
 
         [Nota()]
         [Column("DATA_ATUALIZACAO", Order = 101)]
-        public DateTime DataAtualizacao { get; set; }
+        public DateTime? DataAtualizacao { get; set; }
 
         [Nota()]
         [Column("ATIVO", Order = 102)]

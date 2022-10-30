@@ -75,7 +75,6 @@ namespace VendaFacil.Api.Controllers
                 var consulta = _service.ObterPorCodigo(model.Codigo);
                 
                 if (consulta is not null)
-
                     return Ok(_service.Atualizar(model));
                 else
                     return BadRequest(new { Resultado = "Registro não encontrado" });

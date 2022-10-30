@@ -1,6 +1,6 @@
 ﻿namespace VendaFacil.Domain.Entities.Filtros
 {
-    public class FiltroCartao
+    public class FiltroCartao : filtroPaginacao
     {
         public int Codigo { get; set; }
         public string? Nome { get; set; }

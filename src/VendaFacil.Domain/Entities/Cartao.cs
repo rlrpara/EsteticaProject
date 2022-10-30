@@ -32,7 +32,7 @@ namespace VendaFacil.Domain.Entities
 		}
 
         [Nota()]
-        [Column(name: "NUMER", Order = 4)]
+        [Column(name: "NUMERO", Order = 4)]
         public string? Numero
 		{
 			get { return _numero; }

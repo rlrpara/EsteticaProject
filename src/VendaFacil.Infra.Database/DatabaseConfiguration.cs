@@ -164,18 +164,26 @@ namespace VendaFacil.Infra.Database
         private void CriaBaseDados()
         {
             Criar(ObterProcedureDropConstraint());
-            Criar(_geradorDapper.CriaTabela<Usuario>(), false);
             Criar(_geradorDapper.CriaTabela<Empresa>(), false);
+            Criar(_geradorDapper.CriaTabela<Usuario>(), false);
             Criar(_geradorDapper.CriaTabela<ProdutoServicoCategoria>(), false);
             Criar(_geradorDapper.CriaTabela<ProdutoServico>(), false);
             Criar(_geradorDapper.CriaTabela<Tipo>(), false);
             Criar(_geradorDapper.CriaTabela<Categoria>(), false);
+            Criar(_geradorDapper.CriaTabela<Cartao>(), false);
+            Criar(_geradorDapper.CriaTabela<Mes>(), false);
+            Criar(_geradorDapper.CriaTabela<Despesa>(), false);
+            Criar(_geradorDapper.CriaTabela<Ganho>(), false);
         }
         private void InsereDadosPadroes()
         {
+            if (!ExisteDados<Empresa>())
+                Criar(_geradorDapper.GeralSqlInsertControles(ObterEmpresaPadrao()));
+
             if (!ExisteDados<Usuario>())
                 Criar(_geradorDapper.GeralSqlInsertControles(ObterUsuarioPadrao()));
         }
+
         private bool ServidorAtivo()
         {
             try

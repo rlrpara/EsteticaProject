@@ -312,20 +312,6 @@ namespace VendaFacil.Infra.Data.Context
 
             return sqlPesquisa?.ToString()?.Trim();
         }
-        public string? InserirDadosPadroes<T>() where T : class
-        {
-            var sqlPesquisa = new StringBuilder();
-
-            switch (typeof(T).Name.ToLower())
-            {
-                case "usuario":
-                    sqlPesquisa.AppendLine($"INSERT INTO usuario (                nome,             email,           senha, senha_criptografada,           cpf, id_empresa,     data_cadastro,  data_atualizacao, foto, ativo, id_nivel)");
-                    sqlPesquisa.AppendLine($"             VALUES ('Administrador SAAS', 'admin@email.com', 'Postgres2022!',     'Postgres2022!', '00000000000',          0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,   '',  true,       92);");
-                    return sqlPesquisa.ToString();
-                default:
-                    return "";
-            }
-        }
 
         #endregion
     }

@@ -34,5 +34,9 @@ namespace VendaFacil.Domain.Entities
         [Nota()]
         [Column(name: "VALOR_UNITARIO", Order = 5)]
         public double ValorUnitario { get; set; }
+
+        [Nota(ChaveEstrangeira = "EMPRESA", Indice = true)]
+        [Column(name: "ID_EMPRESA", Order = 6)]
+        public int CodigoEmpresa { get; set; }
     }
 }

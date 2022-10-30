@@ -5,7 +5,7 @@ using VendaFacil.Domain.Entities.Base;
 namespace VendaFacil.Domain.Entities
 {
     [Table(name: "CARTAO")]
-    public class Cartao
+    public class Cartao : EntityBase
     {
 		#region [Propriedades Privadas]
 		private string? _nome;

@@ -34,11 +34,12 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyMethod());
 app.UseHttpsRedirection();
+app.UseRouting();
 app.UseAuthorization();
+app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 app.UseStaticFiles();
 app.UseSpaStaticFiles();
 app.UseMiddleware(typeof(ErrorMiddleware));
-app.MapControllers();
 app.UseSpa(x =>
 {
     x.Options.SourcePath = Path.Combine(Directory.GetCurrentDirectory(), pastaFront);

@@ -25,7 +25,11 @@ namespace VendaFacil.Service.Service
         #endregion
 
         #region [Métodos Públicos]
-        public int Atualizar(CartaoViewModel model) => _service.Atualizar(_mapper.Map<Cartao>(model)).Result;
+        public int Atualizar(CartaoViewModel model)
+        {
+            model.Ativo ??= ObterPorCodigo(model.Codigo).Ativo;
+            return _service.Atualizar(_mapper.Map<Cartao>(model)).Result;
+        }
         public int Deletar(CartaoViewModel model)
         {
             model.Ativo = false;

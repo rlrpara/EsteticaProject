@@ -1,4 +1,5 @@
-﻿using VendaFacil.Domain.Entities;
+﻿using System.Text;
+using VendaFacil.Domain.Entities;
 using VendaFacil.Domain.Entities.Filtros;
 using VendaFacil.Domain.Interface;
 
@@ -8,6 +9,18 @@ namespace VendaFacil.Infra.Data.Repositories
     {
         #region [Propriedades Privadas]
         private readonly IBaseRepository _baseRepository;
+        #endregion
+
+        #region [Métodos Privados]
+        private string ObterFiltros(FiltroCartao filtro)
+        {
+            var sqlPesquisa = new StringBuilder();
+
+            sqlPesquisa.AppendLine($" WHERE email ILIKE '%{filtro.Nome}%'");
+            sqlPesquisa.AppendLine($"   AND nome ilike '%{filtro.Nome}%'");
+
+            return sqlPesquisa.ToString();
+        }
         #endregion
 
         #region [Construtor]

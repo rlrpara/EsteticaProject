@@ -25,16 +25,11 @@ namespace VendaFacil.Service.Service
         }
         #endregion
 
-        public int ObterTotalRegistros(filtroEmpresaViewModel filtro)
-            => _mapper.Map<int>(_service.TotalRegistros(_mapper.Map<filtroEmpresa>(filtro)).Result);
-        public EmpresaViewModel ObterPorCodigo(int codigo)
-            => _mapper.Map<EmpresaViewModel>(_service.ObterPorCodigo(codigo).Result);
-        public IEnumerable<EmpresaViewModel> ObterTodos(filtroEmpresaViewModel filtro)
-            => _mapper.Map<IEnumerable<EmpresaViewModel>>(_service.ObterTodos(_mapper.Map<filtroEmpresa>(filtro)).Result);
-        public bool ObterEntidade(EmpresaViewModel model)
-            => _service.ObterEntidade(_mapper.Map<Empresa>(model)).Result;
-        public bool Inserir(EmpresaViewModel model)
-            => _service.Inserir(_mapper.Map<Empresa>(model)).Result;
+        public int ObterTotalRegistros(filtroEmpresaViewModel filtro) => _mapper.Map<int>(_service.TotalRegistros(_mapper.Map<filtroEmpresa>(filtro)).Result);
+        public EmpresaViewModel ObterPorCodigo(int codigo) => _mapper.Map<EmpresaViewModel>(_service.ObterPorCodigo(codigo).Result);
+        public IEnumerable<EmpresaViewModel> ObterTodos(filtroEmpresaViewModel filtro) => _mapper.Map<IEnumerable<EmpresaViewModel>>(_service.ObterTodos(_mapper.Map<filtroEmpresa>(filtro)).Result);
+        public bool ObterEntidade(EmpresaViewModel model) => _service.ObterEntidade(_mapper.Map<Empresa>(model)).Result;
+        public bool Inserir(EmpresaViewModel model) => _service.Inserir(_mapper.Map<Empresa>(model)).Result;
         public bool Atualizar(EmpresaViewModel model)
         {
             model.Ativo ??= ObterPorCodigo(model.Codigo).Ativo;

@@ -100,5 +100,6 @@ namespace VendaFacil.Api.Controllers
             else
                 return BadRequest(new { Resultado = "Registro não encontrado" });
         }
+        #endregion
     }
 }

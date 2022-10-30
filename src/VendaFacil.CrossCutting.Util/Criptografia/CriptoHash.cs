@@ -35,4 +35,3 @@ namespace VendaFacil.CrossCutting.Util.Criptografia
         }
     }
 }
-}

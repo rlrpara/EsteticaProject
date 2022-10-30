@@ -12,7 +12,7 @@ namespace VendaFacil.Infra.Data.Repositories
         #endregion
 
         #region [Métodos Privados]
-        private string ObterFiltros(FiltroCartao filtro)
+        private string ObterFiltros(filtroCartao filtro)
         {
             var sqlPesquisa = new StringBuilder();
 
@@ -29,7 +29,7 @@ namespace VendaFacil.Infra.Data.Repositories
         #endregion
 
         #region [Métodos Públicos]
-        public async Task<int> ObterTotalRegistros(FiltroCartao filtro)
+        public async Task<int> ObterTotalRegistros(filtroCartao filtro)
         {
             var sqlPesquisa = new StringBuilder();
 
@@ -40,7 +40,7 @@ namespace VendaFacil.Infra.Data.Repositories
             return await _baseRepository.BuscarPorQueryAsync<int>(sqlPesquisa.ToString());
         }
         public async Task<Cartao> ObterPorCodigo(int codigo) => await _baseRepository.BuscarPorIdAsync<Cartao>(codigo);
-        public async Task<IEnumerable<Cartao>> ObterTodos(FiltroCartao filtro)
+        public async Task<IEnumerable<Cartao>> ObterTodos(filtroCartao filtro)
         {
             var sqlPesquisa = new StringBuilder();
 

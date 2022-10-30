@@ -13,11 +13,17 @@ namespace VendaFacil.CrossCutting.Ioc
             //services.AddSingleton(configuration);
 
             #region Services
+            services.AddTransient<ICartaoService, CartaoService>();
+            services.AddTransient<ICategoriaService, CategoriaServie>();
+            services.AddTransient<IEmpresaService, EmpresaService>();
             services.AddTransient<IUsuarioService, UsuarioService>();
 
             #endregion
 
             #region Repositories
+            services.AddTransient<ICartaoRepository, CartaoRepository>();
+            services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+            services.AddTransient<IEmpresaRepository, EmpresaRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             services.AddTransient<IBaseRepository, BaseRepository>();
             #endregion

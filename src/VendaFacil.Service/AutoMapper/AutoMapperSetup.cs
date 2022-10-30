@@ -11,19 +11,43 @@ namespace VendaFacil.Service.AutoMapper
         public AutoMapperSetup()
         {
             #region [ViewModelToDomain]
+            CreateMap<filtroCartaoViewModel, filtroCartao>();
+            CreateMap<filtroCategoriaViewModel, filtroCategoria>();
+            CreateMap<filtroEmpresaViewModel, filtroEmpresa>();
+            CreateMap<filtroPaginacaoViewModel, filtroPaginacao>();
             CreateMap<filtroUsuarioViewModel, filtroUsuario>();
 
-            CreateMap<UsuarioViewModel, Usuario>();
+            CreateMap<CartaoViewModel, Cartao>();
+            CreateMap<CategoriaViewModel, Categoria>();
+            CreateMap<DespesaViewModel, Despesa>();
             CreateMap<EmpresaViewModel, Empresa>();
+            CreateMap<GanhoViewModel, Ganho>();
+            CreateMap<MesViewModel, Mes>();
+            CreateMap<ProdutoServicoCategoriaViewModel, ProdutoServicoCategoria>();
+            CreateMap<ProdutoServicoViewModel, ProdutoServico>();
+            CreateMap<TipoViewModel, Tipo>();
+            CreateMap<UsuarioViewModel, Usuario>();
             #endregion
 
 
 
             #region [DomainToViewModel]
+            CreateMap<filtroCartao, filtroCartaoViewModel>();
+            CreateMap<filtroCategoria, filtroCategoriaViewModel>();
+            CreateMap<filtroEmpresa, filtroEmpresaViewModel>();
+            CreateMap<filtroPaginacao, filtroPaginacaoViewModel>();
             CreateMap<filtroUsuario, filtroUsuarioViewModel>();
 
-            CreateMap<Usuario, UsuarioViewModel>();
+            CreateMap<Cartao, CartaoViewModel>();
+            CreateMap<Categoria, CategoriaViewModel>();
+            CreateMap<Despesa, DespesaViewModel>();
             CreateMap<Empresa, EmpresaViewModel>();
+            CreateMap<Ganho, GanhoViewModel>();
+            CreateMap<Mes, MesViewModel>();
+            CreateMap<ProdutoServicoCategoria, ProdutoServicoCategoriaViewModel>();
+            CreateMap<ProdutoServico, ProdutoServicoViewModel>();
+            CreateMap<Tipo, TipoViewModel>();
+            CreateMap<Usuario, UsuarioViewModel>();
             #endregion
         }
     }

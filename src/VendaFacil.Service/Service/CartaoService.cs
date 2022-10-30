@@ -38,8 +38,8 @@ namespace VendaFacil.Service.Service
         public bool Inserir(CartaoViewModel model) => _service.Inserir(_mapper.Map<Cartao>(model)).Result;
         public bool ObterEntidade(CartaoViewModel model) => _service.ObterEntidade(_mapper.Map<Cartao>(model)).Result;
         public CartaoViewModel ObterPorCodigo(int codigo) => _mapper.Map<CartaoViewModel>(_service.ObterPorCodigo(_mapper.Map<int>(codigo)).Result);
-        public IEnumerable<CartaoViewModel> ObterTodos(filtroCartaoViewModel filtro) => _mapper.Map<IEnumerable<CartaoViewModel>>(_service.ObterTodos(_mapper.Map<FiltroCartao>(filtro)).Result);
-        public int ObterTotalRegistros(filtroCartaoViewModel filtro) => _service.ObterTotalRegistros(_mapper.Map<FiltroCartao>(filtro)).Result;
+        public IEnumerable<CartaoViewModel> ObterTodos(filtroCartaoViewModel filtro) => _mapper.Map<IEnumerable<CartaoViewModel>>(_service.ObterTodos(_mapper.Map<filtroCartao>(filtro)).Result);
+        public int ObterTotalRegistros(filtroCartaoViewModel filtro) => _service.ObterTotalRegistros(_mapper.Map<filtroCartao>(filtro)).Result;
 
         #endregion
     }

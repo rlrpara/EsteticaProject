@@ -16,6 +16,8 @@ namespace VendaFacil.Service.AutoMapper
             CreateMap<filtroEmpresaViewModel, filtroEmpresa>();
             CreateMap<filtroPaginacaoViewModel, filtroPaginacao>();
             CreateMap<filtroUsuarioViewModel, filtroUsuario>();
+            CreateMap<filtroDespesaViewModel, filtroDespesa>();
+            CreateMap<filtroTipoViewModel, filtroTipo>();
 
             CreateMap<CartaoViewModel, Cartao>();
             CreateMap<CategoriaViewModel, Categoria>();
@@ -37,6 +39,8 @@ namespace VendaFacil.Service.AutoMapper
             CreateMap<filtroEmpresa, filtroEmpresaViewModel>();
             CreateMap<filtroPaginacao, filtroPaginacaoViewModel>();
             CreateMap<filtroUsuario, filtroUsuarioViewModel>();
+            CreateMap<filtroDespesa, filtroDespesaViewModel>();
+            CreateMap<filtroTipo, filtroTipoViewModel>();
 
             CreateMap<Cartao, CartaoViewModel>();
             CreateMap<Categoria, CategoriaViewModel>();

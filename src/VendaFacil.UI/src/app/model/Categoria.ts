@@ -1,7 +1,9 @@
 export class Categoria{
-  id: number|undefined;
-  nome: string|undefined;
-  data_criado: string|undefined;
-  data_atualizado: string|undefined;
-  ativo: boolean|undefined;
+  id: number | undefined;
+  nome: string | undefined;
+  icone: string |undefined;
+  codigoTipo: number | undefined;
+  dataCriado: string | undefined;
+  dataAtualizado: string|undefined;
+  ativo: boolean | undefined;
 }

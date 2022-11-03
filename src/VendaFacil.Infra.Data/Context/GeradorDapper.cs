@@ -21,7 +21,7 @@ namespace VendaFacil.Infra.Data.Context
 
         #region Métodos Privados
         private Nota? ObterAtributoNota(PropertyInfo x) => x.GetCustomAttribute(typeof(Nota)) as Nota;
-        private IOrderedEnumerable<PropertyInfo> ObterListaPropriedadesClasse<T>(T entidade = null) where T : class
+        private IEnumerable<PropertyInfo> ObterListaPropriedadesClasse<T>(T entidade = null) where T : class
         {
             if (entidade is null)
                 return typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order);
@@ -117,12 +117,12 @@ namespace VendaFacil.Infra.Data.Context
                 return $"{x.GetValue(entidade)}";
         }
         private string ObterValorInsert<T>(T entidade) where T : class
-            => string.Join($", ", ObterListaPropriedadesClasse(entidade)
+            => string.Join($", ", ObterListaPropriedadesClasse(entidade).ToList()
                     .Where(x => ObterAtributoNota(x).UsarParaBuscar && !ObterAtributoNota(x).ChavePrimaria && x.GetCustomAttributes().FirstOrDefault() is not KeyAttribute)
                     .Select(x => $"{FormataValor(x, entidade)}")
                     .ToList());
         private string ObterColunasInsert<T>() where T : class
-            => string.Join($", ", ObterListaPropriedadesClasse<T>()
+            => string.Join($", ", ObterListaPropriedadesClasse<T>().ToList()
                     .Where(x => ObterAtributoNota(x).UsarParaBuscar && !ObterAtributoNota(x).ChavePrimaria && x.GetCustomAttributes().FirstOrDefault() is not KeyAttribute)
                     .Select(x => $"{x.GetCustomAttribute<ColumnAttribute>()?.Name}")
                     .ToList());

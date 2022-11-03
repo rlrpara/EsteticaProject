@@ -24,7 +24,7 @@ namespace VendaFacil.Tests.InfraTests.DataTests.ContextsTests
             var sqlPesquisa = new StringBuilder();
 
             sqlPesquisa.AppendLine($"INSERT INTO EMPRESA (NOME, CPF_CNPJ, TELEFONE, EMAIL, ENDERECO, VALOR_MENSAL, DATA_PAGAMENTO, DATA_CADASTRO, DATA_ATUALIZACAO, ATIVO)");
-            sqlPesquisa.AppendLine($"                     VALUES (0, 'ESTETICA MALATO', '43091903249', '49999458768', 'rosemalato@gmail.com', 'R. BRASILIA, 187-D, N 105 - JARDIM ITALIA, CHAPECO - SC, 89802-320', 70, 10, '2022-10-18 23:25:45', '2022-10-18 23:25:45', True)");
+            sqlPesquisa.AppendLine($"                     VALUES ('ESTETICA MALATO', '43091903249', '49999458768', 'rosemalato@gmail.com', 'R. BRASILIA, 187-D, N 105 - JARDIM ITALIA, CHAPECO - SC, 89802-320', 70, 10, '2022-10-18 23:25:45', '2022-10-18 23:25:45', True)");
 
             return sqlPesquisa?.ToString()?.Trim();
         }

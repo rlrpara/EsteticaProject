@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { TiposService } from './services/tipos.service';
 
 import { HttpClientModule } from '@angular/common/http';
+import { CategoriasComponent } from './components/categorias/categorias.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CategoriasComponent
   ],
   imports: [
     BrowserModule,

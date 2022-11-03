@@ -1,4 +1,4 @@
-export class Tipo{
+export class Categoria{
   id: number|undefined;
   nome: string|undefined;
   data_criado: string|undefined;

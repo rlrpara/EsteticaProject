@@ -21,6 +21,9 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      },
       "publishAllPorts": true,
       "useSSL": true
     }
@@ -30,7 +33,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:3730",
+      "applicationUrl": "http://localhost:3001",
       "sslPort": 44304
     }
   }

@@ -14,7 +14,7 @@ string urlFront = Environment.GetEnvironmentVariable("URL_FRONT") ?? "";
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
-builder.Services.AddSpaStaticFiles(x => { x.RootPath = pastaFront; });
+builder.Services.AddSpaStaticFiles(configuration => configuration.RootPath = $"../VendaFacil.UI/dist");
 builder.Services.AddControllers()
     .AddJsonOptions(x => { x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull; })
     .AddNewtonsoftJson(x => { x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
@@ -44,7 +44,7 @@ app.UseSpa(x =>
 {
     x.Options.SourcePath = Path.Combine(Directory.GetCurrentDirectory(), pastaFront);
 
-    if(app.Environment.IsDevelopment())
-        x.UseProxyToSpaDevelopmentServer(urlFront);
+    //if(app.Environment.IsDevelopment())
+    //    x.UseProxyToSpaDevelopmentServer(urlFront);
 });
 app.Run();

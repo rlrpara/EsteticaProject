@@ -9,12 +9,14 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 8081:80
+    expose:
+      - 80
     restart: on-failure
     depends_on:
       - vendafacil.api
     networks:
       rede_vendafacil:
-        ipv4_address: 172.25.0.4
+        ipv4_address: 173.25.0.4
 
   vendafacil.api:
     image: ${DOCKER_REGISTRY-}vendafacilapi
@@ -23,16 +25,18 @@ services:
       context: .
       dockerfile: src/VendaFacil.Api/Dockerfile
     environment:
-      SERVIDOR: "172.25.0.2"
-      PORTA: "5401"
-      USUARIO: "postgres"
-      SENHA: "Postgres2019!"
-      BANCO: "VendaFacilGestao"
+      SERVIDOR: ${SERVIDOR}
+      PORTA: ${PORTA}
+      USUARIO: ${USUARIO}
+      SENHA: ${SENHA}
+      BANCO: ${BANCO}
     ports:
       - 3001:80
+    expose:
+      - 80
     networks:
       rede_vendafacil:
-        ipv4_address: 172.25.0.3
+        ipv4_address: 173.25.0.3
     restart: on-failure
     depends_on:
       - vendafacil_database
@@ -41,16 +45,16 @@ services:
     image: postgres
     container_name: vendafacil_database
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Postgres2019!
+      POSTGRES_USER: ${USUARIO}
+      POSTGRES_PASSWORD: ${SENHA}
       PGDATA: /data/postgres
     ports:
-      - "5401:5432"
+      - "5402:5432"
     expose:
-      - 5401
+      - 5402
     networks:
       rede_vendafacil:
-        ipv4_address: 172.25.0.2
+        ipv4_address: 173.25.0.2
     volumes:
        - /D/Databases/vendafacil_database/data:/var/lib/postgresql/data
     restart: on-failure
@@ -61,5 +65,5 @@ networks:
     driver: bridge
     ipam:
      config:
-       - subnet: 172.25.0.0/16
-         gateway: 172.25.0.1
+       - subnet: 173.25.0.0/16
+         gateway: 173.25.0.1

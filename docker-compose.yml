@@ -8,9 +8,7 @@ services:
       context: src/VendaFacil.UI
       dockerfile: ./Dockerfile
     ports:
-      - 8081:80
-    expose:
-      - 80
+      - 4200:80
     restart: on-failure
     depends_on:
       - vendafacil.api
@@ -31,9 +29,7 @@ services:
       SENHA: ${SENHA}
       BANCO: ${BANCO}
     ports:
-      - 3001:80
-    expose:
-      - 80
+      - 6000:80
     networks:
       rede_vendafacil:
         ipv4_address: 173.25.0.3

@@ -7,5 +7,5 @@ RUN npm run build
 
 FROM nginx:alpine
 VOLUME /var/cache/nginx
-COPY --from=angular src/app/dist/venda-facil.ui usr/share/nginx/html
+COPY --from=angular /app/dist/venda-facil.ui usr/share/nginx/html
 COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf

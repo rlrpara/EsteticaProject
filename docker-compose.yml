@@ -9,6 +9,12 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 8081:80
+    restart: on-failure
+    depends_on:
+      - vendafacil.api
+    networks:
+      rede_vendafacil:
+        ipv4_address: 172.25.0.4
 
   vendafacil.api:
     image: ${DOCKER_REGISTRY-}vendafacilapi
@@ -17,7 +23,7 @@ services:
       context: .
       dockerfile: src/VendaFacil.Api/Dockerfile
     environment:
-      SERVIDOR: "localhost"
+      SERVIDOR: "172.25.0.2"
       PORTA: "5401"
       USUARIO: "postgres"
       SENHA: "Postgres2019!"

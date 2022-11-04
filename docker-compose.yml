@@ -9,6 +9,8 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 4200:80
+    expose:
+      - 4200
     restart: on-failure
     depends_on:
       - vendafacil.api
@@ -30,6 +32,8 @@ services:
       BANCO: ${BANCO}
     ports:
       - 6000:80
+    expose:
+      - 6000
     networks:
       rede_vendafacil:
         ipv4_address: 173.25.0.3

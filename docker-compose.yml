@@ -47,7 +47,7 @@ services:
     ports:
       - "5401:5432"
     expose:
-      - 5432
+      - 5401
     networks:
       rede_vendafacil:
         ipv4_address: 172.25.0.2

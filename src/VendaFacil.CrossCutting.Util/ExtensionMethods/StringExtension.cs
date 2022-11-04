@@ -10,7 +10,7 @@ namespace VendaFacil.CrossCutting.Util.ExtensionMethods
         {
             var texto = "";
 
-            foreach (var item in valor.ToCharArray().ToList())
+            foreach (var item in valor?.ToCharArray().ToList() ?? new List<char>())
                 texto += char.IsUpper(item) ? $" {item}" : $"{item}";
 
             return texto.Trim();

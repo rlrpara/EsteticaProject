@@ -3,7 +3,7 @@
     public class ApiResult<T> where T : class
     {
         public Paginacao Paginacao { get; private set; }
-        public List<T> Dados { get; private set; }
+        public List<T>? Dados { get; private set; }
 
         public ApiResult()
         {

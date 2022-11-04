@@ -34,12 +34,12 @@ namespace VendaFacil.Service.Service
         public bool Atualizar(GanhoViewModel model)
         {
             model.Ativo ??= ObterPorCodigo(model.Codigo).Ativo;
-            return _service.Atualizar(_mapper.Map<Empresa>(model)).Result;
+            return _service.Atualizar(_mapper.Map<Ganho>(model)).Result;
         }
-        public bool Deletar(EmpresaViewModel model)
+        public bool Deletar(GanhoViewModel model)
         {
             model.Ativo = false;
-            return _service.Atualizar(_mapper.Map<Empresa>(model)).Result;
+            return _service.Atualizar(_mapper.Map<Ganho>(model)).Result;
         }
 
         #endregion

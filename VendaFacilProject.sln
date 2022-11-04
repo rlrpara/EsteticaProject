@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendaFacil.CrossCutting.Uti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendaFacil.Tests", "tests\VendaFacil.Tests\VendaFacil.Tests.csproj", "{C61C6BBD-66AE-4288-8378-3B8A431B8FAA}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{26488895-DE2E-4F7D-B967-6B141A3A4A3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{C61C6BBD-66AE-4288-8378-3B8A431B8FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C61C6BBD-66AE-4288-8378-3B8A431B8FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C61C6BBD-66AE-4288-8378-3B8A431B8FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26488895-DE2E-4F7D-B967-6B141A3A4A3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26488895-DE2E-4F7D-B967-6B141A3A4A3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26488895-DE2E-4F7D-B967-6B141A3A4A3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26488895-DE2E-4F7D-B967-6B141A3A4A3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

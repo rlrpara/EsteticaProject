@@ -8,7 +8,7 @@ namespace VendaFacil.Service.Interface
         int ObterTotalRegistros(filtroGanhoViewModel filtro);
         bool Atualizar(GanhoViewModel model);
         bool Inserir(GanhoViewModel model);
-        bool Deletar(EmpresaViewModel model);
+        bool Deletar(GanhoViewModel model);
         bool ObterEntidade(GanhoViewModel model);
         GanhoViewModel ObterPorCodigo(int codigo);
         IEnumerable<GanhoViewModel> ObterTodos(filtroGanhoViewModel filtro);

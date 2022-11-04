@@ -43,6 +43,8 @@ app.UseMiddleware(typeof(ErrorMiddleware));
 app.UseSpa(x =>
 {
     x.Options.SourcePath = Path.Combine(Directory.GetCurrentDirectory(), pastaFront);
-    x.UseProxyToSpaDevelopmentServer(urlFront);
+
+    if(app.Environment.IsDevelopment())
+        x.UseProxyToSpaDevelopmentServer(urlFront);
 });
 app.Run();

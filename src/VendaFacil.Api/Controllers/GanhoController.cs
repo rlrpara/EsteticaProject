@@ -54,7 +54,7 @@ namespace VendaFacil.Api.Controllers
             if (dadosRetorno is null)
                 return Ok(new { Resultado = "Registro não encontrado." });
 
-            var resultado = new ApiResult<DespesaViewModel>();
+            var resultado = new ApiResult<GanhoViewModel>();
             resultado.AddPaginacao(filtro.PaginaAtual, filtro.QuantidadePorPagina, ObterTotalPaginas(filtro), _service.ObterTotalRegistros(filtro), dadosRetorno);
 
             return Ok(resultado);

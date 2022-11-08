@@ -3,10 +3,11 @@ pipeline {
     
     stages {
         stage ('Build Image'){
-            steps {
-                script {
-                    dockerapp = docker.build("rlrpara/VendaFacilProject", '-f ./src/VendaFacil.Api/Dockerfile ./src')
-                }
+            stage('Clear Project'){
+            steps { bat 'dotnet clean --configuration Release' }
+            }
+            stage('Restore Nuget'){
+                steps { bat 'dotnet restore Conversor.sln -r win-x64' }
             }
         }
     }

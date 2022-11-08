@@ -5,7 +5,7 @@ pipeline {
         stage ('Build Image'){
             steps {
                 script {
-                    dockerapp = docker.build("src/VendaFacil.Api", '-f ./src/Dockerfile ./src')
+                    dockerapp = docker.build("rlrpara/VendaFacilProject", '-f ./src/Dockerfile ./src')
                 }
             }
         }

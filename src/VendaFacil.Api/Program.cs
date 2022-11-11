@@ -8,8 +8,7 @@ using VendaFacil.Service.Middleware;
 DotEnvLoad.Load();
 
 #region [Propriedades Privadas]
-string pastaFront = Environment.GetEnvironmentVariable("PASTA_FRONT") ?? "";
-string urlFront = Environment.GetEnvironmentVariable("URL_FRONT") ?? "";
+string pastaFront = "VendaFacil.Front";
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);

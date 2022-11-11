@@ -363,5 +363,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-/src/VendaFacil.UI/.angular
-/src/VendaFacil.UI/dist
+/src/VendaFacil.Front/.angular
+/src/VendaFacil.Front/dist

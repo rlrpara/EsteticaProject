@@ -10,4 +10,8 @@
     <ProjectReference Include="..\VendaFacil.CrossCutting.Util\VendaFacil.CrossCutting.Util.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\Ficha\" />
+  </ItemGroup>
+
 </Project>

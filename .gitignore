@@ -365,3 +365,4 @@ FodyWeavers.xsd
 
 /src/VendaFacil.Front/.angular
 /src/VendaFacil.Front/dist
+.vscode

@@ -52,7 +52,7 @@ namespace VendaFacil.Api.Controllers
         }
 
         [HttpPost("Inserir")]
-        public IActionResult PostInserir([FromBody]UsuarioViewModel model)
+        public IActionResult PostInserir([FromBody] UsuarioViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -69,11 +69,11 @@ namespace VendaFacil.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(model.Codigo.Equals(0))
+                if (model.Codigo.Equals(0))
                     return Ok(new { Resultado = "Registro não encontrado" });
-                
+
                 var consulta = _service.ObterPorCodigo(model.Codigo);
-                
+
                 if (consulta is not null)
                     return Ok(_service.Atualizar(model));
                 else
@@ -91,7 +91,7 @@ namespace VendaFacil.Api.Controllers
 
             var consulta = _service.ObterPorCodigo(Codigo);
 
-            if(consulta.Ativo is not null && !(consulta.Ativo??false))
+            if (consulta.Ativo is not null && !(consulta.Ativo ?? false))
                 return Ok(new { Resultado = "Registro ja deletado" });
 
             if (consulta is not null)

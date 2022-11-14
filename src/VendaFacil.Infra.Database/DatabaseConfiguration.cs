@@ -102,7 +102,7 @@ namespace VendaFacil.Infra.Database
                     sqlPesquisa.AppendLine($"CREATE DATABASE {_parametrosConexao.NomeBanco};");
                     break;
                 case ETipoBanco.SqLite:
-                    var caminho = Path.Combine(Directory.GetCurrentDirectory(), _parametrosConexao.NomeBanco??"");
+                    var caminho = Path.Combine(Directory.GetCurrentDirectory(), _parametrosConexao.NomeBanco ?? "");
                     if (!File.Exists(caminho))
                         File.Create(caminho).Close();
                     sqlPesquisa.AppendLine($"");
@@ -138,7 +138,7 @@ namespace VendaFacil.Infra.Database
 
                     break;
                 case ETipoBanco.SqLite:
-                    var caminho = Path.Combine(Directory.GetCurrentDirectory(), _parametrosConexao.NomeBanco??"");
+                    var caminho = Path.Combine(Directory.GetCurrentDirectory(), _parametrosConexao.NomeBanco ?? "");
                     if (!File.Exists(caminho))
                         sqlPesquisa.AppendLine($"");
                     else
@@ -166,14 +166,6 @@ namespace VendaFacil.Infra.Database
             Criar(ObterProcedureDropConstraint());
             Criar(_geradorDapper.CriaTabela<Empresa>(), false);
             Criar(_geradorDapper.CriaTabela<Usuario>(), false);
-            Criar(_geradorDapper.CriaTabela<ProdutoServicoCategoria>(), false);
-            Criar(_geradorDapper.CriaTabela<ProdutoServico>(), false);
-            Criar(_geradorDapper.CriaTabela<Tipo>(), false);
-            Criar(_geradorDapper.CriaTabela<Categoria>(), false);
-            Criar(_geradorDapper.CriaTabela<Cartao>(), false);
-            Criar(_geradorDapper.CriaTabela<Mes>(), false);
-            Criar(_geradorDapper.CriaTabela<Despesa>(), false);
-            Criar(_geradorDapper.CriaTabela<Ganho>(), false);
         }
         private void InsereDadosPadroes()
         {
@@ -192,7 +184,7 @@ namespace VendaFacil.Infra.Database
                 using var conexao = ConnectionConfiguration.AbrirConexao(ObterParametrosConexao(true));
                 return conexao.State.Equals(ConnectionState.Open);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _errorMessage = ex.Message;
                 return false;

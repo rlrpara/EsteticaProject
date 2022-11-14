@@ -12,7 +12,7 @@ namespace VendaFacil.Infra.Data.Context
     public class GeradorDapper : IGeradorDapper
     {
         #region [Propriedades Privadas]
-        private  ParametrosConexao _parametrosConexao;
+        private ParametrosConexao _parametrosConexao;
         #endregion
 
         #region [Construtor]
@@ -183,9 +183,9 @@ namespace VendaFacil.Infra.Data.Context
                     .ToList());
         }
         public string? RetornaCamposSelect<T>() where T : class
-            => string.Join($", {Environment.NewLine}       ",ObterListaPropriedadesClasse<T>()
+            => string.Join($", {Environment.NewLine}       ", ObterListaPropriedadesClasse<T>()
                 .Where(x => ObterAtributoNota(x)?.UsarParaBuscar ?? false && ObterAtributoNota(x) is not null)
-                .Select(x => $"{x.GetCustomAttribute<ColumnAttribute>()?.Name?.Trim()??""} AS {x.Name}")
+                .Select(x => $"{x.GetCustomAttribute<ColumnAttribute>()?.Name?.Trim() ?? ""} AS {x.Name}")
                 .ToList())?.Trim();
         public string? ObterDelete<T>(int id) where T : class
         {

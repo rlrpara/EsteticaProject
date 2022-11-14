@@ -13,7 +13,7 @@ namespace VendaFacil.Tests.InfraTests.DataTests.ContextsTests
         #endregion
 
         #region [Construtor]
-        public GeradorDapperTests() =>_geradorDapper = new GeradorDapper(new ParametrosConexao());
+        public GeradorDapperTests() => _geradorDapper = new GeradorDapper(new ParametrosConexao());
         #endregion
 
         #region [Métodos Públicos]

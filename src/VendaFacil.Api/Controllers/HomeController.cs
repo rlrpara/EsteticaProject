@@ -10,6 +10,6 @@ namespace VendaFacil.Api.Controllers
         [HttpGet("healt-check")]
         public IActionResult Get() => Ok(new { Versao = "1.0", Servidor = Environment.GetEnvironmentVariable("SERVIDOR") });
         #endregion
-        
+
     }
 }

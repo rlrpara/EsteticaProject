@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VendaFacil.CrossCutting.Util\VendaFacil.CrossCutting.Util.csproj" />
+    <Compile Remove="Entities\Ficha\**" />
+    <EmbeddedResource Remove="Entities\Ficha\**" />
+    <None Remove="Entities\Ficha\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Ficha\" />
+    <ProjectReference Include="..\VendaFacil.CrossCutting.Util\VendaFacil.CrossCutting.Util.csproj" />
   </ItemGroup>
 
 </Project>

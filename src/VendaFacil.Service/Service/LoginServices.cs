@@ -20,7 +20,7 @@ namespace VendaFacil.Service.Service
             var key = Encoding.ASCII.GetBytes(Configuracao.JwtKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Expires= DateTime.UtcNow,
+                Expires = DateTime.UtcNow,
             };
             var token = TokenHandler.CreateToken(tokenDescriptor);
             return TokenHandler.WriteToken(token);

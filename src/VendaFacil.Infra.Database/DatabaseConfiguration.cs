@@ -164,8 +164,8 @@ namespace VendaFacil.Infra.Database
         private void CriaBaseDados()
         {
             Criar(ObterProcedureDropConstraint());
-            Criar(_geradorDapper.CriaTabela<Empresa>(), false);
-            Criar(_geradorDapper.CriaTabela<Usuario>(), false);
+            Criar(_geradorDapper.CriarTabela<Empresa>(), false);
+            Criar(_geradorDapper.CriarTabela<Usuario>(), false);
         }
         private void InsereDadosPadroes()
         {

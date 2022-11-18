@@ -197,7 +197,7 @@ namespace VendaFacil.Infra.Data.Context
 
             return sqlDelete?.ToString()?.Trim();
         }
-        public string? CriaTabela<T>() where T : class
+        public string? CriarTabela<T>() where T : class
         {
             List<string> campos = new();
             StringBuilder sqlConstraint = new();

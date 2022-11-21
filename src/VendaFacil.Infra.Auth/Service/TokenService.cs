@@ -35,12 +35,5 @@ namespace VendaFacil.Infra.Auth.Service
                 return default(dynamic);
             }
         }
-
-        public static string GetValueFromClaim(IIdentity identity, string field)
-        {
-            var claims = identity as ClaimsIdentity;
-
-            return claims.FindFirst(field).Value;
-        }
     }
 }

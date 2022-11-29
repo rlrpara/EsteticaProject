@@ -28,7 +28,7 @@ public class EmpresaControllerTest
             Telefone = "",
             Email = ""
         };
-        _baseRepository.Setup(x => x.BuscarTodosPorQueryAsync(x => x.))
+        //_baseRepository.Setup(x => x.BuscarTodosPorQueryAsync(x => x.))
         var controller = new EmpresasController(_baseRepository.Object, _mapper);
 
         var teste = controller.PostObterTodos(filtro);

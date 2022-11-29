@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using VendaFacil.Api.Model;
-using VendaFacil.Infra.Data.Repositories;
+using VendaFacil.Domain.Interface;
 using VendaFacil.Service.Interface;
 using VendaFacil.Service.Service;
 using VendaFacil.Service.ViewModel.Entities;
@@ -29,10 +29,10 @@ namespace VendaFacil.Api.Controllers
         #endregion
 
         #region [Contrutor]
-        public EmpresasController(IMapper mapper)
+        public EmpresasController(IBaseRepository baseRepository, IMapper mapper)
         {
             _mapper = mapper;
-            _service = new EmpresaService(new BaseRepository(), _mapper);
+            _service = new EmpresaService(baseRepository, _mapper);
         }
         #endregion
 

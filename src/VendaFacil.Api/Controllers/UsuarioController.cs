@@ -14,7 +14,6 @@ namespace VendaFacil.Api.Controllers
     public class UsuarioController : ControllerBase
     {
         #region [Propriedades Privadas]
-        private readonly IMapper _mapper;
         private readonly IUsuarioService _service;
         #endregion
 
@@ -29,11 +28,7 @@ namespace VendaFacil.Api.Controllers
         #endregion
 
         #region [Contrutor]
-        public UsuarioController(IMapper mapper)
-        {
-            _mapper = mapper;
-            _service = new UsuarioService(new BaseRepository(), _mapper);
-        }
+        public UsuarioController(IUsuarioService usuarioService) => _service = usuarioService;
         #endregion
 
         #region [Propriedades Públicas]

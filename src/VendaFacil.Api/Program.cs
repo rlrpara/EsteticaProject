@@ -20,6 +20,8 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(AutoMapperSetup));
+new DatabaseConfiguration().GerenciarBanco();
+NativeInjector.RegisterServices(builder.Services);
 builder.Services.AddSwaggerGen(x =>
 {
     x.SwaggerDoc("v1", new OpenApiInfo
@@ -70,9 +72,6 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = false
     };
 });
-
-new DatabaseConfiguration().GerenciarBanco();
-NativeInjector.RegisterServices(builder.Services);
 
 var app = builder.Build();
 app.MapControllers();

@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VendaFacil.Api.Model;
-using VendaFacil.Infra.Data.Repositories;
 using VendaFacil.Service.Interface;
-using VendaFacil.Service.Service;
 using VendaFacil.Service.ViewModel.Entities;
 using VendaFacil.Service.ViewModel.Entities.Filtros;
 
@@ -14,7 +11,6 @@ namespace VendaFacil.Api.Controllers
     public class EmpresasController : ControllerBase
     {
         #region [Propriedades Privadas]
-        private readonly IMapper _mapper;
         private readonly IEmpresaService _service;
         #endregion
 
@@ -29,11 +25,7 @@ namespace VendaFacil.Api.Controllers
         #endregion
 
         #region [Contrutor]
-        public EmpresasController(IMapper mapper)
-        {
-            _mapper = mapper;
-            _service = new EmpresaService(new BaseRepository(), _mapper);
-        }
+        public EmpresasController(IEmpresaService empresaService) => _service = empresaService;
         #endregion
 
         #region [Propriedades Públicas]

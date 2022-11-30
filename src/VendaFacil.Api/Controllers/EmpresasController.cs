@@ -32,7 +32,7 @@ namespace VendaFacil.Api.Controllers
         [HttpPost("ObterTodos")]
         public IActionResult PostObterTodos([FromBody] filtroEmpresaViewModel filtro)
         {
-            var dadosRetorno = _service.ObterTodos(filtro).ToList();
+            var dadosRetorno = _service.ObterTodos(filtro);
 
             if (dadosRetorno is null)
                 return Ok(new { Resultado = "Registro não encontrado." });

@@ -1,38 +1,33 @@
 ﻿using AutoMapper;
 using Moq;
-using VendaFacil.Api.Controllers;
+using VendaFacil.Domain.Entities;
 using VendaFacil.Domain.Interface;
-using VendaFacil.Infra.Data.Repositories;
-using VendaFacil.Service.ViewModel.Entities.Filtros;
+using VendaFacil.Service.Service;
 
 namespace VendaFacil.Tests.PesentationTests.ControllersTests.EmpresaControllerTests;
 
 [Trait("Controllers", "Empresa")]
-public class EmpresaControllerTest
+public class EmpresaControllerTest : EmpresaControllerBaseTests
 {
+    #region [Propriedades Privadas]
     private readonly IMapper _mapper;
-    private readonly Mock<IBaseRepository> _baseRepository;
+    #endregion
 
-    public EmpresaControllerTest()
+    #region [Construtor]
+    public EmpresaControllerTest() { }
+    #endregion
+
+    #region [Métodos Públicos]
+    [Fact(DisplayName = "Quando invocado deve obter um Ok Result")]
+    public void Post_QuandoInvocadoDeveObterOkResult()
     {
-        _baseRepository = new Mock<IBaseRepository>();
+        var _mockervice = new Mock<IBaseRepository>();
+        _mockervice.Setup(x => x.BuscarTodosPorQueryAsync<Empresa>(It.Is<string>(x => x.Contains("SELECT id as Codigo,")))).Returns(ObterEmpresas());
+
+        var service = new EmpresaService(_mockervice.Object, _mapper);
+
+        var teste = service.ObterTodos(ObterFiltroEmpresa());
     }
 
-    [Fact(DisplayName = "Deve gerar um nova instância")]
-    public void Post_ObterTodos()
-    {
-        var filtro = new filtroEmpresaViewModel
-        {
-            Nome = "Rodrigo",
-            CpfCnpj = "",
-            Telefone = "",
-            Email = ""
-        };
-        //_baseRepository.Setup(x => x.BuscarTodosPorQueryAsync(x => x.))
-        var controller = new EmpresasController(_baseRepository.Object, _mapper);
-
-        var teste = controller.PostObterTodos(filtro);
-
-        Assert.NotNull(teste);
-    }
+    #endregion
 }

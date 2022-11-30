@@ -31,7 +31,7 @@ namespace VendaFacil.Infra.Database
         private ParametrosConexao ObterParametrosConexao(bool RemoverNomeBanco = false) => new()
         {
             Servidor = Environment.GetEnvironmentVariable("SERVIDOR"),
-            NomeBanco = RemoverNomeBanco ? "" : Environment.GetEnvironmentVariable("BANCO").ToLower(),
+            NomeBanco = RemoverNomeBanco ? "" : Environment.GetEnvironmentVariable("BANCO")?.ToLower(),
             Porta = Environment.GetEnvironmentVariable("PORTA"),
             Usuario = Environment.GetEnvironmentVariable("USUARIO"),
             Senha = Environment.GetEnvironmentVariable("SENHA"),

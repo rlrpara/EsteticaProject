@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VendaFacil.Api.Model;
-using VendaFacil.Infra.Data.Repositories;
 using VendaFacil.Service.Interface;
-using VendaFacil.Service.Service;
 using VendaFacil.Service.ViewModel.Entities;
 using VendaFacil.Service.ViewModel.Entities.Filtros;
 

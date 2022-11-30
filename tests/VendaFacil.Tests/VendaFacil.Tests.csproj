@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\VendaFacil.Api\VendaFacil.Api.csproj" />
     <ProjectReference Include="..\..\src\VendaFacil.Infra.Data\VendaFacil.Infra.Data.csproj" />
   </ItemGroup>
 

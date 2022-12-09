@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Entities\Ficha\**" />
+    <EmbeddedResource Remove="Entities\Ficha\**" />
+    <None Remove="Entities\Ficha\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Estetica.CrossCutting.Util\Estetica.CrossCutting.Util.csproj" />
+  </ItemGroup>
+
+</Project>

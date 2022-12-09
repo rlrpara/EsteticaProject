@@ -3,10 +3,12 @@ using Estetica.Api.Model;
 using Estetica.Service.Interface;
 using Estetica.Service.ViewModel.Entities;
 using Estetica.Service.ViewModel.Entities.Filtros;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Estetica.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class UsuarioController : ControllerBase
     {
@@ -75,21 +77,26 @@ namespace Estetica.Api.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpDelete("Excluir")]
-        public IActionResult DeleteExcluir(int Codigo)
+        [HttpDelete("Excluir/{id}")]
+        public IActionResult DeleteExcluir(int id)
         {
-            if (Codigo.Equals(0))
+            if (id.Equals(0))
                 return Ok(new { Resultado = "Registro não encontrado" });
 
-            var consulta = _service.ObterPorCodigo(Codigo);
-
-            if (consulta.Ativo is not null && !(consulta.Ativo ?? false))
-                return Ok(new { Resultado = "Registro ja deletado" });
-
-            if (consulta is not null)
-                return Ok(_service.Deletar(consulta));
+            var consulta = _service.ObterPorCodigo(id);
+            
+            if(consulta is null)
+                return Ok(new { Resultado = "Registro não encontrado" });
             else
-                return BadRequest(new { Resultado = "Registro não encontrado" });
+            {
+                if (consulta is null && consulta?.Ativo is not null && !(consulta.Ativo ?? false))
+                    return Ok(new { Resultado = "Registro ja deletado" });
+
+                if (consulta is not null)
+                    return Ok(_service.Deletar(consulta));
+            }
+
+            return BadRequest(new { Resultado = "Registro não encontrado" });
         }
         #endregion
     }

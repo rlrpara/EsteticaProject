@@ -32,26 +32,15 @@ namespace Estetica.Service.Service
         }
         #endregion
 
-        public dynamic Authenticate(UsuarioAuthenticateRequestModel login)
+        public UsuarioAuthenticateResponseModel Authenticate(UsuarioAuthenticateRequestModel login)
         {
             var usuario = _service.Logar(_mapper.Map<Login>(ObterLogin(login))).Result;
 
             if (usuario is null || !usuario.Ativo)
                 return null;
 
-            var resultado = new UsuarioAuthenticateResponseModel(_mapper.Map<LoginViewModel>(usuario), TokenService.GenerateToken(usuario));
+            return new UsuarioAuthenticateResponseModel(_mapper.Map<LoginViewModel>(usuario), TokenService.GenerateToken(usuario));
 
-            var saida = new
-            {
-                Login = new
-                {
-                    usuario.Nome,
-                    usuario.Email,
-                },
-                resultado.Token
-            };
-
-            return saida;
         }
     }
 }

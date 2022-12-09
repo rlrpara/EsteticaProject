@@ -18,7 +18,7 @@ namespace Estetica.Api.Controllers
             if (string.IsNullOrWhiteSpace(login.Email) || string.IsNullOrWhiteSpace(login.Senha))
                 return $"Usuário/Senha não preenchido";
 
-            var resultado = _service.Authenticate(login);
+            UsuarioAuthenticateResponseModel resultado = _service.Authenticate(login);
 
             if (resultado is null)
                 return $"Usuário não encontrado.";

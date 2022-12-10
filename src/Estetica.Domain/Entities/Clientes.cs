@@ -246,7 +246,7 @@ namespace Estetica.Domain.Entities
 		}
 
         [Nota()]
-        [Column(name: "X_AREA_INTERESSE_SPA_CORPORAL", Order = 28)]
+        [Column(name: "X_APARELHO_APLICACAO_ATIVO", Order = 28)]
         public bool AparelhoAplicacaoAtivos
 		{
 			get { return _aparelhoAplicacaoAtivos; }

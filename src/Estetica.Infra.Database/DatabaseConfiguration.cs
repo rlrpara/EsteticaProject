@@ -168,6 +168,7 @@ namespace Estetica.Infra.Database
             Criar(ObterProcedureDropConstraint());
             Criar(_geradorDapper.CriarTabela<Empresa>(), false);
             Criar(_geradorDapper.CriarTabela<Usuario>(), false);
+            Criar(_geradorDapper.CriarTabela<Clientes>(), false);
         }
         private void InsereDadosPadroes()
         {

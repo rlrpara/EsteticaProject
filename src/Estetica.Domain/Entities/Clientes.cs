@@ -259,67 +259,67 @@ namespace Estetica.Domain.Entities
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_FRUTA", Order = 30)]
-        public int HabitosAlimentaresFruta { get; set; }
+        public bool HabitosAlimentaresFruta { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_FARINHA_BRANCA", Order = 31)]
-        public int HabitosAlimentaresFarinhaBranca { get; set; }
+        public bool HabitosAlimentaresFarinhaBranca { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_SEMENTE", Order = 32)]
-        public int HabitosAlimentaresSemente { get; set; }
+        public bool HabitosAlimentaresSemente { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_LEITE", Order = 32)]
-        public int HabitosAlimentaresLeite { get; set; }
+        public bool HabitosAlimentaresLeite { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_LEGUME", Order = 33)]
-        public int HabitosAlimentaresLegume { get; set; }
+        public bool HabitosAlimentaresLegume { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_DERIVADO_LEITE", Order = 34)]
-        public int HabitosAlimentaresDerivadoLeite { get; set; }
+        public bool HabitosAlimentaresDerivadoLeite { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_VERDURA", Order = 35)]
-        public int HabitosAlimentaresVerdura { get; set; }
+        public bool HabitosAlimentaresVerdura { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_ACUCAR", Order = 36)]
-        public int HabitosAlimentaresAcucar { get; set; }
+        public bool HabitosAlimentaresAcucar { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_FARINHA_INTEGRAL", Order = 37)]
-        public int HabitosAlimentaresFarinhaIntegral { get; set; }
+        public bool HabitosAlimentaresFarinhaIntegral { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_REFRIGERANTE", Order = 38)]
-        public int LiquidoRefrigerante { get; set; }
+        public bool LiquidoRefrigerante { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_BEBIDA_ALCOOLICA", Order = 39)]
-        public int LiquidoBebidaAlcolica { get; set; }
+        public bool LiquidoBebidaAlcolica { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_SUCO_INDUSTRIALIZADO", Order = 40)]
-        public int LiquidoSucoIndustrializado { get; set; }
+        public bool LiquidoSucoIndustrializado { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_CHA", Order = 41)]
-        public int LiquidoCha { get; set; }
+        public bool LiquidoCha { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_SUCO_NATURAL", Order = 42)]
-        public int LiquidoSucoNatural { get; set; }
+        public bool LiquidoSucoNatural { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_CHIMARRAO", Order = 43)]
-        public int LiquidoChimarrao { get; set; }
+        public bool LiquidoChimarrao { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_AGUA", Order = 44)]
-        public int LiquidoAgua { get; set; }
+        public bool LiquidoAgua { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_AGUA_QUANTIDADE_DIARIA", Order = 45)]

@@ -14,21 +14,24 @@ namespace Estetica.Service.AutoMapper
             CreateMap<filtroEmpresaViewModel, filtroEmpresa>();
             CreateMap<filtroPaginacaoViewModel, filtroPaginacao>();
             CreateMap<filtroUsuarioViewModel, filtroUsuario>();
+            CreateMap<filtroClientesViewModel, filtroClientes>();
 
             CreateMap<EmpresaViewModel, Empresa>();
             CreateMap<UsuarioViewModel, Usuario>();
             CreateMap<LoginViewModel, Login>();
+            CreateMap<ClientesViewModel, Clientes>();
             #endregion
-
 
 
             #region [DomainToViewModel]
             CreateMap<filtroEmpresa, filtroEmpresaViewModel>();
             CreateMap<filtroPaginacao, filtroPaginacaoViewModel>();
             CreateMap<filtroUsuario, filtroUsuarioViewModel>();
+            CreateMap<filtroClientes, filtroClientesViewModel>();
 
             CreateMap<Empresa, EmpresaViewModel>();
             CreateMap<Usuario, UsuarioViewModel>();
+            CreateMap<Clientes, ClientesViewModel>();
             CreateMap<Login, LoginViewModel>();
             #endregion
         }

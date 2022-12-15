@@ -1,23 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Estetica.Api.Model;
+﻿using Estetica.Api.Model;
 using Estetica.Service.Interface;
 using Estetica.Service.ViewModel.Entities;
 using Estetica.Service.ViewModel.Entities.Filtros;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Estetica.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmpresasController : ControllerBase
+    public class ClientesController : ControllerBase
     {
         #region [Propriedades Privadas]
-        private readonly IEmpresaService _service;
+        private readonly IClientesService _service;
         #endregion
 
         #region [Métodos Privados]
-        private int ObterTotalPaginas(filtroEmpresaViewModel filtro)
+        private int ObterTotalPaginas(filtroClientesViewModel filtro)
         {
-            var total = _service.ObterTotalRegistros(filtro) / filtro.QuantidadePorPagina;
+            var total = _service.ObterTotalRegistros(filtro).Equals(0) ? 0 : _service.ObterTotalRegistros(filtro) / filtro.QuantidadePorPagina;
+            if (total.Equals(0)) return 1;
+
             if ((_service.ObterTotalRegistros(filtro) % filtro.QuantidadePorPagina) > 0)
                 total += 1;
             return total.Equals(0) ? 1 : total;
@@ -25,19 +27,19 @@ namespace Estetica.Api.Controllers
         #endregion
 
         #region [Contrutor]
-        public EmpresasController(IEmpresaService empresaService) => _service = empresaService;
+        public ClientesController(IClientesService clientesService) => _service = clientesService;
         #endregion
 
         #region [Propriedades Públicas]
         [HttpPost("ObterTodos")]
-        public IActionResult PostObterTodos([FromBody] filtroEmpresaViewModel filtro)
+        public IActionResult PostObterTodos([FromBody] filtroClientesViewModel filtro)
         {
             var dadosRetorno = _service.ObterTodos(filtro);
 
             if (dadosRetorno is null)
                 return Ok(new { Resultado = "Registro não encontrado." });
 
-            var resultado = new ApiResult<EmpresaViewModel>();
+            var resultado = new ApiResult<ClientesViewModel>();
             resultado.AddPaginacao(filtro.PaginaAtual, filtro.QuantidadePorPagina, ObterTotalPaginas(filtro), _service.ObterTotalRegistros(filtro), dadosRetorno);
 
             return Ok(resultado);
@@ -51,14 +53,14 @@ namespace Estetica.Api.Controllers
             if (dadosRetorno is null)
                 return Ok(new { Resultado = "Registro não encontrado." });
 
-            var resultado = new ApiResult<EmpresaViewModel>();
-            resultado.AddPaginacao(1, 1, 1, 1, new List<EmpresaViewModel>() { dadosRetorno });
+            var resultado = new ApiResult<ClientesViewModel>();
+            resultado.AddPaginacao(1, 1, 1, 1, new List<ClientesViewModel>() { dadosRetorno });
 
             return Ok(resultado);
         }
 
         [HttpPost("Inserir")]
-        public IActionResult PostInserir([FromBody] EmpresaViewModel model)
+        public IActionResult PostInserir([FromBody] ClientesViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +73,7 @@ namespace Estetica.Api.Controllers
         }
 
         [HttpPut("Atualizar")]
-        public IActionResult PutAtualizar([FromBody] EmpresaViewModel model)
+        public IActionResult PutAtualizar([FromBody] ClientesViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +92,7 @@ namespace Estetica.Api.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpDelete("Excluir/{id}")]
+        [HttpDelete("excluir/{id}")]
         public IActionResult DeleteExcluir(int id)
         {
             if (id.Equals(0))

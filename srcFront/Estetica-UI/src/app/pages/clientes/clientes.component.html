@@ -1,0 +1,49 @@
+<mat-toolbar color="primary">
+  <span>Estética</span>
+</mat-toolbar>
+
+<div class="header">
+  <h1>Clientes</h1>
+  <button mat-fab color="primary" aria-label="Adicionar cliente" (click)="openDialog(null)">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<div class="table">
+  <table mat-table [dataSource]="clientes" class="mat-elevation-z8">
+    <ng-container matColumnDef="codigo">
+      <th mat-header-cell *matHeaderCellDef> Codigo </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.codigo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef> Nome' </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.nome}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nascimento">
+      <th mat-header-cell *matHeaderCellDef> Nascimento </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.nascimento | date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cpf">
+      <th mat-header-cell *matHeaderCellDef> CPF </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.cpf}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td mat-cell *matCellDef="let cliente">
+        <button mat-icon-button (click)="updateCliente(cliente)" color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteCliente(cliente.codigo)" color="primary">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

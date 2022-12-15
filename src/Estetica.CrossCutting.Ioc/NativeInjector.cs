@@ -16,6 +16,7 @@ namespace Estetica.CrossCutting.Ioc
             services.AddTransient<IEmpresaService, EmpresaService>();
             services.AddTransient<IUsuarioService, UsuarioService>();
             services.AddTransient<ILoginService, LoginServices>();
+            services.AddTransient<IClientesService, ClientesService>();
 
             #endregion
 
@@ -23,6 +24,7 @@ namespace Estetica.CrossCutting.Ioc
             services.AddTransient<IEmpresaRepository, EmpresaRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             services.AddTransient<ILoginRepository, LoginRepository>();
+            services.AddTransient<IClientesRepository, ClientesRepository>();
             services.AddTransient<IBaseRepository, BaseRepository>();
             #endregion
         }

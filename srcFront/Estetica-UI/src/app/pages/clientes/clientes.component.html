@@ -10,7 +10,7 @@
 </div>
 
 <div class="table">
-  <table mat-table [dataSource]="clientes" class="mat-elevation-z8">
+  <table mat-table [dataSource]="clientes.dados" class="mat-elevation-z8">
     <ng-container matColumnDef="codigo">
       <th mat-header-cell *matHeaderCellDef> Codigo </th>
       <td mat-cell *matCellDef="let cliente"> {{cliente.codigo}} </td>

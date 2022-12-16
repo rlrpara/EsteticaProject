@@ -1,3 +1,5 @@
+import { environment } from './../../../environments/environment.prod';
+import { RetornoModels } from './../../models/RetornoModels';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -15,7 +17,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ClientesService {
-  apiUrl = 'https://localhost:44304/api/clientes';
+
+  apiUrl = `${environment.urlApi}/clientes`;
 
   constructor(private http: HttpClient) { }
 
@@ -23,8 +26,8 @@ export class ClientesService {
     return this.http.get<ClientesModel>(`${this.apiUrl}/${id}`);
   }
 
-  obterTodos(filtro: filtroClienteModels): Observable<ClientesModel[]> {
-    return this.http.post<ClientesModel[]>(`${this.apiUrl}/obtertodos`, filtro);
+  obterTodos(filtro: filtroClienteModels): Observable<RetornoModels> {
+    return this.http.post<RetornoModels>(`${this.apiUrl}/obtertodos`, filtro);
   }
 
   inserir(clientes: ClientesModel): Observable<boolean> {

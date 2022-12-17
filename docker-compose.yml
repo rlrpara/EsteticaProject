@@ -12,13 +12,34 @@ services:
       USUARIO: ${USUARIO}
       SENHA: ${SENHA}
       BANCO: ${BANCO}
+      TIPOBANCO: ${TIPOBANCO}
     ports:
       - 5001:80
     expose:
-      - 6000
+      - 5001
+    networks:
+      rede_estetica:
+        ipv4_address: 173.25.0.2
+    restart: on-failure
+    depends_on:
+      - estetica_database
+
+  estetica_database:
+    image: postgres
+    container_name: estetica_database
+    environment:
+      POSTGRES_USER: ${USUARIO}
+      POSTGRES_PASSWORD: ${SENHA}
+      PGDATA: /data/postgres
+    ports:
+      - 5402:5432
+    expose:
+      - 5402
     networks:
       rede_estetica:
         ipv4_address: 173.25.0.3
+    volumes:
+       - /D/Databases/estetica_database/data:/var/lib/postgresql/data
     restart: on-failure
 
 networks:

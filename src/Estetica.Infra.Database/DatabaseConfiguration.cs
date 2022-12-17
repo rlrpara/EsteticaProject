@@ -35,7 +35,7 @@ namespace Estetica.Infra.Database
             Porta = Environment.GetEnvironmentVariable("PORTA"),
             Usuario = Environment.GetEnvironmentVariable("USUARIO"),
             Senha = Environment.GetEnvironmentVariable("SENHA"),
-            TipoBanco = Convert.ToInt32(Environment.GetEnvironmentVariable("TIPO_BANCO"))
+            TipoBanco = Convert.ToInt32(Environment.GetEnvironmentVariable("TIPOBANCO"))
         };
         private string ObterProcedureDropConstraint()
         {
@@ -116,42 +116,50 @@ namespace Estetica.Infra.Database
         }
         private bool ExisteBanco()
         {
-            _parametrosConexao = ObterParametrosConexao();
-
-            var sqlPesquisa = new StringBuilder();
-
-            switch ((ETipoBanco)_parametrosConexao.TipoBanco)
+            try
             {
-                case ETipoBanco.MySql:
-                    sqlPesquisa.AppendLine($"SHOW DATABASES LIKE '{_parametrosConexao.NomeBanco}';");
-                    break;
-                case ETipoBanco.SqlServer:
-                    sqlPesquisa.AppendLine($"SELECT NAME");
-                    sqlPesquisa.AppendLine($"  FROM MASTER.DBO.SYSDATABASES");
-                    sqlPesquisa.AppendLine($"WHERE NAME = N'{_parametrosConexao.NomeBanco}'");
-                    break;
-                case ETipoBanco.Firebird:
-                    break;
-                case ETipoBanco.Postgresql:
-                    sqlPesquisa.AppendLine($"SELECT DATNAME");
-                    sqlPesquisa.AppendLine($"  FROM PG_DATABASE");
-                    sqlPesquisa.AppendLine($" WHERE DATISTEMPLATE = false");
-                    sqlPesquisa.AppendLine($"   AND lower(DATNAME) = lower('{_parametrosConexao.NomeBanco}');");
+                _parametrosConexao = ObterParametrosConexao();
 
-                    break;
-                case ETipoBanco.SqLite:
-                    var caminho = Path.Combine(Directory.GetCurrentDirectory(), _parametrosConexao.NomeBanco ?? "");
-                    if (!File.Exists(caminho))
-                        sqlPesquisa.AppendLine($"");
-                    else
-                        sqlPesquisa.AppendLine($"SELECT 1;");
-                    break;
-                default:
-                    break;
+                var sqlPesquisa = new StringBuilder();
+
+                switch ((ETipoBanco)_parametrosConexao.TipoBanco)
+                {
+                    case ETipoBanco.MySql:
+                        sqlPesquisa.AppendLine($"SHOW DATABASES LIKE '{_parametrosConexao.NomeBanco}';");
+                        break;
+                    case ETipoBanco.SqlServer:
+                        sqlPesquisa.AppendLine($"SELECT NAME");
+                        sqlPesquisa.AppendLine($"  FROM MASTER.DBO.SYSDATABASES");
+                        sqlPesquisa.AppendLine($"WHERE NAME = N'{_parametrosConexao.NomeBanco}'");
+                        break;
+                    case ETipoBanco.Firebird:
+                        break;
+                    case ETipoBanco.Postgresql:
+                        sqlPesquisa.AppendLine($"SELECT DATNAME");
+                        sqlPesquisa.AppendLine($"  FROM PG_DATABASE");
+                        sqlPesquisa.AppendLine($" WHERE DATISTEMPLATE = false");
+                        sqlPesquisa.AppendLine($"   AND lower(DATNAME) = lower('{_parametrosConexao.NomeBanco}');");
+
+                        break;
+                    case ETipoBanco.SqLite:
+                        var caminho = Path.Combine(Directory.GetCurrentDirectory(), _parametrosConexao.NomeBanco ?? "");
+                        if (!File.Exists(caminho))
+                            sqlPesquisa.AppendLine($"");
+                        else
+                            sqlPesquisa.AppendLine($"SELECT 1;");
+                        break;
+                    default:
+                        break;
+                }
+
+                using var conexao = ConnectionConfiguration.AbrirConexao(ObterParametrosConexao(RemoverNomeBanco: true));
+                return conexao.Query<string>(sqlPesquisa.ToString()).ToList().Count > 0;
             }
-
-            using var conexao = ConnectionConfiguration.AbrirConexao(ObterParametrosConexao(RemoverNomeBanco: true));
-            return conexao.Query<string>(sqlPesquisa.ToString()).ToList().Count > 0;
+            catch (Exception ex)
+            {
+                _errorMessage = ex.Message;
+                return false;
+            }
         }
         private void Criar(string? sqlCondicao, bool removerNomeBanco = false)
         {
@@ -178,7 +186,6 @@ namespace Estetica.Infra.Database
             if (!ExisteDados<Usuario>())
                 Criar(_geradorDapper.GeralSqlInsertControles(ObterUsuarioPadrao()));
         }
-
         private bool ServidorAtivo()
         {
             try
@@ -238,9 +245,9 @@ namespace Estetica.Infra.Database
                 //else
                 //    throw new Exception($"Base de dados Offline/Erro. Erro: {_errorMessage}");
             }
-            catch (Exception ex)
+            catch
             {
-                throw new Exception(ex.Message);
+                throw new Exception(_errorMessage);
             }
         }
         #endregion

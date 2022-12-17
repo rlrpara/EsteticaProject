@@ -33,7 +33,7 @@ namespace Estetica.Infra.Data.Repositories
             var sqlPesquisa = new StringBuilder();
 
             sqlPesquisa.AppendLine($"SELECT COUNT(ID) as Total");
-            sqlPesquisa.AppendLine($"  FROM Clientes");
+            sqlPesquisa.AppendLine($"  FROM cliente");
             sqlPesquisa.AppendLine(ObterFiltros(filtro));
 
             return await _baseRepository.BuscarPorQueryAsync<int>(sqlPesquisa.ToString());

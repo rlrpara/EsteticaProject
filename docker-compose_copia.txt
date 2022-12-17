@@ -1,0 +1,48 @@
+version: '3.4'
+
+services:
+  estetica.api:
+    image: ${DOCKER_REGISTRY-}esteticaapi
+    build:
+      context: .
+      dockerfile: src/Estetica.Api/Dockerfile
+    environment:
+      SERVIDOR: ${SERVIDOR}
+      PORTA: ${PORTA}
+      USUARIO: ${USUARIO}
+      SENHA: ${SENHA}
+      BANCO: ${BANCO}
+    ports:
+      - 6000:80
+    expose:
+      - 6000
+    networks:
+      rede_estetica:
+        ipv4_address: 173.25.0.3
+    restart: on-failure
+
+  estetica.ui:
+    image: estetica-ui
+    container_name: estetica-ui
+    build:
+      context: srcFront/Estetica-UI
+      dockerfile: ./Dockerfile
+    ports:
+      - 4200:80
+    expose:
+      - 4200
+    restart: on-failure
+    depends_on:
+      - estetica.api
+    networks:
+      rede_estetica:
+        ipv4_address: 173.25.0.4
+
+networks:
+  rede_estetica:
+    name: rede_estetica
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 173.25.0.0/16
+         gateway: 173.25.0.1

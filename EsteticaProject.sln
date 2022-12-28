@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estetica.CrossCutting.Util"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{01E2DE41-E68E-433E-8376-46F94FDC2A87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estetica.Desktop", "src\Estetica.Desktop\Estetica.Desktop.csproj", "{59BE15EF-4958-45B3-BF85-AB789ACDCE7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{01E2DE41-E68E-433E-8376-46F94FDC2A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01E2DE41-E68E-433E-8376-46F94FDC2A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01E2DE41-E68E-433E-8376-46F94FDC2A87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BE15EF-4958-45B3-BF85-AB789ACDCE7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BE15EF-4958-45B3-BF85-AB789ACDCE7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59BE15EF-4958-45B3-BF85-AB789ACDCE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59BE15EF-4958-45B3-BF85-AB789ACDCE7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,6 +116,7 @@ Global
 		{728F79EC-07C4-40DA-B7CD-A609728DD10D} = {79204DB2-4619-4A9E-8888-34DA9F4761CE}
 		{6DD97096-A18C-4170-A5EC-53CA25A3BEDB} = {B3656C73-D970-4C98-9457-97FAE5195FF1}
 		{3BEF450D-77DC-4811-9CC2-606E77162E59} = {C5982963-091A-4C4E-80B7-38FF6E33DF1D}
+		{59BE15EF-4958-45B3-BF85-AB789ACDCE7B} = {530848E4-0C0E-4CA4-96AE-CA6247B5E576}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {17B99B0F-57DA-4760-980B-26C6121ED0EE}

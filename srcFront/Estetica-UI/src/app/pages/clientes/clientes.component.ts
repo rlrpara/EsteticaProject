@@ -53,20 +53,20 @@ export class ClientesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log(result);
-      if(result!= undefined){
+      if (result != undefined) {
       }
     });
   }
 
   updateCliente(clientesModel: ClientesModel) {
     this.openDialog(clientesModel);
-    if(this.clientes.dados.map(x => x.codigo).includes(clientesModel.codigo)){
+    if (this.clientes.dados.map(x => x.codigo).includes(clientesModel.codigo)) {
       this.clientesService.atualizar(clientesModel)
-      .subscribe(data => {
-        console.log(data);
-        const saida = data;
-      })
-    }else{
+        .subscribe(data => {
+          console.log(data);
+          const saida = data;
+        })
+    } else {
 
     }
 

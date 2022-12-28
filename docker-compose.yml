@@ -1,5 +1,8 @@
 version: '3.4'
 
+volumes:
+  data:
+
 services:
   estetica.api:
     image: ${DOCKER_REGISTRY-}esteticaapi
@@ -7,12 +10,12 @@ services:
       context: .
       dockerfile: src/Estetica.Api/Dockerfile
     environment:
-      SERVIDOR: ${SERVIDOR}
-      PORTA: ${PORTA}
-      USUARIO: ${USUARIO}
-      SENHA: ${SENHA}
-      BANCO: ${BANCO}
-      TIPOBANCO: ${TIPOBANCO}
+      - SERVIDOR = ${SERVIDOR}
+      - PORTA = ${PORTA}
+      - USUARIO = ${USUARIO}
+      - SENHA = ${SENHA}
+      - BANCO = ${BANCO}
+      - TIPOBANCO = ${TIPOBANCO}
     ports:
       - 5001:80
     expose:
@@ -25,21 +28,21 @@ services:
       - estetica_database
 
   estetica_database:
-    image: postgres
-    container_name: estetica_database
-    environment:
-      POSTGRES_USER: ${USUARIO}
-      POSTGRES_PASSWORD: ${SENHA}
-      PGDATA: /data/postgres
+    image: postgres:13
     ports:
       - 5402:5432
-    expose:
-      - 5402
+    container_name: estetica_database
+    environment:
+      - POSTGRES_USER = ${USUARIO}
+      - POSTGRES_PASSWORD = ${SENHA}
+      - PGDATA = /data/postgres
     networks:
       rede_estetica:
         ipv4_address: 173.25.0.3
     volumes:
-       - /D/Databases/estetica_database/data:/var/lib/postgresql/data
+       - data:/var/lib/postgresql/data
+       - type: tmpfs
+         target: /dev/shm
     restart: on-failure
 
 networks:

@@ -9,7 +9,7 @@
   </button>
 </div>
 
-<div class="table">
+<div class="table" *ngIf="clientes != null">
   <table mat-table [dataSource]="clientes.dados" class="mat-elevation-z8">
     <ng-container matColumnDef="codigo">
       <th mat-header-cell *matHeaderCellDef> Codigo </th>

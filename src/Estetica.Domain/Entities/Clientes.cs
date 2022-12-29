@@ -259,63 +259,63 @@ namespace Estetica.Domain.Entities
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_FRUTA", Order = 30)]
-        public bool HabitosAlimentaresFruta { get; set; }
+        public int HabitosAlimentaresFruta { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_FARINHA_BRANCA", Order = 31)]
-        public bool HabitosAlimentaresFarinhaBranca { get; set; }
+        public int HabitosAlimentaresFarinhaBranca { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_SEMENTE", Order = 32)]
-        public bool HabitosAlimentaresSemente { get; set; }
+        public int HabitosAlimentaresSemente { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_LEITE", Order = 32)]
-        public bool HabitosAlimentaresLeite { get; set; }
+        public int HabitosAlimentaresLeite { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_LEGUME", Order = 33)]
-        public bool HabitosAlimentaresLegume { get; set; }
+        public int HabitosAlimentaresLegume { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_DERIVADO_LEITE", Order = 34)]
-        public bool HabitosAlimentaresDerivadoLeite { get; set; }
+        public int HabitosAlimentaresDerivadoLeite { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_VERDURA", Order = 35)]
-        public bool HabitosAlimentaresVerdura { get; set; }
+        public int HabitosAlimentaresVerdura { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_ACUCAR", Order = 36)]
-        public bool HabitosAlimentaresAcucar { get; set; }
+        public int HabitosAlimentaresAcucar { get; set; }
 
         [Nota()]
         [Column(name: "HABITOS_ALIMENTARES_FARINHA_INTEGRAL", Order = 37)]
-        public bool HabitosAlimentaresFarinhaIntegral { get; set; }
+        public int HabitosAlimentaresFarinhaIntegral { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_REFRIGERANTE", Order = 38)]
-        public bool LiquidoRefrigerante { get; set; }
+        public int LiquidoRefrigerante { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_BEBIDA_ALCOOLICA", Order = 39)]
-        public bool LiquidoBebidaAlcolica { get; set; }
+        public int LiquidoBebidaAlcolica { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_SUCO_INDUSTRIALIZADO", Order = 40)]
-        public bool LiquidoSucoIndustrializado { get; set; }
+        public int LiquidoSucoIndustrializado { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_CHA", Order = 41)]
-        public bool LiquidoCha { get; set; }
+        public int LiquidoCha { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_SUCO_NATURAL", Order = 42)]
-        public bool LiquidoSucoNatural { get; set; }
+        public int LiquidoSucoNatural { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_CHIMARRAO", Order = 43)]
-        public bool LiquidoChimarrao { get; set; }
+        public int LiquidoChimarrao { get; set; }
 
         [Nota()]
         [Column(name: "LIQUIDO_AGUA", Order = 44)]
@@ -468,5 +468,9 @@ namespace Estetica.Domain.Entities
         [Nota()]
         [Column(name: "PESO_IDEAL", Order = 81)]
         public decimal PesoIdeal { get; set; }
-	}
+
+        [Nota(ChaveEstrangeira = "EMPRESA")]
+        [Column(name: "ID_EMPRESA", Order = 82)]
+        public int CodigoEmpresa { get; set; }
+    }
 }

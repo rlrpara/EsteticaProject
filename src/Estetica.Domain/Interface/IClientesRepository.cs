@@ -7,7 +7,8 @@ namespace Estetica.Domain.Interface
     {
         Task<Clientes> ObterPorCodigo(int codigo);
         Task<int> TotalRegistros(filtroClientes filtro);
-        Task<IEnumerable<Clientes>> ObterTodos(filtroClientes filtro);
+        IEnumerable<Clientes> ObterTodos(filtroClientes filtro);
+        Task<IEnumerable<Clientes>> ObterTodosAsync(filtroClientes filtro);
         Task<bool> ObterEntidade(Clientes Clientes);
         Task<bool> Inserir(Clientes Clientes);
         Task<bool> Atualizar(Clientes Clientes);

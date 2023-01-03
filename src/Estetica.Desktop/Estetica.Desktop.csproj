@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Estetica.Infra.Database\Estetica.Infra.Database.csproj" />
+    <ProjectReference Include="..\Estetica.Service\Estetica.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿using Estetica.Service.ViewModel.Entities;
+﻿using Estetica.Domain.Entities;
+using Estetica.Domain.Entities.Filtros;
+using Estetica.Service.ViewModel.Entities;
 using Estetica.Service.ViewModel.Entities.Filtros;
 
 namespace Estetica.Service.Interface
@@ -8,6 +10,7 @@ namespace Estetica.Service.Interface
         int ObterTotalRegistros(filtroClientesViewModel filtro);
         bool ObterEntidade(ClientesViewModel model);
         ClientesViewModel ObterPorCodigo(int codigo);
+        IEnumerable<Clientes> ObterTodos(filtroClientes filtro);
         IEnumerable<ClientesViewModel> ObterTodos(filtroClientesViewModel filtro);
         bool Inserir(ClientesViewModel model);
         bool Atualizar(ClientesViewModel model);

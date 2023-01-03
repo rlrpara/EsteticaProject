@@ -7,7 +7,9 @@
         Task<T> BuscarPorIdAsync<T>(int id) where T : class;
         Task<T> BuscarPorQueryAsync<T>(string query);
         Task<T> BuscarPorQueryGeradorAsync<T>(string? sqlWhere = null) where T : class;
+        IEnumerable<T> BuscarTodosPorQuery<T>(string? query = null) where T : class;
         Task<IEnumerable<T>> BuscarTodosPorQueryAsync<T>(string? query = null) where T : class;
+        IEnumerable<T> BuscarTodosPorQueryGerador<T>(string? sqlWhere = null) where T : class;
         Task<IEnumerable<T>> BuscarTodosPorQueryGeradorAsync<T>(string? sqlWhere = null) where T : class;
         Task<int> AdicionarAsync<T>(T entidade) where T : class;
         Task<int> AtualizarAsync<T>(int id, T entidade) where T : class;

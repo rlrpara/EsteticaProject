@@ -75,15 +75,20 @@ namespace Estetica.Infra.Data.Repositories
                 return default;
             }
         }
+        public IEnumerable<T> BuscarTodosPorQuery<T>(string? query = null) where T : class
+        {
+            using var conn = ObterConexao();
+            return conn.Query<T>(query, commandType: CommandType.Text);
+        }
         public async Task<IEnumerable<T>> BuscarTodosPorQueryAsync<T>(string? query = null) where T : class
         {
             using var conn = ObterConexao();
             return await conn.QueryAsync<T>(query, commandType: CommandType.Text);
         }
+        public IEnumerable<T> BuscarTodosPorQueryGerador<T>(string? sqlWhere = null) where T : class
+            => BuscarTodosPorQuery<T>(_geradorDapper.GeralSqlSelecaoControles<T>(sqlWhere));
         public async Task<IEnumerable<T>> BuscarTodosPorQueryGeradorAsync<T>(string? sqlWhere = null) where T : class
-        {
-            return await BuscarTodosPorQueryAsync<T>(_geradorDapper.GeralSqlSelecaoControles<T>(sqlWhere));
-        }
+            => await BuscarTodosPorQueryAsync<T>(_geradorDapper.GeralSqlSelecaoControles<T>(sqlWhere));
         public async Task<int> ExcluirAsync<T>(int id) where T : class
         {
             using var conn = ObterConexao();

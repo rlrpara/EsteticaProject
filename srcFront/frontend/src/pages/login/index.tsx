@@ -1,12 +1,12 @@
-import Head  from "next/head";
+import Head from "next/head";
 import styles from './login.module.scss';
 import LogoImg from '../../../public/logo.svg';
 import Image from 'next/image';
 import Input from "../../components/ui/Input";
 import Button from '../../components/ui/Button';
 
-export default function Login(){
-  return(
+export default function Login() {
+  return (
     <div>
       <Head>
         <title>Login</title>
@@ -21,6 +21,9 @@ export default function Login(){
 
             <Button type="submit" loadding={false} >Acessar</Button>
           </form>
+
+          <a className={styles.text}>Não possui uma conta? Cadastre-se</a>
+
         </div>
       </div>
     </div>

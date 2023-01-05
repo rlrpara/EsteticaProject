@@ -9,6 +9,12 @@
   --white: #fff;
   --back: #000;
 
+  --rosa-900: #DE7C9D;
+  --rosa-300: #F7D8E0;
+
+  --verde-900: #028F98;
+  --verde-300: #CFEBEF;
+
   --dark-900: #101026;
   --dark-700: #1d1d2e;
 
@@ -27,7 +33,7 @@ a{
 }
 
 body{
-  background: var(--dark-700);
+  background: var(--white);
 }
 
 body, input, textarea, select, button {

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from './login.module.scss';
-import LogoImg from '../../../public/logo.svg';
+import LogoImg from '../../../public/imagens/logo.png';
 import Image from 'next/image';
 import Input from "../../components/ui/Input";
 import Button from '../../components/ui/Button';

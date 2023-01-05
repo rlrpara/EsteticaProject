@@ -3,6 +3,7 @@ import styles from './login.module.scss';
 import LogoImg from '../../../public/logo.svg';
 import Image from 'next/image';
 import Input from "../../components/ui/Input";
+import Button from '../../components/ui/Button';
 
 export default function Login(){
   return(
@@ -15,7 +16,10 @@ export default function Login(){
 
         <div className={styles.login}>
           <form>
-            <Input />
+            <Input type="text" placeholder="Digite seu E-Mail" />
+            <Input type="password" placeholder="Digite sua senha" />
+
+            <Button type="submit" loadding={false} >Acessar</Button>
           </form>
         </div>
       </div>

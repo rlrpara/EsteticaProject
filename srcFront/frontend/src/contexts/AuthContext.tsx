@@ -50,10 +50,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const { codigo, nome, token } = response.data;
 
-      console.log(codigo);
-      console.log(nome);
-      console.log(token);
-
       setCookie(undefined, '@esteticaauth.token', token, {
         maxAge: 60 * 60 * 24 * 2,
         path: "/"
@@ -73,6 +69,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     } catch (err) {
       console.log('Erro ao acessar', err);
+      signOut();
     }
   }
 

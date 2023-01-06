@@ -11,6 +11,7 @@ namespace Estetica.Domain.Entities
         private string? _email;
         private string? _senha;
 
+
         [Nota(Indice = true)]
         [Column(name: "NOME", Order = 2)]
         public string? Nome

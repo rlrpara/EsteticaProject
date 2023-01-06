@@ -242,8 +242,8 @@ namespace Estetica.Infra.Database
 
                     ExecutarScripts();
                 }
-                //else
-                //    throw new Exception($"Base de dados Offline/Erro. Erro: {_errorMessage}");
+                else
+                    throw new Exception($"Base de dados Offline/Erro. Erro: {_errorMessage}");
             }
             catch
             {

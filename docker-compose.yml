@@ -10,12 +10,12 @@ services:
       context: .
       dockerfile: src/Estetica.Api/Dockerfile
     environment:
-      - SERVIDOR = ${SERVIDOR}
-      - PORTA = ${PORTA}
-      - USUARIO = ${USUARIO}
-      - SENHA = ${SENHA}
-      - BANCO = ${BANCO}
-      - TIPOBANCO = ${TIPOBANCO}
+      SERVIDOR : ${SERVIDOR}
+      PORTA : ${PORTA}
+      USUARIO : ${USUARIO}
+      SENHA : ${SENHA}
+      BANCO : ${BANCO}
+      TIPOBANCO : ${TIPOBANCO}
     ports:
       - 5001:80
     expose:
@@ -33,9 +33,9 @@ services:
       - 5402:5432
     container_name: estetica_database
     environment:
-      - POSTGRES_USER = ${USUARIO}
-      - POSTGRES_PASSWORD = ${SENHA}
-      - PGDATA = /data/postgres
+      POSTGRES_USER: ${USUARIO}
+      POSTGRES_PASSWORD : ${SENHA}
+      PGDATA: /data/postgres
     networks:
       rede_estetica:
         ipv4_address: 173.25.0.3

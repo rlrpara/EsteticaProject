@@ -13,17 +13,23 @@ namespace Estetica.Api.Controllers
         #endregion
 
         #region [Métodos Privados]
-        private string GetToken(UsuarioAuthenticateRequestModel login)
+        private dynamic GetToken(UsuarioAuthenticateRequestModel login)
         {
             if (string.IsNullOrWhiteSpace(login.Email) || string.IsNullOrWhiteSpace(login.Senha))
-                return $"Usuário/Senha não preenchido";
+                return BadRequest($"Usuário/Senha não preenchido");
 
             UsuarioAuthenticateResponseModel resultado = _service.Authenticate(login);
 
             if (resultado is null)
-                return $"Usuário não encontrado.";
+                return BadRequest($"Usuário não encontrado.");
 
-            return resultado.Token;
+            return new
+            { 
+                codigo = resultado.Login.Codigo,
+                email = resultado.Login.Email,
+                nome = resultado.Login.Nome,
+                token = resultado.Token
+            };
         }
         #endregion
 

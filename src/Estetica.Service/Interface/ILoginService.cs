@@ -1,4 +1,5 @@
 ﻿using Estetica.Service.ViewModel;
+using Estetica.Service.ViewModel.Entities;
 
 namespace Estetica.Service.Interface
 {

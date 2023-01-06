@@ -70,9 +70,9 @@ namespace Estetica.Infra.Data.Repositories
                 using var conn = ObterConexao();
                 return await conn.QueryFirstOrDefaultAsync<T>(_geradorDapper.GeralSqlSelecaoControles<T>(sqlWhere), commandType: CommandType.Text);
             }
-            catch
+            catch(Exception ex)
             {
-                return default;
+                throw new Exception(ex.Message);
             }
         }
         public IEnumerable<T> BuscarTodosPorQuery<T>(string? query = null) where T : class

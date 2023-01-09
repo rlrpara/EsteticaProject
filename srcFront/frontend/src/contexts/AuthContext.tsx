@@ -8,6 +8,7 @@ type AuthContextData = {
   isAuthenticated: boolean;
   signIn: (credentials: SignInProps) => Promise<void>;
   signOut: () => void;
+  signUp: (credentials: SignUpProps) => Promise<void>;
 }
 
 type UserProps = {
@@ -23,6 +24,12 @@ type SignInProps = {
 
 type AuthProviderProps = {
   children: ReactNode
+}
+
+type SignUpProps = {
+  nome: string;
+  email: string;
+  senha: string;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -73,9 +80,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function signUp({ nome, email, senha }: SignUpProps) {
+
+  }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut, signUp }}>
       {children}
     </AuthContext.Provider>
   )

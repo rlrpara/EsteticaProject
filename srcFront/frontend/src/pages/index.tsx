@@ -20,6 +20,13 @@ export default function Login() {
   async function handleLogin(event: FormEvent) {
     event.preventDefault();
 
+    if(email == '' || senha == ''){
+      alert('Preencha os dados');
+      return;
+    }
+
+    setLoading(true);
+
     let data = {
       email,
       senha
@@ -27,6 +34,7 @@ export default function Login() {
 
     await signIn(data);
 
+    setLoading(false);
   }
 
   return (
@@ -55,7 +63,7 @@ export default function Login() {
               onChange={(e) => setSenha(e.target.value)}
             />
 
-            <Button type="submit" loadding={false} >Acessar</Button>
+            <Button type="submit" loadding={loading} >Acessar</Button>
           </form>
 
           <Link href="/signup" className={styles.text}>

@@ -5,23 +5,23 @@ const routes: Routes = [
   { path: "", pathMatch: "full", redirectTo: "login" },
   {
     path: "login",
-    loadChildren: () => import('./pages/login/login-routing.module').then(x => x.LoginRoutingModule)
+    loadChildren: () => import('./pages/login/login.module').then(x => x.LoginModule)
   },
   {
     path: "cliente",
-    loadChildren: () => import('./pages/cliente/cliente-routing.module').then(x => x.ClienteRoutingModule)
+    loadChildren: () => import('./pages/cliente/cliente.module').then(x => x.ClienteModule)
   },
   {
     path: "empresa",
-    loadChildren: () => import('./pages/empresa/empresa-routing.module').then(x => x.EmpresaRoutingModule)
+    loadChildren: () => import('./pages/empresa/empresa.module').then(x => x.EmpresaModule)
   },
   {
     path: "mocimentacao",
-    loadChildren: () => import('./pages/movimentacao/movimentacao-routing.module').then(x => x.MovimentacaoRoutingModule)
+    loadChildren: () => import('./pages/movimentacao/movimentacao.module').then(x => x.MovimentacaoModule)
   },
   {
     path: "usuario",
-    loadChildren: () => import('./pages/usuario/usuario-routing.module').then(x => x.UsuarioRoutingModule)
+    loadChildren: () => import('./pages/usuario/usuario.module').then(x => x.UsuarioModule)
   },
   {
     path: "dashboard",

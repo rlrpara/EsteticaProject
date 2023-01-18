@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
+import { AppMaterialModule } from './../../shared/app-material/app-material.module';
 import { UsuarioRoutingModule } from './usuario-routing.module';
 
 
@@ -8,7 +9,8 @@ import { UsuarioRoutingModule } from './usuario-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    UsuarioRoutingModule
+    UsuarioRoutingModule,
+    AppMaterialModule
   ]
 })
 export class UsuarioModule { }

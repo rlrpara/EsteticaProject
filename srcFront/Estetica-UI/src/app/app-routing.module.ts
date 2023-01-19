@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { LayoutComponent } from './pages/layout/layout.component';
+
+
 const routes: Routes = [
-  { path: "", pathMatch: "full", redirectTo: "login" },
+  { path: "", pathMatch: "full", redirectTo: "layout" },
+  { path: "layout", component: LayoutComponent },
   {
     path: "login",
     loadChildren: () => import('./pages/login/login.module').then(x => x.LoginModule)
@@ -16,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/empresa/empresa.module').then(x => x.EmpresaModule)
   },
   {
-    path: "mocimentacao",
+    path: "movimentacao",
     loadChildren: () => import('./pages/movimentacao/movimentacao.module').then(x => x.MovimentacaoModule)
   },
   {

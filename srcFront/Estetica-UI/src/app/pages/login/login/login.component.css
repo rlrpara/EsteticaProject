@@ -36,7 +36,7 @@
 
 .container form .container-checkbox a {
   text-decoration: none;
-  color: blueviolet;
+  color: #038fa8;
 }
 
 .container form .container-botao{
@@ -49,6 +49,7 @@
 .container form .container-botao button {
   width: 100%;
   margin-bottom: 1em;
+  background-color: #038fa8;
 }
 
 .conteudo-login{

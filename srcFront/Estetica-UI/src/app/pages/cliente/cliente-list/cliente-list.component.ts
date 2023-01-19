@@ -1,3 +1,4 @@
+import { ClienteService } from './../services/cliente.service';
 import { Component, OnInit } from '@angular/core';
 
 import { ClienteLista } from './../model/clientelista';
@@ -7,18 +8,15 @@ import { ClienteLista } from './../model/clientelista';
   templateUrl: './cliente-list.component.html',
   styleUrls: ['./cliente-list.component.css']
 })
-export class ClienteListComponent implements OnInit {
+export class ClienteListComponent {
 
-  clientes: ClienteLista[] = [
-    { codigo: 1, nome: 'Rosenira Malato Colares', nascimento: '12/07/1974' },
-    { codigo: 2, nome: 'Ana Lívia da Silva Malato', nascimento: '12/07/2017' },
-  ];
+  clientes: ClienteLista[] = [];
   displayColumns = ['codigo', 'nome', 'nascimento', 'whatsapp', 'email'];
 
-  constructor() {
-  }
-
-  ngOnInit(): void {
+  constructor(
+    private clienteService: ClienteService
+    ) {
+    this.clientes = clienteService.ObterTodos();
   }
 
 }

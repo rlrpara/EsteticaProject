@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { AppMaterialModule } from './../../shared/app-material/app-material.module';
 import { ClienteRoutingModule } from './cliente-routing.module';
 
 
@@ -10,8 +9,7 @@ import { ClienteRoutingModule } from './cliente-routing.module';
   ],
   imports: [
     CommonModule,
-    ClienteRoutingModule,
-    AppMaterialModule
+    ClienteRoutingModule
   ]
 })
 export class ClienteModule { }

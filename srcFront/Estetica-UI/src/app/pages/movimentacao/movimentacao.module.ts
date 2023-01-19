@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { AppMaterialModule } from './../../shared/app-material/app-material.module';
 import { MovimentacaoRoutingModule } from './movimentacao-routing.module';
 
 
@@ -9,8 +8,7 @@ import { MovimentacaoRoutingModule } from './movimentacao-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    MovimentacaoRoutingModule,
-    AppMaterialModule
+    MovimentacaoRoutingModule
   ]
 })
 export class MovimentacaoModule { }

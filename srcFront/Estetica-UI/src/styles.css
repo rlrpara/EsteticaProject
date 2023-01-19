@@ -1,3 +1,6 @@
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';
+
 :root{
   --primary: #038fa8;
   --secondary: #d2e9ef;
@@ -7,12 +10,6 @@
   --body: #fff;
   --text-body: #4b4b4b;
 
-}
-
-
-* {
-  padding: 0;
-  margin: 0;
 }
 
 html, body{

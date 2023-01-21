@@ -24,7 +24,6 @@ export class ClienteListComponent implements OnInit {
   public set Nome(value: string) {
     this._nome = value;
     this.clientesFiltrados = this.Nome ? this.filtroCliente(this.Nome) : this.clientes;
-    console.log(this.clientesFiltrados);
   }
 
   widthImg = 150;
@@ -54,8 +53,7 @@ export class ClienteListComponent implements OnInit {
     filtrarPor = filtrarPor.toLocaleLowerCase();
 
     return this.clientes.filter(
-      (cliente: any) => cliente.nome.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
-                        cliente.whatsapp.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+      (cliente: any) => cliente.nome.toLocaleLowerCase().indexOf(filtrarPor) !== -1
     )
   }
 

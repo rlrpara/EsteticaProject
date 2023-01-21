@@ -33,7 +33,7 @@
   <tbody *ngIf="clientesFiltrados && clientesFiltrados.length > 0">
     <tr *ngFor="let cliente of clientesFiltrados">
       <td>
-        <img [collapse]="exibirImagem"
+        <img *ngIf="cliente.foto" [collapse]="exibirImagem"
           [isAnimated]="true"
           src="/assets/{{cliente.foto}}"
           alt="foto de {{cliente.nome}}"

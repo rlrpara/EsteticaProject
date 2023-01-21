@@ -2,20 +2,16 @@
 <hr>
 
 <div class="form-inline">
-  <div class="for-group mb-2">
+  <div class="for-group mb-2 form-container">
+    <label class="mr-2">Filtro</label>
     <input
       type="text"
       class="form-control mr-2"
       placeholder="buscar"
       [(ngModel)]="Nome"
       >
-    <button class="btn btn-outline-success">
-      Buscar
-    </button>
   </div>
 </div>
-
-<h3>Filtro: {{Nome}}</h3>
 
 <table class="table table-striped">
   <thead>
@@ -31,6 +27,7 @@
       <th>E-Mail</th>
       <th>Whatsapp</th>
       <th>Celular</th>
+      <th>Opções</th>
     </tr>
   </thead>
   <tbody *ngIf="clientesFiltrados && clientesFiltrados.length > 0">
@@ -48,6 +45,10 @@
       <td>{{cliente.email}}</td>
       <td>{{cliente.whatsapp}}</td>
       <td>{{cliente.celular}}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm mr-2">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+      </td>
     </tr>
   </tbody>
   <tfoot *ngIf="clientes.length === 0">

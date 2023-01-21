@@ -1,6 +1,11 @@
 export interface Retorno<T> {
+  paginacao: Paginacao;
+  dados: T;
+}
+
+export interface Paginacao {
   paginaAtual?: number;
   quantidadePorPagina?: number;
-  nome?: string;
-  dados?: T[];
+  totalPagina?: number;
+  totalRegistros?: number;
 }

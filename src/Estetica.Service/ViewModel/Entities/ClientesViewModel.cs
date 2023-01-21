@@ -6,84 +6,10 @@
         public string? Nome { get; set; }
         public DateTime? Nascimento { get; set; }
         public string? CPF { get; set; }
-        public string? Endereco { get; set; }
-        public string? Cidade { get; set; }
-        public string? UF { get; set; }
-        public string? CEP { get; set; }
-        public string? Telefone { get; set; }
+        public string? Whatsapp { get; set; }
         public string? Email { get; set; }
-        public string? Profissao { get; set; }
-        public string? Instagran { get; set; }
-        public int? EstadoCivil { get; set; }
-        public int? NumeroFilhos { get; set; }
-        public bool? ConheceuPeloFacebook { get; set; }
-        public bool? ConheceuPeloInstagran { get; set; }
-        public bool? ConheceuPelaInternet { get; set; }
-        public bool? Indicacao { get; set; }
-        public string? IndicacaoQuem { get; set; }
-        public bool? ConheceuOutros { get; set; }
-        public string? ConheceuOutrosQual { get; set; }
-        public bool? JaFezTratamentoEstetico { get; set; }
-        public string? JaFezTratamentoEsteticoQual { get; set; }
-        public bool? AreaInteresseEsculpeDetox { get; set; }
-        public bool? AreaInteresseEsculpe21 { get; set; }
-        public bool? SpaFacial { get; set; }
-        public bool? SpaCorporal { get; set; }
-        public bool? AparelhoAplicacaoAtivos { get; set; }
-        public int? HabitosAlimentaresFritura { get; set; }
-        public bool? HabitosAlimentaresFruta { get; set; }
-        public bool? HabitosAlimentaresFarinhaBranca { get; set; }
-        public bool? HabitosAlimentaresSemente { get; set; }
-        public bool? HabitosAlimentaresLeite { get; set; }
-        public bool? HabitosAlimentaresLegume { get; set; }
-        public bool? HabitosAlimentaresDerivadoLeite { get; set; }
-        public bool? HabitosAlimentaresVerdura { get; set; }
-        public bool? HabitosAlimentaresAcucar { get; set; }
-        public bool? HabitosAlimentaresFarinhaIntegral { get; set; }
-        public bool? LiquidoRefrigerante { get; set; }
-        public bool? LiquidoBebidaAlcolica { get; set; }
-        public bool? LiquidoSucoIndustrializado { get; set; }
-        public bool? LiquidoCha { get; set; }
-        public bool? LiquidoSucoNatural { get; set; }
-        public bool? LiquidoChimarrao { get; set; }
-        public bool? LiquidoAgua { get; set; }
-        public int? LiquidoAguaQuantidadeDiaria { get; set; }
-        public bool? AtividadeFisicaPraticaRegularmente { get; set; }
-        public int AtividadeFisicaPraticaRegularmenteQuantasVezesSemana { get; set; }
-        public string? AtividadeFisicaPraticaRegularmenteQuaisAtividades { get; set; }
-        public bool? AtividadeFisicaNaoPratica { get; set; }
-        public bool? AtividadeFisicaNuncaPraticou { get; set; }
-        public bool? SonoMenos6Horas { get; set; }
-        public bool? Sono6Horas { get; set; }
-        public bool? Sono8HorasOuMais { get; set; }
-        public bool? FuncionamentoIntestinoTodosDias { get; set; }
-        public bool? FuncionamentoIntestino3MaisSemana { get; set; }
-        public bool? FuncionamentoIntestino1Semana { get; set; }
-        public bool? RetencaoLiquido2Dia { get; set; }
-        public bool? RetencaoLiquidoMais2Dia { get; set; }
-        public bool? RetencaoLiquidoMais5Dia { get; set; }
-        public bool? MetodoContraceptivoNenhum { get; set; }
-        public bool? MetodoContraceptivoMirena { get; set; }
-        public bool? MetodoContraceptivoPilula { get; set; }
-        public bool? MetodoContraceptivoMenopausa { get; set; }
-        public bool? MetodoContraceptivoAdesivo { get; set; }
-        public bool? MetodoContraceptivoImplante { get; set; }
-        public bool? MetodoContraceptivoDiu { get; set; }
-        public string? MetodoContraceptivoAlgumaCirurgia { get; set; }
-        public bool? AcompanhamentoContinuoCardiologista { get; set; }
-        public bool? AcompanhamentoContinuoDermatologista { get; set; }
-        public bool? AcompanhamentoContinuoNutrologo { get; set; }
-        public bool? AcompanhamentoContinuoPsicologo { get; set; }
-        public bool? AcompanhamentoContinuoPsiquiatra { get; set; }
-        public bool? AcompanhamentoContinuoCoach { get; set; }
-        public bool? AcompanhamentoContinuoGinecologista { get; set; }
-        public bool? AcompanhamentoContinuoPersonalTrainer { get; set; }
-        public bool? AcompanhamentoContinuoTraumatologista { get; set; }
-        public bool? AcompanhamentoContinuoNutricionista { get; set; }
-        public string? MedicamentoUsoContinuo { get; set; }
-        public string? QuantoTempoPesoIdeal { get; set; }
-        public decimal? PesoAtual { get; set; }
-        public decimal? PesoIdeal { get; set; }
+        public string? Celular { get; set; }
+        public string? Foto { get; set; }
         public DateTime? DataCadastro { get; set; }
         public DateTime? DataAtualizacao { get; set; }
         public bool? Ativo { get; set; }

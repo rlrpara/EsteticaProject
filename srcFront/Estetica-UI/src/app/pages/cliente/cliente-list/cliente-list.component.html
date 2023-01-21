@@ -1,0 +1,60 @@
+<h2>Clientes</h2>
+<hr>
+
+<div class="form-inline">
+  <div class="for-group mb-2">
+    <input
+      type="text"
+      class="form-control mr-2"
+      placeholder="buscar"
+      [(ngModel)]="Nome"
+      >
+    <button class="btn btn-outline-success">
+      Buscar
+    </button>
+  </div>
+</div>
+
+<h3>Filtro: {{Nome}}</h3>
+
+<table class="table table-striped">
+  <thead>
+    <tr class="table-dark">
+      <th>
+        <button class="btn btn-outline-light btn-sm" (click)="alterarEstadoImagem()">
+          {{!exibirImagem ? 'ocultar' : 'mostrar'}}
+        </button>
+      </th>
+      <th>#</th>
+      <th>Nome</th>
+      <th>Nascimento</th>
+      <th>E-Mail</th>
+      <th>Whatsapp</th>
+      <th>Celular</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="clientesFiltrados && clientesFiltrados.length > 0">
+    <tr *ngFor="let cliente of clientesFiltrados">
+      <td>
+        <img [collapse]="exibirImagem"
+          [isAnimated]="true"
+          src="/assets/{{cliente.foto}}"
+          alt="foto de {{cliente.nome}}"
+          [style.width.px]="widthImg">
+      </td>
+      <td>{{cliente.codigo}}</td>
+      <td>{{cliente.nome}}</td>
+      <td>{{cliente.nascimento | date : 'dd/MM/yyyy'}}</td>
+      <td>{{cliente.email}}</td>
+      <td>{{cliente.whatsapp}}</td>
+      <td>{{cliente.celular}}</td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="clientes.length === 0">
+    <tr>
+      <td colspan="6" class="text-center">
+        <h4>Nenhum evento encontrado</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>

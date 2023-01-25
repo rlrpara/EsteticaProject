@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Retorno } from 'src/app/models/retornoPaginacao';
 
+import { ClienteLista } from '../model/clienteLista';
 import { FiltroCliente } from '../model/filtroCliente';
 import { ClienteService } from '../services/cliente.service';
 
@@ -10,10 +12,11 @@ import { ClienteService } from '../services/cliente.service';
 })
 export class ClienteListComponent implements OnInit {
 
-  clientes: any = [];
-  clientesFiltrados: any = [];
-  displayColumns = ['codigo', 'nome', 'nascimento', 'whatsapp', 'email'];
-  _nome = "";
+  private _nome = "";
+  private clientes: ClienteLista[] = [];
+
+  public clientesFiltrados: ClienteLista[] = [];
+  public displayColumns = ['codigo', 'nome', 'nascimento', 'whatsapp', 'email'];
 
   public get Nome(): string {
     return this._nome;
@@ -30,7 +33,7 @@ export class ClienteListComponent implements OnInit {
   filtro: FiltroCliente = {
     paginaAtual: 1,
     quantidadePorPagina: 50,
-    nome: ''
+    nome: this.Nome
   }
 
   constructor(
@@ -39,15 +42,10 @@ export class ClienteListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.clienteService.ObterTodos(this.filtro).subscribe(retorno => {
-      this.clientes = retorno.dados;
-      this.clientesFiltrados = this.clientes;
-    },
-    error => console.log(error)
-    );
+    this.obterTodos();
   }
 
-  filtroCliente(filtrarPor: string): any {
+  public filtroCliente(filtrarPor: string): ClienteLista[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
 
     return this.clientes.filter(
@@ -55,8 +53,18 @@ export class ClienteListComponent implements OnInit {
     )
   }
 
-  alterarEstadoImagem() {
+  public alterarEstadoImagem(): void {
     this.exibirImagem = !this.exibirImagem;
+  }
+
+  public obterTodos(): void {
+    this.clienteService.ObterTodos(this.filtro).subscribe({
+      next: (retorno: Retorno<ClienteLista[]>) => {
+        this.clientes = retorno.dados;
+        this.clientesFiltrados = this.clientes;
+      },
+      error: (error: any) => console.log(error)
+    });
   }
 
 }

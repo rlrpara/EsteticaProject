@@ -1,19 +1,19 @@
-import { FiltroCliente } from '../model/filtroCliente';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Retorno } from '../../../models/retornoPaginacao';
 import { ClienteLista } from '../model/clienteLista';
+import { FiltroCliente } from '../model/filtroCliente';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
 
-  baseUrl = "http://localhost:5001/api/clientes/obtertodos";
+  private baseUrl = "http://localhost:5001/api/clientes";
 
-  lista!: Retorno<ClienteLista[]>;
+  public lista!: Retorno<ClienteLista[]>;
 
   constructor(
     private http: HttpClient
@@ -21,7 +21,11 @@ export class ClienteService {
 
   }
 
-  ObterTodos(filtro: FiltroCliente): Observable<Retorno<ClienteLista[]>>{
-    return this.http.post<Retorno<ClienteLista[]>>(this.baseUrl, filtro);
+  public ObterTodos(filtro: FiltroCliente): Observable<Retorno<ClienteLista[]>>{
+    return this.http.post<Retorno<ClienteLista[]>>(`${this.baseUrl}/obtertodos`, filtro);
+  }
+
+  public ObterPorId(id: number): Observable<Retorno<ClienteLista[]>>{
+    return this.http.get<Retorno<ClienteLista[]>>(`${this.baseUrl}/${id}`);
   }
 }

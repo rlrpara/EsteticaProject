@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FiltroCliente } from '../../../modelApi/filtroCliente';
+import { FiltroCliente } from '../model/filtroCliente';
 import { ClienteService } from '../services/cliente.service';
 
 @Component({

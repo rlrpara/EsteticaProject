@@ -1,10 +1,10 @@
-import { FiltroCliente } from './../../../modelApi/filtroCliente';
+import { FiltroCliente } from '../model/filtroCliente';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Retorno } from './../../../modelApi/retorno';
-import { ClienteLista } from './../model/clientelista';
+import { Retorno } from '../../../models/retornoPaginacao';
+import { ClienteLista } from '../model/clienteLista';
 
 @Injectable({
   providedIn: 'root'

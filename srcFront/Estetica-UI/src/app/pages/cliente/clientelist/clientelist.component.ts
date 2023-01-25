@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FiltroCliente } from './../../../modelApi/filtroCliente';
-import { Retorno } from './../../../modelApi/retorno';
-import { ClienteLista } from './../model/clientelista';
-import { ClienteService } from './../services/cliente.service';
+import { FiltroCliente } from '../../../modelApi/filtroCliente';
+import { ClienteService } from '../services/cliente.service';
 
 @Component({
   selector: 'app-cliente-list',
-  templateUrl: './cliente-list.component.html',
-  styleUrls: ['./cliente-list.component.css']
+  templateUrl: './clientelist.component.html',
+  styleUrls: ['./clientelist.component.css']
 })
 export class ClienteListComponent implements OnInit {
 

@@ -8,7 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
-import { ClienteListComponent } from './pages/cliente/cliente-list/cliente-list.component';
+import { ClienteListComponent } from './pages/cliente/clientelist/clientelist.component';
 import { AppNgxBootstrapModule } from './shared/app-ngx-bootstrap/app-ngx-bootstrap.module';
 
 @NgModule({

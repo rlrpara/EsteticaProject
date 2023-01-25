@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ClienteListComponent } from './cliente-list/cliente-list.component';
+import { ClienteListComponent } from './clientelist/clientelist.component';
 
 const routes: Routes = [
   { path: '', component: ClienteListComponent }

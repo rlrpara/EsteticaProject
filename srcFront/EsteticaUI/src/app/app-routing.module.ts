@@ -19,6 +19,18 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./modules/DashboardModule/dashboard/dashboard.module').then(x => x.DashboardModule)
+      },
+      {
+        path: 'empresa',
+        loadChildren: () => import('./modules/EmpresaModule/empresa/empresa.module').then(x => x.EmpresaModule)
+      },
+      {
+        path: 'movimentacao',
+        loadChildren: () => import('./modules/MovimentacaoModule/movimentacao/movimentacao.module').then(x => x.MovimentacaoModule)
+      },
+      {
+        path: 'agenda',
+        loadChildren: () => import('./modules/AgendaModule/agenda/agenda.module').then(x => x.AgendaModule)
       }
     ]
   }

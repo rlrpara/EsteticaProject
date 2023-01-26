@@ -1,6 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
+import { AppMaterialModule } from './../../shared/app-material/app-material.module';
 import { ClientesRoutingModule } from './clientes-routing.module';
 import { ClientesComponent } from './clientes/clientes.component';
 
@@ -11,7 +13,9 @@ import { ClientesComponent } from './clientes/clientes.component';
   ],
   imports: [
     CommonModule,
-    ClientesRoutingModule
+    ClientesRoutingModule,
+    AppMaterialModule,
+    FormsModule
   ]
 })
 export class ClientesModule { }

@@ -2,18 +2,18 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { AppMaterialModule } from './../../shared/app-material/app-material.module';
-import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { EmpresaRoutingModule } from './empresa-routing.module';
+import { EmpresaComponent } from './empresa/empresa.component';
 
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    EmpresaComponent
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule,
+    EmpresaRoutingModule,
     AppMaterialModule
   ]
 })
-export class DashboardModule { }
+export class EmpresaModule { }

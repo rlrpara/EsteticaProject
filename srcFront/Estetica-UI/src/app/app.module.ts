@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
+import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { ClienteListComponent } from './pages/cliente/clientelist/clientelist.component';
 import { AppNgxBootstrapModule } from './shared/app-ngx-bootstrap/app-ngx-bootstrap.module';
 
@@ -15,7 +17,8 @@ import { AppNgxBootstrapModule } from './shared/app-ngx-bootstrap/app-ngx-bootst
   declarations: [
     AppComponent,
     ClienteListComponent,
-    NavComponent
+    NavComponent,
+    DateTimeFormatPipe,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { AppNgxBootstrapModule } from './shared/app-ngx-bootstrap/app-ngx-bootst
     AppNgxBootstrapModule,
     HttpClientModule,
     FormsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    TooltipModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

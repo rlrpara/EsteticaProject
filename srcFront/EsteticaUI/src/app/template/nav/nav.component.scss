@@ -1,0 +1,26 @@
+.toolbar-item-spacer {
+  flex: 1 1 auto;
+}
+
+.app-container {
+  height: 90%;
+  margin: 0;
+}
+.app-sidenav {
+  width: 230px;
+}
+.app-sidenav-content {
+  display: flex;
+  height: 100%;
+}
+
+.sidenav-list-item {
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  .icon {
+   font-size: 20px;
+   margin-right: 0.1rem;
+  }
+}

@@ -1,9 +1,10 @@
-import { Cliente } from './../models/cliente';
-import { ClienteService } from './../services/cliente.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { Cliente } from './../models/cliente';
+import { ClienteService } from './../services/cliente.service';
 
 @Component({
   selector: 'app-cliente-dialog',
@@ -13,85 +14,88 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ClienteDialogComponent implements OnInit {
 
   private valorSaida: number = 0;
-  public formGroup!: FormGroup;
-
-  private cliente: Cliente = {
-    nome: 'ana livia da silva malato',
-    cpfcnpj: '25741591523',
-    ativo: true
-  }
+  public formCliente!: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<ClienteDialogComponent>,
-    private fb: FormBuilder,
     private clienteService: ClienteService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private formBuilder: FormBuilder
   ){}
 
   ngOnInit(): void {
-      this.formGroup = this.fb.group({
-          codigo: ['', [Validators.nullValidator]],
-          numeroProntuario: ['', [Validators.nullValidator]],
-          numeroCartaoFidelidade: ['', [Validators.nullValidator]],
-          nome: ['', [Validators.required]],
-          nascimento: ['', [Validators.nullValidator]],
-          codigoTipoPessoa: ['', [Validators.nullValidator]],
-          cpfcnpj: ['', [Validators.required]],
-          orgaoEmissor: ['', [Validators.nullValidator]],
-          inscricaoMunicipal: ['', [Validators.nullValidator]],
-          inscricaoEstadual: ['', [Validators.nullValidator]],
-          whatsapp: ['', [Validators.nullValidator]],
-          email: ['', [Validators.nullValidator]],
-          celular: ['', [Validators.nullValidator]],
-          foto: ['', [Validators.nullValidator]],
-          cep: ['', [Validators.nullValidator]],
-          codigoTipoEndereco: ['', [Validators.nullValidator]],
-          endereco: ['', [Validators.nullValidator]],
-          numero: ['', [Validators.nullValidator]],
-          bairro: ['', [Validators.nullValidator]],
-          complemento: ['', [Validators.nullValidator]],
-          codigoUf: ['', [Validators.nullValidator]],
-          cidade: ['', [Validators.nullValidator]],
-          observacao: ['', [Validators.nullValidator]],
-          origemIndicacao: ['', [Validators.nullValidator]],
-          origemParcerias: ['', [Validators.nullValidator]],
-          origemProfissional: ['', [Validators.nullValidator]],
-          origemCliente: ['', [Validators.nullValidator]],
-          origemCampanha: ['', [Validators.nullValidator]],
-          codigoEstabelecimentoOrigem: ['', [Validators.nullValidator]],
-          origemMarketing: ['', [Validators.nullValidator]],
-          naturalidade: ['', [Validators.nullValidator]],
-          nomePai: ['', [Validators.nullValidator]],
-          nomeMae: ['', [Validators.nullValidator]],
-          profissao: ['', [Validators.nullValidator]],
-          localTrabalho: ['', [Validators.nullValidator]],
-          codigoSexo: ['', [Validators.nullValidator]],
-          codigoEstadoCivil: ['', [Validators.nullValidator]],
-          codigoTipoSnaguineo: ['', [Validators.nullValidator]],
-          codigoTipoCliente: ['', [Validators.nullValidator]],
-          dataCadastro: ['', [Validators.nullValidator]],
-          dataAtualizacao: ['', [Validators.nullValidator]],
-          ativo: ['', [Validators.nullValidator]],
-      })
+    this.criarForm();
+  }
+
+  criarForm(){
+    this.formCliente = this.formBuilder.group({
+      codigo: [null, [Validators.nullValidator]],
+      numeroProntuario: [null, [Validators.nullValidator]],
+      numeroCartaoFidelidade: ['', [Validators.nullValidator]],
+      nome: ['', [Validators.required]],
+      nascimento: ['', [Validators.nullValidator]],
+      codigoTipoPessoa: ['', [Validators.nullValidator]],
+      cpfcnpj: ['', [Validators.required]],
+      orgaoEmissor: ['', [Validators.nullValidator]],
+      inscricaoMunicipal: ['', [Validators.nullValidator]],
+      inscricaoEstadual: ['', [Validators.nullValidator]],
+      whatsapp: ['', [Validators.nullValidator]],
+      email: ['', [Validators.nullValidator]],
+      celular: ['', [Validators.nullValidator]],
+      foto: ['', [Validators.nullValidator]],
+      cep: ['', [Validators.nullValidator]],
+      codigoTipoEndereco: ['', [Validators.nullValidator]],
+      endereco: ['', [Validators.nullValidator]],
+      numero: ['', [Validators.nullValidator]],
+      bairro: ['', [Validators.nullValidator]],
+      complemento: ['', [Validators.nullValidator]],
+      codigoUf: ['', [Validators.nullValidator]],
+      cidade: ['', [Validators.nullValidator]],
+      observacao: ['', [Validators.nullValidator]],
+      origemIndicacao: ['', [Validators.nullValidator]],
+      origemParcerias: ['', [Validators.nullValidator]],
+      origemProfissional: ['', [Validators.nullValidator]],
+      origemCliente: ['', [Validators.nullValidator]],
+      origemCampanha: ['', [Validators.nullValidator]],
+      codigoEstabelecimentoOrigem: ['', [Validators.nullValidator]],
+      origemMarketing: ['', [Validators.nullValidator]],
+      naturalidade: ['', [Validators.nullValidator]],
+      nomePai: ['', [Validators.nullValidator]],
+      nomeMae: ['', [Validators.nullValidator]],
+      profissao: ['', [Validators.nullValidator]],
+      localTrabalho: ['', [Validators.nullValidator]],
+      codigoSexo: ['', [Validators.nullValidator]],
+      codigoEstadoCivil: ['', [Validators.nullValidator]],
+      codigoTipoSnaguineo: ['', [Validators.nullValidator]],
+      codigoTipoCliente: ['', [Validators.nullValidator]],
+      dataCadastro: [new Date().toLocaleDateString("pt-BR"), [Validators.nullValidator]],
+      dataAtualizacao: [new Date().toLocaleDateString("pt-BR"), [Validators.nullValidator]],
+      ativo: ['', [Validators.nullValidator]],
+    });
   }
 
   public cancel(): void {
     this.dialogRef.close();
-    this.formGroup.reset();
   }
 
   public Salvar(): void {
-    this.clienteService.Salvar(this.cliente).subscribe(result => {
-      this.valorSaida = result
-      console.log(this.valorSaida)
-      this.openSnackBar(this.valorSaida > 0 ? 'Registro salvo' : 'Erro ao salvar registro', 'Fechar');
-      this.dialogRef.close();
-      this.formGroup.reset();
+    console.log(this.formCliente.invalid);
+
+    if(this.formCliente.invalid) return;
+    var cliente = this.formCliente.getRawValue() as Cliente;
+
+    this.clienteService.Salvar(cliente).subscribe(result => {
+      this.valorSaida = result;
     });
+    this.openSnackBar(this.valorSaida > 0 ? 'Registro salvo' : 'Erro ao salvar registro', 'X');
+    this.dialogRef.close();
+    this.formCliente.reset();
   }
 
   openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action);
+    this._snackBar.open(message, action, {
+      duration: 1000
+    });
   }
   // public Salvar(): void {
   //   this.clienteService.Salvar(this.cliente).subscribe({

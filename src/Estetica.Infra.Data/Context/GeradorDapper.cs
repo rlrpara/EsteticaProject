@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text;
+using Estetica.CrossCutting.Util.ExtensionMethods;
 using Estetica.Domain.Entities.Base;
 using Estetica.Domain.ValueObject;
 using Estetica.Infra.Data.Enumerables;
@@ -103,14 +104,14 @@ namespace Estetica.Infra.Data.Context
             var propriedade = x.PropertyType.Name.ToLower();
 
             if (propriedade.Contains("string"))
-                return $"'{x.GetValue(entidade)}'";
+                return $"'{x.GetValue(entidade)?.ToString().RemoverAcentos()}'";
             else if (propriedade.Contains("datetime"))
                 return $"{(string.IsNullOrWhiteSpace(x.GetValue(entidade)?.ToString()) ? "null" : $"'{Convert.ToDateTime(x.GetValue(entidade)).ToString("yyyy-MM-dd HH:mm:ss")}'")}";
             else if (propriedade.Contains("nullable`1"))
                 if (x.PropertyType.FullName.ToLower().Contains("datetime"))
                     return $"{(string.IsNullOrWhiteSpace(x.GetValue(entidade)?.ToString()) ? "null" : $"'{Convert.ToDateTime(x.GetValue(entidade)).ToString("yyyy-MM-dd HH:mm:ss")}'")}";
                 else if (x.PropertyType.FullName.ToLower().Contains("string"))
-                    return $"{(string.IsNullOrWhiteSpace(x.GetValue(entidade)?.ToString()) ? "null" : $"'{x.GetValue(entidade)}'")}";
+                    return $"{(string.IsNullOrWhiteSpace(x.GetValue(entidade)?.ToString()) ? "null" : $"'{x.GetValue(entidade)?.ToString().RemoverAcentos()}'")}";
                 else
                     return $"{(string.IsNullOrWhiteSpace(x.GetValue(entidade)?.ToString()) ? "null" : x.GetValue(entidade))}";
             else

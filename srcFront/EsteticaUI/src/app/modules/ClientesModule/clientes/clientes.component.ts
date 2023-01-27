@@ -47,6 +47,7 @@ export class ClientesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.obterTodos();
       console.log('The dialog was closed');
     });
   }

@@ -12,6 +12,7 @@ import { Cliente } from './../models/cliente';
 })
 export class ClienteService {
   private baseUrl = "http://localhost:5001/api/clientes";
+  private baseUrlHomologacao = "https://localhost:44304/api/clientes";
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -36,6 +37,14 @@ export class ClienteService {
   }
 
   public Salvar(cliente: Cliente): Observable<number> {
-    return this.http.post<number>(`${this.baseUrl}/inserir`, cliente);
+    return this.http.post<number>(`${this.baseUrlHomologacao}/inserir`, cliente);
+  }
+
+  public Atualizar(cliente: Cliente): Observable<number> {
+    return this.http.put<number>(`${this.baseUrl}/atualizar`, cliente);
+  }
+
+  public Excluir(id: number): Observable<number>{
+    return this.http.delete<number>(`${this.baseUrl}/${id}`);
   }
 }

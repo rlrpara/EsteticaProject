@@ -1,4 +1,6 @@
 .form-group {
+  display: flex;
+  flex-direction: column;
   min-width: 150px;
   width: 100%;
 }

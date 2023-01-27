@@ -3,6 +3,7 @@ import { ClienteService } from './../services/cliente.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cliente-dialog',
@@ -13,12 +14,18 @@ export class ClienteDialogComponent implements OnInit {
 
   private valorSaida: number = 0;
   public formGroup!: FormGroup;
-  private cliente!: Cliente;
+
+  private cliente: Cliente = {
+    nome: 'ana livia da silva malato',
+    cpfcnpj: '25741591523',
+    ativo: true
+  }
 
   constructor(
     public dialogRef: MatDialogRef<ClienteDialogComponent>,
     private fb: FormBuilder,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private _snackBar: MatSnackBar
   ){}
 
   ngOnInit(): void {
@@ -76,10 +83,15 @@ export class ClienteDialogComponent implements OnInit {
   public Salvar(): void {
     this.clienteService.Salvar(this.cliente).subscribe(result => {
       this.valorSaida = result
+      console.log(this.valorSaida)
+      this.openSnackBar(this.valorSaida > 0 ? 'Registro salvo' : 'Erro ao salvar registro', 'Fechar');
+      this.dialogRef.close();
+      this.formGroup.reset();
     });
-    this.dialogRef.close();
-    this.formGroup.reset();
-    console.log(this.valorSaida)
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
   // public Salvar(): void {
   //   this.clienteService.Salvar(this.cliente).subscribe({

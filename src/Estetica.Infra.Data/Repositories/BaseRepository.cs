@@ -39,8 +39,15 @@ namespace Estetica.Infra.Data.Repositories
         #region [Métodos Públicos]
         public async Task<int> AdicionarAsync<T>(T entidade) where T : class
         {
-            using var conn = ObterConexao();
-            return await conn.ExecuteAsync(_geradorDapper.GeralSqlInsertControles(entidade));
+            try
+            {
+                using var conn = ObterConexao();
+                return await conn.ExecuteAsync(_geradorDapper.GeralSqlInsertControles(entidade));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public async Task<int> AtualizarAsync<T>(int id, T entidade) where T : class
         {

@@ -17,7 +17,6 @@ namespace Estetica.Infra.Data.Repositories
             var sqlPesquisa = new StringBuilder();
 
             sqlPesquisa.AppendLine($" WHERE nome ilike '%{filtro.Nome}%'");
-            sqlPesquisa.AppendLine($"   AND ativo = true");
 
             return sqlPesquisa.ToString();
         }
@@ -116,11 +115,17 @@ namespace Estetica.Infra.Data.Repositories
         {
             var sqlPesquisa = new StringBuilder();
 
-            sqlPesquisa.AppendLine($" (nome = '{clientes.Nome}'");
+            sqlPesquisa.AppendLine($" nome = '{clientes.Nome}'");
 
             return await _baseRepository.BuscarPorQueryGeradorAsync<Usuario>(sqlPesquisa.ToString()) is not null;
         }
-        public async Task<bool> Inserir(Clientes clientes) => await _baseRepository.AdicionarAsync(clientes) > 0;
+        public async Task<bool> Inserir(Clientes clientes)
+        {
+            clientes.DataCadastro ??= DateTime.Now;
+            clientes.DataAtualizacao ??= DateTime.Now;
+
+            return await _baseRepository.AdicionarAsync(clientes) > 0;
+        }
         public async Task<bool> Atualizar(Clientes clientes) => await _baseRepository.AtualizarAsync(clientes.Codigo, clientes) > 0;
         #endregion
     }

@@ -105,16 +105,16 @@ namespace Estetica.Infra.Data.Context
             if (propriedade.Contains("string"))
                 return $"'{x.GetValue(entidade)}'";
             else if (propriedade.Contains("datetime"))
-                return $"'{Convert.ToDateTime(x.GetValue(entidade)):yyyy-MM-dd HH:mm:ss}'";
+                return $"{(string.IsNullOrWhiteSpace(x.GetValue(entidade)?.ToString()) ? "null" : $"'{Convert.ToDateTime(x.GetValue(entidade)).ToString("yyyy-MM-dd HH:mm:ss")}'")}";
             else if (propriedade.Contains("nullable`1"))
                 if (x.PropertyType.FullName.ToLower().Contains("datetime"))
-                    return $"'{Convert.ToDateTime(x.GetValue(entidade)):yyyy-MM-dd HH:mm:ss}'";
+                    return $"{(string.IsNullOrWhiteSpace(x.GetValue(entidade)?.ToString()) ? "null" : $"'{Convert.ToDateTime(x.GetValue(entidade)).ToString("yyyy-MM-dd HH:mm:ss")}'")}";
                 else if (x.PropertyType.FullName.ToLower().Contains("string"))
-                    return $"'{x.GetValue(entidade)}'";
+                    return $"{(string.IsNullOrWhiteSpace(x.GetValue(entidade)?.ToString()) ? "null" : $"'{x.GetValue(entidade)}'")}";
                 else
-                    return $"{x.GetValue(entidade)}";
+                    return $"{(string.IsNullOrWhiteSpace(x.GetValue(entidade)?.ToString()) ? "null" : x.GetValue(entidade))}";
             else
-                return $"{x.GetValue(entidade)}";
+                return $"{(string.IsNullOrWhiteSpace(x.GetValue(entidade)?.ToString()) ? "null" : x.GetValue(entidade))}";
         }
         private string ObterValorInsert<T>(T entidade) where T : class
             => string.Join($", ", ObterListaPropriedadesClasse(entidade).ToList()

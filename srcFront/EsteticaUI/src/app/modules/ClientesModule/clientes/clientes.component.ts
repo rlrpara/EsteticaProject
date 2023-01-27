@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ClienteLista } from '../models/clienteLista';
-import { Retorno } from './../../../interface/retornoPaginacao';
-import { ClienteService } from './../../services/cliente.service';
-import { FiltroCliente } from './../models/filtroCliente';
+import { FiltroCliente } from '../models/filtroCliente';
+import { Retorno } from './../../models/retornoPaginacao';
+import { ClienteDialogComponent } from './../cliente-dialog/cliente-dialog.component';
+import { ClienteService } from './../services/cliente.service';
 
 @Component({
   selector: 'app-clientes',
@@ -33,9 +35,20 @@ export class ClientesComponent implements OnInit {
   }
 
   constructor(
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    public dialog: MatDialog
   ) {
 
+  }
+
+  novoCliente(): void {
+    const dialogRef = this.dialog.open(ClienteDialogComponent, {
+      minWidth: '72%',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   ngOnInit(): void {

@@ -1,16 +1,23 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ClienteLista } from '../clientes/models/clienteLista';
-import { Retorno } from './../../interface/retornoPaginacao';
-import { FiltroCliente } from './../clientes/models/filtroCliente';
+import { Retorno } from '../../models/retornoPaginacao';
+import { ClienteLista } from '../models/clienteLista';
+import { FiltroCliente } from '../models/filtroCliente';
+import { Cliente } from './../models/cliente';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
   private baseUrl = "http://localhost:5001/api/clientes";
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-type': 'application/json'
+    })
+  }
 
   public lista!: Retorno<ClienteLista[]>;
 
@@ -26,5 +33,9 @@ export class ClienteService {
 
   public ObterPorId(id: number): Observable<Retorno<ClienteLista[]>>{
     return this.http.get<Retorno<ClienteLista[]>>(`${this.baseUrl}/${id}`);
+  }
+
+  public Salvar(cliente: Cliente): Observable<number> {
+    return this.http.post<number>(`${this.baseUrl}/inserir`, cliente);
   }
 }

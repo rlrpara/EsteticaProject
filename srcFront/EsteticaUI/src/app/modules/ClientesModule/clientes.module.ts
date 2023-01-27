@@ -1,21 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AppMaterialModule } from './../../shared/app-material/app-material.module';
+import { AppMaterialModule } from './../shared/app-material/app-material.module';
+import { ClienteDialogComponent } from './cliente-dialog/cliente-dialog.component';
 import { ClientesRoutingModule } from './clientes-routing.module';
 import { ClientesComponent } from './clientes/clientes.component';
 
 
 @NgModule({
   declarations: [
-    ClientesComponent
+    ClientesComponent,
+    ClienteDialogComponent
   ],
   imports: [
     CommonModule,
     ClientesRoutingModule,
     AppMaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ClientesModule { }

@@ -37,17 +37,17 @@ namespace Estetica.Infra.Data.Repositories
 
             return await _baseRepository.BuscarPorQueryAsync<int>(sqlPesquisa.ToString());
         }
-        public async Task<Clientes> ObterPorCodigo(int codigo) => await _baseRepository.BuscarPorIdAsync<Clientes>(codigo);
-        public IEnumerable<Clientes> ObterTodos(filtroClientes filtro)
+        public async Task<Cliente> ObterPorCodigo(int codigo) => await _baseRepository.BuscarPorIdAsync<Cliente>(codigo);
+        public IEnumerable<Cliente> ObterTodos(filtroClientes filtro)
         {
             var sqlPesquisa = new StringBuilder();
 
             sqlPesquisa.AppendLine($" nome ilike '%{filtro.Nome}%'");
             sqlPesquisa.AppendLine($" AND ativo = true");
 
-            return _baseRepository.BuscarTodosPorQueryGerador<Clientes>(sqlPesquisa.ToString());
+            return _baseRepository.BuscarTodosPorQueryGerador<Cliente>(sqlPesquisa.ToString());
         }
-        public async Task<IEnumerable<Clientes>> ObterTodosAsync(filtroClientes filtro)
+        public async Task<IEnumerable<Cliente>> ObterTodosAsync(filtroClientes filtro)
         {
             var sqlPesquisa = new StringBuilder();
 
@@ -109,9 +109,9 @@ namespace Estetica.Infra.Data.Repositories
             sqlPesquisa.AppendLine($"");
             sqlPesquisa.AppendLine($"SELECT * FROM tmp_table;");
 
-            return await _baseRepository.BuscarTodosPorQueryAsync<Clientes>(sqlPesquisa.ToString().Trim());
+            return await _baseRepository.BuscarTodosPorQueryAsync<Cliente>(sqlPesquisa.ToString().Trim());
         }
-        public async Task<bool> ObterEntidade(Clientes clientes)
+        public async Task<bool> ObterEntidade(Cliente clientes)
         {
             var sqlPesquisa = new StringBuilder();
 
@@ -119,14 +119,14 @@ namespace Estetica.Infra.Data.Repositories
 
             return await _baseRepository.BuscarPorQueryGeradorAsync<Usuario>(sqlPesquisa.ToString()) is not null;
         }
-        public async Task<bool> Inserir(Clientes clientes)
+        public async Task<bool> Inserir(Cliente clientes)
         {
             clientes.DataCadastro ??= DateTime.Now;
             clientes.DataAtualizacao ??= DateTime.Now;
 
             return await _baseRepository.AdicionarAsync(clientes) > 0;
         }
-        public async Task<bool> Atualizar(Clientes clientes) => await _baseRepository.AtualizarAsync(clientes.Codigo, clientes) > 0;
+        public async Task<bool> Atualizar(Cliente clientes) => await _baseRepository.AtualizarAsync(clientes.Codigo, clientes) > 0;
         #endregion
     }
 }

@@ -1,269 +1,219 @@
 <h1 mat-dialog-title>Novo Cliente</h1>
 <div mat-dialog-content>
   <form class="form-group" [formGroup]="formCliente">
-    <mat-form-field appearance="fill" style="margin-top: 5px;">
-      <mat-label>Codigo</mat-label>
-      <input matInput placeholder="Código"
-        formControlName="codigo"
-        name="codigo">
-    </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Nº prontuário</mat-label>
-      <input matInput placeholder="Número do prontuário"
-        formControlName="numeroProntuario"
-        name="numeroProntuario">
-    </mat-form-field>
+    <div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Nº Cartão Fidelidade</mat-label>
-      <input matInput placeholder="Número do Cartao Fidelidade"
-        formControlName="numeroCartaoFidelidade"
+      <mat-form-field appearance="fill" style="margin-top: 5px;">
+        <mat-label>Codigo</mat-label>
+        <input matInput placeholder="Código" formControlName="codigo" name="codigo" readonly>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Nº prontuário</mat-label>
+        <input matInput placeholder="Número do prontuário" formControlName="numeroProntuario" name="numeroProntuario">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Nº Cartão Fidelidade</mat-label>
+        <input matInput placeholder="Número do Cartao Fidelidade" formControlName="numeroCartaoFidelidade"
         name="numeroCartaoFidelidade">
-    </mat-form-field>
+      </mat-form-field>
+
+    </div>
 
     <mat-form-field appearance="outline">
       <mat-label>Nome</mat-label>
-      <input matInput placeholder="Nome"
-        formControlName="nome"
-        name="nome">
+      <input matInput placeholder="Nome" formControlName="nome" name="nome">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Data de Nascimento</mat-label>
-      <input matInput placeholder="Data de nascimento"
-        formControlName="nascimento"
-        name="nascimento">
+      <input matInput placeholder="Data de nascimento" formControlName="nascimento" name="nascimento">
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>codigoTipoPessoa</mat-label>
-      <input matInput placeholder="Tipo da pessoa"
-        formControlName="codigoTipoPessoa"
-        name="codigoTipoPessoa">
-    </mat-form-field>
+    <div style="display: flex; flex-direction: row;">
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo Pessoa</mat-label>
+        <mat-select placeholder="">
+          <mat-option value="1">Física</mat-option>
+          <mat-option value="2">Jurídica</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>cpfcnpj</mat-label>
-      <input matInput placeholder="Cpf/Cnpj"
-        formControlName="cpfcnpj"
-        name="cpfcnpj">
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>cpfcnpj</mat-label>
+        <input matInput placeholder="Cpf/Cnpj" formControlName="cpfcnpj" name="cpfcnpj">
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>orgaoEmissor</mat-label>
-      <input matInput placeholder="Órgão emissor"
-        formControlName="orgaoEmissor"
-        name="orgaoEmissor">
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Orgão Emissor</mat-label>
+        <mat-select placeholder="">
+          <mat-option value="1">Teste</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>inscricaoMunicipal</mat-label>
-      <input matInput  placeholder="IM"
-        formControlName="inscricaoMunicipal"
-        name="inscricaoMunicipal">
-    </mat-form-field>
+    <div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>IM</mat-label>
+        <input matInput placeholder="IM" formControlName="inscricaoMunicipal" name="inscricaoMunicipal">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>IE</mat-label>
+        <input matInput placeholder="IE" formControlName="inscricaoEstadual" name="inscricaoEstadual">
+      </mat-form-field>
+
+    </div>
 
     <mat-form-field appearance="outline">
       <mat-label>whatsapp</mat-label>
-      <input matInput placeholder="Whatsapp"
-        formControlName="whatsapp"
-        name="whatsapp">
+      <input matInput placeholder="Whatsapp" formControlName="whatsapp" name="whatsapp">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>email</mat-label>
-      <input matInput  placeholder="Ex: email@empresa.com.br"
-        formControlName="email"
-        name="email">
+      <input matInput placeholder="Ex: email@empresa.com.br" formControlName="email" name="email">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>celular</mat-label>
-      <input matInput placeholder="Nº celular com ddd"
-        formControlName="celular"
-        name="celular">
+      <input matInput placeholder="Nº celular com ddd" formControlName="celular" name="celular">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>foto</mat-label>
-      <input matInput placeholder="Foto"
-        formControlName="foto"
-        name="foto">
+      <input matInput placeholder="Foto" formControlName="foto" name="foto">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>cep</mat-label>
-      <input matInput placeholder="CEP"
-        formControlName="cep"
-        name="cep">
+      <input matInput placeholder="CEP" formControlName="cep" name="cep">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>codigoTipoEndereco</mat-label>
-      <input matInput placeholder="Código tipo de endereço"
-        formControlName="codigoTipoEndereco"
+      <input matInput placeholder="Código tipo de endereço" formControlName="codigoTipoEndereco"
         name="codigoTipoEndereco">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>endereco</mat-label>
-      <input matInput placeholder="Endereço"
-        formControlName="endereco"
-        name="endereco">
+      <input matInput placeholder="Endereço" formControlName="endereco" name="endereco">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>numero</mat-label>
-      <input matInput placeholder="Número"
-        formControlName="numero"
-        name="numero">
+      <input matInput placeholder="Número" formControlName="numero" name="numero">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>bairro</mat-label>
-      <input matInput placeholder="Bairro"
-        formControlName="bairro"
-        name="bairro">
+      <input matInput placeholder="Bairro" formControlName="bairro" name="bairro">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>complemento</mat-label>
-      <input matInput placeholder="Complemento"
-        formControlName="complemento"
-        name="complemento">
+      <input matInput placeholder="Complemento" formControlName="complemento" name="complemento">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>codigoUf</mat-label>
-      <input matInput placeholder="Código UF"
-        formControlName="codigoUf"
-        name="codigoUf">
+      <input matInput placeholder="Código UF" formControlName="codigoUf" name="codigoUf">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>cidade</mat-label>
-      <input matInput placeholder="Cpf/Cnpj"
-        formControlName="cidade"
-        name="cidade">
+      <input matInput placeholder="Cpf/Cnpj" formControlName="cidade" name="cidade">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>observacao</mat-label>
-      <input matInput placeholder="Observação"
-        formControlName="observacao"
-        name="observacao">
+      <input matInput placeholder="Observação" formControlName="observacao" name="observacao">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>origemIndicacao</mat-label>
-      <input matInput placeholder="Origem da indicação"
-        formControlName="origemIndicacao"
-        name="origemIndicacao">
+      <input matInput placeholder="Origem da indicação" formControlName="origemIndicacao" name="origemIndicacao">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>origemParcerias</mat-label>
-      <input matInput placeholder="Origem parcerias"
-        formControlName="origemParcerias"
-        name="origemParcerias">
+      <input matInput placeholder="Origem parcerias" formControlName="origemParcerias" name="origemParcerias">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>origemProfissional</mat-label>
-      <input matInput placeholder="Origem profissional"
-        formControlName="origemProfissional"
-        name="origemProfissional">
+      <input matInput placeholder="Origem profissional" formControlName="origemProfissional" name="origemProfissional">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>origemCliente</mat-label>
-      <input matInput placeholder="Origem do Cliente"
-        formControlName="origemCliente"
-        name="origemCliente">
+      <input matInput placeholder="Origem do Cliente" formControlName="origemCliente" name="origemCliente">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>origemCampanha</mat-label>
-      <input matInput placeholder="Origem Campanha"
-        formControlName="origemCampanha"
-        name="origemCampanha">
+      <input matInput placeholder="Origem Campanha" formControlName="origemCampanha" name="origemCampanha">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>codigoEstabelecimentoOrigem</mat-label>
-      <input matInput placeholder="Código do estabelecimento de origem"
-        formControlName="codigoEstabelecimentoOrigem"
+      <input matInput placeholder="Código do estabelecimento de origem" formControlName="codigoEstabelecimentoOrigem"
         name="codigoEstabelecimentoOrigem">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>origemMarketing</mat-label>
-      <input matInput placeholder="Origem do Marketing"
-        formControlName="origemMarketing"
-        name="origemMarketing">
+      <input matInput placeholder="Origem do Marketing" formControlName="origemMarketing" name="origemMarketing">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>naturalidade</mat-label>
-      <input matInput placeholder="Naturalidade"
-        formControlName="naturalidade"
-        name="naturalidade">
+      <input matInput placeholder="Naturalidade" formControlName="naturalidade" name="naturalidade">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>nomePai</mat-label>
-      <input matInput placeholder="Nome do pai"
-        formControlName="nomePai"
-        name="nomePai">
+      <input matInput placeholder="Nome do pai" formControlName="nomePai" name="nomePai">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>nomeMae</mat-label>
-      <input matInput placeholder="Nome da mãe"
-        formControlName="nomeMae"
-        name="nomeMae">
+      <input matInput placeholder="Nome da mãe" formControlName="nomeMae" name="nomeMae">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>profissao</mat-label>
-      <input matInput placeholder="Profissão"
-        formControlName="profissao"
-        name="profissao">
+      <input matInput placeholder="Profissão" formControlName="profissao" name="profissao">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>localTrabalho</mat-label>
-      <input matInput placeholder="Local de Trabalho"
-        formControlName="localTrabalho"
-        name="localTrabalho">
+      <input matInput placeholder="Local de Trabalho" formControlName="localTrabalho" name="localTrabalho">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>codigoSexo</mat-label>
-      <input matInput placeholder="Código do sexo"
-        formControlName="codigoSexo"
-        name="codigoSexo">
+      <input matInput placeholder="Código do sexo" formControlName="codigoSexo" name="codigoSexo">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>codigoEstadoCivil</mat-label>
-      <input matInput placeholder="Código do estado civil"
-        formControlName="codigoEstadoCivil"
-        name="codigoEstadoCivil">
+      <input matInput placeholder="Código do estado civil" formControlName="codigoEstadoCivil" name="codigoEstadoCivil">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>codigoTipoSnaguineo</mat-label>
-      <input matInput placeholder="Código do tipo sanguíneo"
-        formControlName="codigoTipoSnaguineo"
+      <input matInput placeholder="Código do tipo sanguíneo" formControlName="codigoTipoSnaguineo"
         name="codigoTipoSnaguineo">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>codigoTipoCliente</mat-label>
-      <input matInput placeholder="Código do tipo de cliente"
-        formControlName="codigoTipoCliente"
+      <input matInput placeholder="Código do tipo de cliente" formControlName="codigoTipoCliente"
         name="codigoTipoCliente">
     </mat-form-field>
 
@@ -271,8 +221,7 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Data de Cadastro</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="dataAtualizacao"
-          name="dataAtualizacao">
+          <input matInput [matDatepicker]="picker" formControlName="dataAtualizacao" name="dataAtualizacao">
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -281,9 +230,7 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Data de Atualização</mat-label>
-          <input matInput [matDatepicker]="picker"
-            formControlName="dataAtualizacao"
-            name="dataAtualizacao">
+          <input matInput [matDatepicker]="picker" formControlName="dataAtualizacao" name="dataAtualizacao">
           <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -292,9 +239,7 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>ativo</mat-label>
-          <input matInput placeholder="Cliente com cadastro ativo"
-            formControlName="ativo"
-            name="ativo">
+          <input matInput placeholder="Cliente com cadastro ativo" formControlName="ativo" name="ativo">
         </mat-form-field>
       </div>
     </div>

@@ -30,7 +30,7 @@ namespace Estetica.Domain.Entities
             set { _email = value?.ToLower(); }
         }
 
-        [Nota(Tamanho = 20)]
+        [Nota(Tamanho = 30)]
         [Column(name: "SENHA", Order = 4)]
         public string? Senha
         {
@@ -68,6 +68,6 @@ namespace Estetica.Domain.Entities
 
         [Nota(Indice = true)]
         [Column(name: "PROFISSAO", Order = 11)]
-        public string Profissao { get; set; }
+        public string? Profissao { get; set; }
     }
 }

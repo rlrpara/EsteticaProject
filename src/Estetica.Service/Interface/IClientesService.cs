@@ -10,7 +10,7 @@ namespace Estetica.Service.Interface
         int ObterTotalRegistros(filtroClientesViewModel filtro);
         bool ObterEntidade(ClientesViewModel model);
         ClientesViewModel ObterPorCodigo(int codigo);
-        IEnumerable<Clientes> ObterTodos(filtroClientes filtro);
+        IEnumerable<Cliente> ObterTodos(filtroClientes filtro);
         IEnumerable<ClientesViewModel> ObterTodos(filtroClientesViewModel filtro);
         bool Inserir(ClientesViewModel model);
         bool Atualizar(ClientesViewModel model);

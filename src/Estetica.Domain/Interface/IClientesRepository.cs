@@ -5,12 +5,12 @@ namespace Estetica.Domain.Interface
 {
     public interface IClientesRepository : IBaseRepository
     {
-        Task<Clientes> ObterPorCodigo(int codigo);
+        Task<Cliente> ObterPorCodigo(int codigo);
         Task<int> TotalRegistros(filtroClientes filtro);
-        IEnumerable<Clientes> ObterTodos(filtroClientes filtro);
-        Task<IEnumerable<Clientes>> ObterTodosAsync(filtroClientes filtro);
-        Task<bool> ObterEntidade(Clientes Clientes);
-        Task<bool> Inserir(Clientes Clientes);
-        Task<bool> Atualizar(Clientes Clientes);
+        IEnumerable<Cliente> ObterTodos(filtroClientes filtro);
+        Task<IEnumerable<Cliente>> ObterTodosAsync(filtroClientes filtro);
+        Task<bool> ObterEntidade(Cliente Clientes);
+        Task<bool> Inserir(Cliente Clientes);
+        Task<bool> Atualizar(Cliente Clientes);
     }
 }

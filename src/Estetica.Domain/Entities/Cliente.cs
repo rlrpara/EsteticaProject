@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Estetica.Domain.Entities
 {
     [Table(name: "CLIENTE")]
-    public class Clientes : EntityBase
+    public class Cliente : EntityBase
     {
         [Nota()]
         [Column("NUM_PRONTUARIO", Order = 2)]
@@ -14,7 +14,7 @@ namespace Estetica.Domain.Entities
         [Column("NUM_CARTAO_FIDELIDADE", Order = 3)]
         public string? NumeroCartaoFidelidade { get; set; }
 
-        [Nota()]
+        [Nota(Indice = true)]
         [Column("NOME", Order = 4)]
         public string? Nome { get; set; }
 
@@ -22,11 +22,11 @@ namespace Estetica.Domain.Entities
         [Column("NASCIMENTO", Order = 5)]
         public DateTime? Nascimento { get; set; }
 
-        [Nota()]
+        [Nota(ChaveEstrangeira = "TIPO_PESSOA", Indice = true)]
         [Column("ID_TIPO_PESSOA", Order = 6)]
         public int CodigoTipoPessoa { get; set; } = 1;
 
-        [Nota()]
+        [Nota(Indice = true)]
         [Column("CPFCNPJ", Order = 7)]
         public string? CPFCNPJ { get; set; }
 
@@ -42,11 +42,11 @@ namespace Estetica.Domain.Entities
         [Column("IE", Order = 10)]
         public int? InscricaoEstadual { get; set; }
 
-        [Nota()]
+        [Nota(Indice = true)]
         [Column("WHATSAPP", Order = 11)]
         public string? Whatsapp { get; set; }
 
-        [Nota()]
+        [Nota(Indice = true)]
         [Column("EMAIL", Order = 12)]
         public string? Email { get; set; }
 
@@ -62,7 +62,7 @@ namespace Estetica.Domain.Entities
         [Column("CEP", Order = 15)]
         public int? CEP { get; set; }
 
-        [Nota()]
+        [Nota(ChaveEstrangeira = "TIPO_ENDERECO", Indice = true)]
         [Column("ID_TIPO_ENDERECO", Order = 16)]
         public int? CodigoTipoEndereco { get; set; }
 
@@ -82,7 +82,7 @@ namespace Estetica.Domain.Entities
         [Column("COMPLEMENTO", Order = 20)]
         public string? Complemento { get; set; }
 
-        [Nota()]
+        [Nota(ChaveEstrangeira = "UF")]
         [Column("ID_UF", Order = 21)]
         public int? CodigoUf { get; set; }
 
@@ -154,8 +154,8 @@ namespace Estetica.Domain.Entities
         [Column("ID_TIPO_SANGUINEO", Order = 38)]
         public int? CodigoTipoSnaguineo { get; set; }
 
-        [Nota()]
-        [Column("ID_TIPO_CLIENTE", Order = 39)]
-        public int? CodigoTipoCliente { get; set; }
+        [Nota(Indice = true, ChaveEstrangeira = "EMPRESA")]
+        [Column("ID_EMPRESA", Order = 39)]
+        public int? CodigoEmpresa { get; set; }
     }
 }

@@ -176,7 +176,14 @@ namespace Estetica.Infra.Database
             Criar(ObterProcedureDropConstraint());
             Criar(_geradorDapper.CriarTabela<Empresa>(), false);
             Criar(_geradorDapper.CriarTabela<Usuario>(), false);
-            Criar(_geradorDapper.CriarTabela<Clientes>(), false);
+            Criar(_geradorDapper.CriarTabela<TipoPessoa>(), false);
+            Criar(_geradorDapper.CriarTabela<TipoEndereco>(), false);
+            Criar(_geradorDapper.CriarTabela<EstabelecimentoOrigem>(), false);
+            Criar(_geradorDapper.CriarTabela<UF>(), false);
+            Criar(_geradorDapper.CriarTabela<TipoSexo>(), false);
+            Criar(_geradorDapper.CriarTabela<TipoEstadoCivil>(), false);
+            Criar(_geradorDapper.CriarTabela<TipoSanguineo>(), false);
+            Criar(_geradorDapper.CriarTabela<Cliente>(), false);
         }
         private void InsereDadosPadroes()
         {
@@ -185,6 +192,22 @@ namespace Estetica.Infra.Database
 
             if (!ExisteDados<Usuario>())
                 Criar(_geradorDapper.GeralSqlInsertControles(ObterUsuarioPadrao()));
+
+            if (!ExisteDados<TipoPessoa>())
+                Criar(_geradorDapper.GeralSqlInsertControlesMultiplos(ObterTipoPessoaPadrao()));
+
+            if (!ExisteDados<TipoEndereco>())
+                Criar(_geradorDapper.GeralSqlInsertControlesMultiplos(ObterTipoEnderecoPadrao()));
+
+            if (!ExisteDados<EstabelecimentoOrigem>())
+                Criar(_geradorDapper.GeralSqlInsertControles(ObterEstabelecimentoOrigemPadrao()));
+
+            if (!ExisteDados<UF>())
+                Criar(_geradorDapper.GeralSqlInsertControlesMultiplos(ObterUFPadrao()));
+
+            if (!ExisteDados<TipoSexo>())
+                Criar(_geradorDapper.GeralSqlInsertControlesMultiplos(ObterTipoSexoPadrao()));
+
         }
         private bool ServidorAtivo()
         {

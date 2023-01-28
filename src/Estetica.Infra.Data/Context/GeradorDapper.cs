@@ -313,6 +313,22 @@ namespace Estetica.Infra.Data.Context
 
             return sqlPesquisa?.ToString()?.Trim();
         }
+        public string? GeralSqlInsertControlesMultiplos<T>(IEnumerable<T> entidade) where T : class
+        {
+            var sqlPesquisa = new StringBuilder();
+            var contador = 1;
+
+            sqlPesquisa.AppendLine(ObterUseNomeBanco());
+            sqlPesquisa.AppendLine($"INSERT INTO {ObterNomeTabela<T>()} ({ObterColunasInsert<T>()})");
+
+            foreach (var item in entidade.AsEnumerable())
+            {
+                sqlPesquisa.AppendLine($"                     {(contador == 1 ? "VALUES":"      ")} ({string.Join($", ", ObterValorInsert(item))}){(entidade.ToList().Count > contador ? "," : ";")}");
+                contador++;
+            }
+
+            return sqlPesquisa?.ToString()?.Trim();
+        }
 
         #endregion
     }

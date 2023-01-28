@@ -11,5 +11,7 @@
         string? GeralSqlSelecaoControles<T>(string? sqlWhere) where T : class;
         string? GeralSqlUpdateControles<T>(int id, T entidade) where T : class;
         public string? GeralSqlInsertControles<T>(T entidade) where T : class;
+        public string? GeralSqlInsertControlesMultiplos<T>(IEnumerable<T> entidade) where T : class;
+        
     }
 }

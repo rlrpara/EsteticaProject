@@ -142,15 +142,15 @@ namespace Estetica.Domain.Entities
         [Column("LOCAL_TRABALHO", Order = 35)]
         public string? LocalTrabalho { get; set; }
 
-        [Nota()]
+        [Nota(Indice = true, ChaveEstrangeira = "TIPO_SEXO")]
         [Column("ID_SEXO", Order = 36)]
         public int? CodigoSexo { get; set; }
 
-        [Nota()]
+        [Nota(Indice = true, ChaveEstrangeira = "TIPO_ESTADO_CIVIL")]
         [Column("ID_ESTADO_CIVIL", Order = 37)]
         public int? CodigoEstadoCivil { get; set; }
 
-        [Nota()]
+        [Nota(Indice = true, ChaveEstrangeira = "TIPO_SANGUINEO")]
         [Column("ID_TIPO_SANGUINEO", Order = 38)]
         public int? CodigoTipoSnaguineo { get; set; }
 

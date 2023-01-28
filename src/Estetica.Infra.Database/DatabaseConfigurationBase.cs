@@ -143,5 +143,26 @@ namespace Estetica.Infra.Database
                 Ativo = true
             },
         };
+
+        public List<TipoEstadoCivil> ObterTipoEstadoCivilPadrao() => new()
+        {
+            new TipoEstadoCivil() { Descricao = "Solteiro(a)", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+            new TipoEstadoCivil() { Descricao = "Casado(a)", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+            new TipoEstadoCivil() { Descricao = "Divorciado(a)", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+            new TipoEstadoCivil() { Descricao = "Uniao Estavel", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+            new TipoEstadoCivil() { Descricao = "Viuvo(a)", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+        };
+
+        public List<TipoSanguineo> ObterTipoSanguineoPadrao() => new()
+        {
+            new TipoSanguineo() { Descricao = "A+", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+            new TipoSanguineo() { Descricao = "A-", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+            new TipoSanguineo() { Descricao = "B+", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+            new TipoSanguineo() { Descricao = "B-", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+            new TipoSanguineo() { Descricao = "AB+", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+            new TipoSanguineo() { Descricao = "AB-", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+            new TipoSanguineo() { Descricao = "O+", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+            new TipoSanguineo() { Descricao = "O-", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
+        };
     }
 }

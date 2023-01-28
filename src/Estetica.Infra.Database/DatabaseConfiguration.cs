@@ -208,6 +208,12 @@ namespace Estetica.Infra.Database
             if (!ExisteDados<TipoSexo>())
                 Criar(_geradorDapper.GeralSqlInsertControlesMultiplos(ObterTipoSexoPadrao()));
 
+            if (!ExisteDados<TipoEstadoCivil>())
+                Criar(_geradorDapper.GeralSqlInsertControlesMultiplos(ObterTipoEstadoCivilPadrao()));
+
+            if (!ExisteDados<TipoSanguineo>())
+                Criar(_geradorDapper.GeralSqlInsertControlesMultiplos(ObterTipoSanguineoPadrao()));
+
         }
         private bool ServidorAtivo()
         {

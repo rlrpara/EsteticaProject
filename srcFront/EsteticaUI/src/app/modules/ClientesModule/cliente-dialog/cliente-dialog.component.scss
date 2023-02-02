@@ -5,4 +5,15 @@
   width: 100%;
 }
 
+.space-blocks {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 
+  div {
+    padding-right: 5px;
+    flex-grow: 1;
+  }
+}

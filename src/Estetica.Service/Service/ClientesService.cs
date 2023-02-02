@@ -26,12 +26,18 @@ namespace Estetica.Service.Service
         #endregion
 
         #region [Métodos Públicos]
-        public int ObterTotalRegistros(filtroClientesViewModel filtro) => _mapper.Map<int>(_service.TotalRegistros(_mapper.Map<filtroClientes>(filtro)).Result);
-        public ClientesViewModel ObterPorCodigo(int codigo) => _mapper.Map<ClientesViewModel>(_service.ObterPorCodigo(codigo).Result);
-        public IEnumerable<Cliente> ObterTodos(filtroClientes filtro) => _service.ObterTodos(filtro);
-        public IEnumerable<ClientesViewModel> ObterTodos(filtroClientesViewModel filtro) => _mapper.Map<IEnumerable<ClientesViewModel>>(_service.ObterTodosAsync(_mapper.Map<filtroClientes>(filtro)).Result);
-        public bool ObterEntidade(ClientesViewModel model) => _service.ObterEntidade(_mapper.Map<Cliente>(model)).Result;
-        public bool Inserir(ClientesViewModel model) => _service.Inserir(_mapper.Map<Cliente>(model)).Result;
+        public int ObterTotalRegistros(filtroClientesViewModel filtro)
+            => _mapper.Map<int>(_service.TotalRegistros(_mapper.Map<filtroClientes>(filtro)).Result);
+        public ClientesViewModel ObterPorCodigo(int codigo)
+            => _mapper.Map<ClientesViewModel>(_service.ObterPorCodigo(codigo).Result);
+        public IEnumerable<Cliente> ObterTodos(filtroClientes filtro)
+            => _service.ObterTodos(filtro);
+        public IEnumerable<ClientesViewModel> ObterTodos(filtroClientesViewModel filtro)
+            => _mapper.Map<IEnumerable<ClientesViewModel>>(_service.ObterTodosAsync(_mapper.Map<filtroClientes>(filtro)).Result);
+        public bool ObterEntidade(ClientesViewModel model)
+            => _service.ObterEntidade(_mapper.Map<Cliente>(model)).Result;
+        public bool Inserir(ClientesViewModel model)
+            => _service.Inserir(_mapper.Map<Cliente>(model)).Result;
         public bool Atualizar(ClientesViewModel model)
         {
             model.Ativo ??= ObterPorCodigo(model.Codigo).Ativo;

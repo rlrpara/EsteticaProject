@@ -15,11 +15,13 @@ namespace Estetica.Service.AutoMapper
             CreateMap<filtroPaginacaoViewModel, filtroPaginacao>();
             CreateMap<filtroUsuarioViewModel, filtroUsuario>();
             CreateMap<filtroClientesViewModel, filtroClientes>();
+            CreateMap<filtroTipoPessoaViewModel, filtroTipoPessoa>();
 
             CreateMap<EmpresaViewModel, Empresa>();
             CreateMap<UsuarioViewModel, Usuario>();
             CreateMap<LoginViewModel, Login>();
             CreateMap<ClientesViewModel, Cliente>();
+            CreateMap<TipoPessoaViewModel, TipoPessoa>();
             #endregion
 
 
@@ -28,11 +30,13 @@ namespace Estetica.Service.AutoMapper
             CreateMap<filtroPaginacao, filtroPaginacaoViewModel>();
             CreateMap<filtroUsuario, filtroUsuarioViewModel>();
             CreateMap<filtroClientes, filtroClientesViewModel>();
+            CreateMap<filtroTipoPessoa, filtroTipoPessoaViewModel>();
 
             CreateMap<Empresa, EmpresaViewModel>();
             CreateMap<Usuario, UsuarioViewModel>();
             CreateMap<Cliente, ClientesViewModel>();
             CreateMap<Login, LoginViewModel>();
+            CreateMap<TipoPessoa, TipoPessoaViewModel>();
             #endregion
         }
     }

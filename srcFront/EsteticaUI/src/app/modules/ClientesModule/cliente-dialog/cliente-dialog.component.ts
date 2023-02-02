@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { FiltroTipoPessoa } from './../../TipoPessoaModule/model/filtroTipoPessoa';
+import { TipopessoaService } from './../../TipoPessoaModule/services/tipopessoa.service';
 import { Cliente } from './../models/cliente';
+import { TipoPessoa } from './../models/tipoPessoa';
 import { ClienteService } from './../services/cliente.service';
 
 @Component({
@@ -15,15 +18,32 @@ export class ClienteDialogComponent implements OnInit {
 
   private valorSaida: number = 0;
   public formCliente!: FormGroup;
+  public listaTipoPessoa!: TipoPessoa[];
+  private filtroTipoPessoa!: FiltroTipoPessoa;
+  public tipoPessoaSelected: any = {
+    selected: 1
+  }
 
   constructor(
     public dialogRef: MatDialogRef<ClienteDialogComponent>,
     private clienteService: ClienteService,
+    public tipoPessoaService: TipopessoaService,
     private _snackBar: MatSnackBar,
     private formBuilder: FormBuilder
-  ){}
+  ){
+    this.filtroTipoPessoa = {
+      descricao: ''
+    }
+  }
 
   ngOnInit(): void {
+    this.tipoPessoaService.ObterTodos(this.filtroTipoPessoa).subscribe({
+      next: (retorno: TipoPessoa[]) => {
+        this.listaTipoPessoa = retorno;
+      },
+      error: (err: Error) => console.log(err)
+    });
+
     this.criarForm();
   }
 
@@ -34,7 +54,7 @@ export class ClienteDialogComponent implements OnInit {
       numeroCartaoFidelidade: [null],
       nome: [null, [Validators.required]],
       nascimento: [null],
-      codigoTipoPessoa: [null],
+      codigoTipoPessoa: [1],
       cpfcnpj: [null, [Validators.required]],
       orgaoEmissor: [null],
       inscricaoMunicipal: [null],

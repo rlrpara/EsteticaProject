@@ -97,7 +97,6 @@ namespace Estetica.Infra.Data.Repositories
             sqlPesquisa.AppendLine($"           id_sexo as CodigoSexo,");
             sqlPesquisa.AppendLine($"           id_estado_civil as CodigoEstadoCivil,");
             sqlPesquisa.AppendLine($"           id_tipo_sanguineo as CodigoTipoSnaguineo,");
-            sqlPesquisa.AppendLine($"           id_tipo_cliente as CodigoTipoCliente,");
             sqlPesquisa.AppendLine($"           data_cadastro as DataCadastro,");
             sqlPesquisa.AppendLine($"           data_atualizacao as DataAtualizacao,");
             sqlPesquisa.AppendLine($"           ativo");

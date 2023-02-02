@@ -152,7 +152,7 @@ namespace Estetica.Domain.Entities
 
         [Nota(Indice = true, ChaveEstrangeira = "TIPO_SANGUINEO")]
         [Column("ID_TIPO_SANGUINEO", Order = 38)]
-        public int? CodigoTipoSnaguineo { get; set; }
+        public int? CodigoTipoSanguineo { get; set; }
 
         [Nota(Indice = true, ChaveEstrangeira = "EMPRESA")]
         [Column("ID_EMPRESA", Order = 39)]

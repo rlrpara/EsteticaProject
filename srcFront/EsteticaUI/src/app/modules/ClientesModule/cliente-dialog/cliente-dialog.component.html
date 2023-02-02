@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Novo Cliente</h1>
 <div mat-dialog-content>
-  <form class="form-group" [formGroup]="formCliente">
+  <form class="form-group" [formGroup]="formCliente" (ngSubmit)="onFormSubmit()">
 
     <div>
 
@@ -27,24 +27,21 @@
       <input matInput placeholder="Informe o nome da cliente" formControlName="nome" name="nome">
     </mat-form-field>
 
-    <div class="space-blocks">
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label>Data de Nascimento</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="nascimento" name="nascimento">
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label>Tipo Pessoa</mat-label>
-          <mat-select formControlName="codigoTipoPessoa" name="codigoTipoPessoa">
-            <mat-option *ngFor="let item of listaTipoPessoa" [value]="item.codigo">{{item.descricao}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Data de Nascimento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="nascimento">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo Pessoa</mat-label>
+        <mat-select formControlName="codigoTipoPessoa" name="codigoTipoPessoa">
+          <mat-option *ngFor="let item of listaTipoPessoa" [value]="item.codigo">{{item.descricao}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>cpfcnpj</mat-label>
@@ -53,9 +50,9 @@
 
     </div>
 
-    <div>
+    <div class="row">
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="g-col-4">
         <mat-label>IM</mat-label>
         <input matInput placeholder="IM" formControlName="inscricaoMunicipal" name="inscricaoMunicipal">
       </mat-form-field>
@@ -65,47 +62,57 @@
         <input matInput placeholder="IE" formControlName="inscricaoEstadual" name="inscricaoEstadual">
       </mat-form-field>
 
+      <mat-form-field appearance="outline">
+        <mat-label>email</mat-label>
+        <input matInput placeholder="Ex: email@empresa.com.br" formControlName="email" name="email">
+      </mat-form-field>
+
     </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>whatsapp</mat-label>
-      <input matInput placeholder="Whatsapp" formControlName="whatsapp" name="whatsapp">
-    </mat-form-field>
+    <div class="row">
 
-    <mat-form-field appearance="outline">
-      <mat-label>email</mat-label>
-      <input matInput placeholder="Ex: email@empresa.com.br" formControlName="email" name="email">
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>whatsapp</mat-label>
+        <input matInput placeholder="Whatsapp" formControlName="whatsapp" name="whatsapp">
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>celular</mat-label>
-      <input matInput placeholder="Nº celular com ddd" formControlName="celular" name="celular">
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>celular</mat-label>
+        <input matInput placeholder="Nº celular com ddd" formControlName="celular" name="celular">
+      </mat-form-field>
+
+    </div>
 
     <mat-form-field appearance="outline">
       <mat-label>foto</mat-label>
       <input matInput placeholder="Foto" formControlName="foto" name="foto">
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>cep</mat-label>
-      <input matInput placeholder="CEP" formControlName="cep" name="cep">
-    </mat-form-field>
+    <div class="row">
 
-    <mat-form-field appearance="outline">
-      <mat-label>codigoTipoEndereco</mat-label>
-      <input matInput placeholder="Código tipo de endereço" formControlName="codigoTipoEndereco"
-        name="codigoTipoEndereco">
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>cep</mat-label>
+        <input matInput type="number" placeholder="CEP" formControlName="cep" name="cep">
+        <mat-hint>Apenas números</mat-hint>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>endereco</mat-label>
-      <input matInput placeholder="Endereço" formControlName="endereco" name="endereco">
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="col-one">
+        <mat-label>Tipo de Endereço</mat-label>
+        <mat-select formControlName="codigoTipoEndereco" name="codigoTipoEndereco">
+          <mat-option *ngFor="let item of listTipoEndereco" [value]="item.codigo">{{item.descricao}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>endereco</mat-label>
+        <input matInput type="text" placeholder="Endereço" formControlName="endereco" name="endereco">
+      </mat-form-field>
+
+    </div>
 
     <mat-form-field appearance="outline">
       <mat-label>numero</mat-label>
-      <input matInput placeholder="Número" formControlName="numero" name="numero">
+      <input matInput type="number" placeholder="Número" formControlName="numero" name="numero">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -216,38 +223,33 @@
         name="codigoTipoCliente">
     </mat-form-field>
 
-    <div style="display: flex; flex-direction: row;">
-      <!-- <div>
-        <mat-form-field appearance="outline">
-          <mat-label>Data de Cadastro</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="dataAtualizacao" name="dataAtualizacao">
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label>Data de Atualização</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="dataAtualizacao" name="dataAtualizacao">
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div> -->
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label>ativo</mat-label>
-          <input matInput placeholder="Cliente com cadastro ativo" formControlName="ativo" name="ativo">
-        </mat-form-field>
-      </div>
+    <div class="row">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data de Cadastro</mat-label>
+        <input matInput [matDatepicker]="picker1" formControlName="dataCadastro">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data de Atualização</mat-label>
+        <input matInput [matDatepicker]="picker2" formControlName="dataAtualizacao">
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+
+      <section class="example-section">
+        <mat-checkbox formControlName="ativo">Ativo</mat-checkbox>
+      </section>
+
     </div>
 
-
-
+    <div mat-dialog-actions>
+      <button mat-button (click)="cancel()">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit">Salvar</button>
+    </div>
   </form>
-  <div mat-dialog-actions>
-    <button mat-button (click)="cancel()">Cancelar</button>
-    <button mat-raised-button color="primary" (click)="Salvar()">Salvar</button>
-  </div>
 </div>

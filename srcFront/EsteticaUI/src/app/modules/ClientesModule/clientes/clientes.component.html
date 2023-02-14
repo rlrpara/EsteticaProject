@@ -1,17 +1,19 @@
-<div class="botoes_formulario">
+<mat-toolbar>
   <h1>Clientes</h1>
+  <span class="espacamento"></span>
   <button mat-mini-fab color="primary" matTooltip="Novo registro" (click)="novoCliente()">
     <mat-icon>add</mat-icon>
   </button>
-</div>
+</mat-toolbar>
+
 <mat-card>
   <mat-card-content>
-    <mat-form-field>
+    <mat-form-field *ngIf="clientesFiltrados.length > 0">
       <mat-label>Fitro</mat-label>
       <input matInput placeholder="Ex. ana" #input [(ngModel)]="Nome" matTooltip="Ex. ana" matTooltipHideDelay="1000">
     </mat-form-field>
 
-    <table mat-table [dataSource]="clientesFiltrados" class="mat-elevation-z8">
+    <table *ngIf="clientesFiltrados.length > 0" mat-table [dataSource]="clientesFiltrados" class="mat-elevation-z8">
 
       <ng-container matColumnDef="foto">
         <th mat-header-cell *matHeaderCellDef> foto </th>
@@ -60,7 +62,8 @@
         <td class="mat-cell" colspan="4">Nenhum dado encontrado</td>
       </tr>
     </table>
-    <table style="padding-top: 15px;">
+
+    <table *ngIf="clientesFiltrados.length === 0" style="padding-top: 15px;">
       <tr class="mat-row">
         <td class="mat-cell" colspan="4">Nenhum dado encontrado</td>
       </tr>

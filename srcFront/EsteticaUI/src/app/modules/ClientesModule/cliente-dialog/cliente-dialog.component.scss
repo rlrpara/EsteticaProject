@@ -7,6 +7,15 @@
 
 .row {
   display: flex;
+  flex-direction: row;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.column {
+  display: flex;
   gap: 10px;
   align-items: center;
 
@@ -16,5 +25,13 @@
 
   mat-form-field {
     width: 100%;
+  }
+}
+
+.espacamento {
+  margin: 5px 0 5px 0;
+
+  mat-card-content {
+    padding-top: 15px;
   }
 }

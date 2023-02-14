@@ -22,6 +22,7 @@ namespace Estetica.Service.AutoMapper
             CreateMap<LoginViewModel, Login>();
             CreateMap<ClientesViewModel, Cliente>();
             CreateMap<TipoPessoaViewModel, TipoPessoa>();
+            CreateMap<TipoEnderecoViewModel, TipoEndereco>();
             #endregion
 
 
@@ -37,6 +38,7 @@ namespace Estetica.Service.AutoMapper
             CreateMap<Cliente, ClientesViewModel>();
             CreateMap<Login, LoginViewModel>();
             CreateMap<TipoPessoa, TipoPessoaViewModel>();
+            CreateMap<TipoEndereco, TipoEnderecoViewModel>();
             #endregion
         }
     }

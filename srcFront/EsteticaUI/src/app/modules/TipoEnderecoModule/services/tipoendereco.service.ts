@@ -17,6 +17,6 @@ export class TipoenderecoService {
   ) { }
 
   public ObterTodos(): Observable<TipoEndereco[]>{
-    return this.http.get<TipoEndereco[]>(`${this.baseUrl}/obtertodos`);
+    return this.http.get<TipoEndereco[]>(`${this.baseUrl}`);
   }
 }

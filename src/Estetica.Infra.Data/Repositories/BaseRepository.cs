@@ -5,6 +5,7 @@ using Estetica.Domain.Interface;
 using Estetica.Domain.ValueObject;
 using Estetica.Infra.Data.Context;
 using Estetica.Infra.Data.Interface;
+using System.ComponentModel.DataAnnotations;
 
 namespace Estetica.Infra.Data.Repositories
 {

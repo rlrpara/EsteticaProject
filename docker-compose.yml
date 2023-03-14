@@ -12,9 +12,9 @@ services:
     environment:
       SERVIDOR : ${SERVIDOR}
       PORTA : ${PORTA}
+      BANCO : ${BANCO}
       USUARIO : ${USUARIO}
       SENHA : ${SENHA}
-      BANCO : ${BANCO}
       TIPOBANCO : ${TIPOBANCO}
     ports:
       - 5001:80

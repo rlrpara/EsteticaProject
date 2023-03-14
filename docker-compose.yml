@@ -27,6 +27,23 @@ services:
     depends_on:
       - estetica_database
 
+  estetica_front:
+    image: estetica_front
+    container_name: estetica_front
+    build:
+      context: src/Estetica.Web
+      dockerfile: ./Dockerfile
+    ports:
+      - 4201:80
+    expose:
+      - 4201
+    restart: on-failure
+    depends_on:
+      - estetica.api
+    networks:
+      rede_hub_tech:
+        ipv4_address: 173.25.0.14
+
   estetica_database:
     image: postgres:13
     ports:

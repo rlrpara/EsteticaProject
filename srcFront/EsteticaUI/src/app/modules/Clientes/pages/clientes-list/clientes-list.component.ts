@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ClienteLista } from '../models/clienteLista';
-import { FiltroCliente } from '../models/filtroCliente';
-import { Retorno } from './../../models/retornoPaginacao';
-import { ClienteDialogComponent } from './../cliente-dialog/cliente-dialog.component';
-import { ClienteService } from './../services/cliente.service';
+import { Retorno } from '../../../shared/models/retornoPaginacao';
+import { ClienteLista } from '../../models/clienteLista';
+import { FiltroCliente } from '../../models/filtroCliente';
+import { ClienteService } from '../../services/cliente.service';
+import { ClienteDialogComponent } from '../cliente-dialog/cliente-dialog.component';
 
 @Component({
   selector: 'app-clientes',
-  templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.scss']
+  templateUrl: './clientes-list.component.html',
+  styleUrls: ['./clientes-list.component.scss']
 })
 export class ClientesComponent implements OnInit {
   private _nome = "";

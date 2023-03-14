@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { TipoEndereco } from './../../models/tipoEndereco';
+import { TipoEndereco } from './../model/TipoEndereco';
+
 
 @Injectable({
   providedIn: 'root'

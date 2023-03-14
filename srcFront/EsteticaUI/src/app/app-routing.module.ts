@@ -14,23 +14,23 @@ const routes: Routes = [
       },
       {
         path: 'clientes',
-        loadChildren: () => import('./modules/ClientesModule/clientes.module').then(x => x.ClientesModule)
+        loadChildren: () => import('./modules/Clientes/clientes.module').then(x => x.ClientesModule)
       },
       {
         path: 'dashboard',
-        loadChildren: () => import('./modules/DashboardModule/dashboard.module').then(x => x.DashboardModule)
+        loadChildren: () => import('./modules/Dashboard/dashboard.module').then(x => x.DashboardModule)
       },
       {
         path: 'empresa',
-        loadChildren: () => import('./modules/EmpresaModule/empresa/empresa.module').then(x => x.EmpresaModule)
+        loadChildren: () => import('./modules/Empresa/empresa/empresa.module').then(x => x.EmpresaModule)
       },
       {
         path: 'movimentacao',
-        loadChildren: () => import('./modules/MovimentacaoModule/movimentacao/movimentacao.module').then(x => x.MovimentacaoModule)
+        loadChildren: () => import('./modules/Movimentacao/movimentacao/movimentacao.module').then(x => x.MovimentacaoModule)
       },
       {
         path: 'agenda',
-        loadChildren: () => import('./modules/AgendaModule/agenda/agenda.module').then(x => x.AgendaModule)
+        loadChildren: () => import('./modules/Agenda/agenda/agenda.module').then(x => x.AgendaModule)
       }
     ]
   }

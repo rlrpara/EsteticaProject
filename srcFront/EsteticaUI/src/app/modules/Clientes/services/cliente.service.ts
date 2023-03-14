@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Retorno } from '../../models/retornoPaginacao';
+import { Retorno } from '../../shared/models/retornoPaginacao';
 import { ClienteLista } from '../models/clienteLista';
 import { FiltroCliente } from '../models/filtroCliente';
 import { Cliente } from './../models/cliente';

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { TipoPessoa } from './../../ClientesModule/models/tipoPessoa';
+import { TipoPessoa } from '../../shared/models/tipoPessoa';
 import { FiltroTipoPessoa } from './../model/filtroTipoPessoa';
 
 @Injectable({

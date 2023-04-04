@@ -41,8 +41,8 @@ services:
     depends_on:
       - estetica.api
     networks:
-      rede_hub_tech:
-        ipv4_address: 173.25.0.14
+      rede_estetica:
+        ipv4_address: 173.25.0.4
 
   estetica_database:
     image: postgres:13

@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialSkin2DotNet" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Estetica.Infra.Database\Estetica.Infra.Database.csproj" />
     <ProjectReference Include="..\Estetica.Service\Estetica.Service.csproj" />
   </ItemGroup>

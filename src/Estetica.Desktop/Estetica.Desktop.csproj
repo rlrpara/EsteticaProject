@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>icones\estetica_ico.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="icones\estetica_ico.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MaterialSkin2DotNet" Version="1.1.2" />

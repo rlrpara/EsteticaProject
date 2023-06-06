@@ -1,4 +1,3 @@
-using Estetica.Desktop.formularios;
 using Estetica.Infra.Database;
 using MaterialSkin2DotNet;
 using MaterialSkin2DotNet.Controls;
@@ -28,9 +27,6 @@ namespace Estetica.Desktop
         #region [Públic Form Methods]
         private void clienteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using var formulario = new frmClientes();
-            formulario.ShowDialog();
-            ObterConfiguracaoPadrao();
         }
 
         private void ObterConfiguracaoPadrao()

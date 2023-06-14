@@ -38,21 +38,17 @@
             panel1 = new Panel();
             materialCard2 = new MaterialSkin2DotNet.Controls.MaterialCard();
             dtCliente = new MaterialSkin2DotNet.Controls.MaterialDataTable();
-            panel3 = new Panel();
-            materialCard3 = new MaterialSkin2DotNet.Controls.MaterialCard();
             btnExcluir = new MaterialSkin2DotNet.Controls.MaterialButton();
             btnEditar = new MaterialSkin2DotNet.Controls.MaterialButton();
             btnNovo = new MaterialSkin2DotNet.Controls.MaterialButton();
-            materialDivider2 = new MaterialSkin2DotNet.Controls.MaterialDivider();
             materialDivider1 = new MaterialSkin2DotNet.Controls.MaterialDivider();
             panel2 = new Panel();
             materialLabel1 = new MaterialSkin2DotNet.Controls.MaterialLabel();
+            materialDivider2 = new MaterialSkin2DotNet.Controls.MaterialDivider();
             materialCard1.SuspendLayout();
             panel1.SuspendLayout();
             materialCard2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtCliente).BeginInit();
-            panel3.SuspendLayout();
-            materialCard3.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
@@ -105,8 +101,8 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(materialDivider2);
             panel1.Controls.Add(materialCard2);
-            panel1.Controls.Add(panel3);
             panel1.Controls.Add(materialDivider1);
             panel1.Controls.Add(materialCard1);
             panel1.Controls.Add(panel2);
@@ -128,7 +124,7 @@
             materialCard2.MouseState = MaterialSkin2DotNet.MouseState.HOVER;
             materialCard2.Name = "materialCard2";
             materialCard2.Padding = new Padding(14);
-            materialCard2.Size = new Size(1082, 424);
+            materialCard2.Size = new Size(1082, 489);
             materialCard2.TabIndex = 2;
             // 
             // dtCliente
@@ -181,38 +177,12 @@
             dtCliente.RowTemplate.Height = 52;
             dtCliente.ScrollBars = ScrollBars.None;
             dtCliente.ShowVerticalScroll = false;
-            dtCliente.Size = new Size(1054, 396);
+            dtCliente.Size = new Size(1054, 461);
             dtCliente.TabIndex = 0;
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(materialCard3);
-            panel3.Controls.Add(materialDivider2);
-            panel3.Dock = DockStyle.Bottom;
-            panel3.Location = new Point(0, 553);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(1082, 65);
-            panel3.TabIndex = 6;
-            // 
-            // materialCard3
-            // 
-            materialCard3.BackColor = Color.FromArgb(255, 255, 255);
-            materialCard3.Controls.Add(btnExcluir);
-            materialCard3.Controls.Add(btnEditar);
-            materialCard3.Controls.Add(btnNovo);
-            materialCard3.Depth = 0;
-            materialCard3.Dock = DockStyle.Top;
-            materialCard3.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard3.Location = new Point(0, 6);
-            materialCard3.Margin = new Padding(14);
-            materialCard3.MouseState = MaterialSkin2DotNet.MouseState.HOVER;
-            materialCard3.Name = "materialCard3";
-            materialCard3.Padding = new Padding(14);
-            materialCard3.Size = new Size(1082, 57);
-            materialCard3.TabIndex = 6;
             // 
             // btnExcluir
             // 
+            btnExcluir.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnExcluir.AutoSize = false;
             btnExcluir.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnExcluir.Density = MaterialSkin2DotNet.Controls.MaterialButton.MaterialButtonDensity.Default;
@@ -220,7 +190,7 @@
             btnExcluir.Enabled = false;
             btnExcluir.HighEmphasis = true;
             btnExcluir.Icon = (Image)resources.GetObject("btnExcluir.Icon");
-            btnExcluir.Location = new Point(103, 9);
+            btnExcluir.Location = new Point(1040, 3);
             btnExcluir.Margin = new Padding(4, 6, 4, 6);
             btnExcluir.MouseState = MaterialSkin2DotNet.MouseState.HOVER;
             btnExcluir.Name = "btnExcluir";
@@ -233,6 +203,7 @@
             // 
             // btnEditar
             // 
+            btnEditar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnEditar.AutoSize = false;
             btnEditar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnEditar.Density = MaterialSkin2DotNet.Controls.MaterialButton.MaterialButtonDensity.Default;
@@ -240,7 +211,7 @@
             btnEditar.Enabled = false;
             btnEditar.HighEmphasis = true;
             btnEditar.Icon = (Image)resources.GetObject("btnEditar.Icon");
-            btnEditar.Location = new Point(60, 9);
+            btnEditar.Location = new Point(997, 3);
             btnEditar.Margin = new Padding(4, 6, 4, 6);
             btnEditar.MouseState = MaterialSkin2DotNet.MouseState.HOVER;
             btnEditar.Name = "btnEditar";
@@ -253,13 +224,14 @@
             // 
             // btnNovo
             // 
+            btnNovo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnNovo.AutoSize = false;
             btnNovo.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnNovo.Density = MaterialSkin2DotNet.Controls.MaterialButton.MaterialButtonDensity.Default;
             btnNovo.Depth = 0;
             btnNovo.HighEmphasis = true;
             btnNovo.Icon = (Image)resources.GetObject("btnNovo.Icon");
-            btnNovo.Location = new Point(17, 9);
+            btnNovo.Location = new Point(954, 3);
             btnNovo.Margin = new Padding(4, 6, 4, 6);
             btnNovo.MouseState = MaterialSkin2DotNet.MouseState.HOVER;
             btnNovo.Name = "btnNovo";
@@ -270,18 +242,6 @@
             btnNovo.UseAccentColor = true;
             btnNovo.UseVisualStyleBackColor = true;
             btnNovo.Click += btnNovo_Click;
-            // 
-            // materialDivider2
-            // 
-            materialDivider2.BackColor = Color.FromArgb(30, 0, 0, 0);
-            materialDivider2.Depth = 0;
-            materialDivider2.Dock = DockStyle.Top;
-            materialDivider2.Location = new Point(0, 0);
-            materialDivider2.MouseState = MaterialSkin2DotNet.MouseState.HOVER;
-            materialDivider2.Name = "materialDivider2";
-            materialDivider2.Size = new Size(1082, 6);
-            materialDivider2.TabIndex = 5;
-            materialDivider2.Text = "materialDivider2";
             // 
             // materialDivider1
             // 
@@ -297,7 +257,10 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(btnExcluir);
+            panel2.Controls.Add(btnEditar);
             panel2.Controls.Add(materialLabel1);
+            panel2.Controls.Add(btnNovo);
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
@@ -319,6 +282,18 @@
             materialLabel1.Text = "Clientes";
             materialLabel1.UseAccent = true;
             // 
+            // materialDivider2
+            // 
+            materialDivider2.BackColor = Color.FromArgb(30, 0, 0, 0);
+            materialDivider2.Depth = 0;
+            materialDivider2.Dock = DockStyle.Bottom;
+            materialDivider2.Location = new Point(0, 612);
+            materialDivider2.MouseState = MaterialSkin2DotNet.MouseState.HOVER;
+            materialDivider2.Name = "materialDivider2";
+            materialDivider2.Size = new Size(1082, 6);
+            materialDivider2.TabIndex = 7;
+            materialDivider2.Text = "materialDivider2";
+            // 
             // ucCliente
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -332,8 +307,6 @@
             panel1.ResumeLayout(false);
             materialCard2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dtCliente).EndInit();
-            panel3.ResumeLayout(false);
-            materialCard3.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ResumeLayout(false);
@@ -349,8 +322,6 @@
         private MaterialSkin2DotNet.Controls.MaterialDataTable dtCliente;
         private Panel panel2;
         private MaterialSkin2DotNet.Controls.MaterialLabel materialLabel1;
-        private Panel panel3;
-        private MaterialSkin2DotNet.Controls.MaterialCard materialCard3;
         private MaterialSkin2DotNet.Controls.MaterialButton btnExcluir;
         private MaterialSkin2DotNet.Controls.MaterialButton btnEditar;
         private MaterialSkin2DotNet.Controls.MaterialButton btnNovo;

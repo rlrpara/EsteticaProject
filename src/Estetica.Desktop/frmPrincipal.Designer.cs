@@ -192,6 +192,7 @@
             ClientSize = new Size(1227, 708);
             Controls.Add(materialTabControl1);
             DrawerAutoHide = false;
+            DrawerAutoShow = true;
             DrawerBackgroundWithAccent = true;
             DrawerShowIconsWhenHidden = true;
             DrawerTabControl = materialTabControl1;
@@ -200,11 +201,12 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Name = "frmPrincipal";
-            PrimaryColor = MaterialSkin2DotNet.Primary.Pink400;
-            PrimaryDarkColor = MaterialSkin2DotNet.Primary.Pink700;
+            PrimaryColor = MaterialSkin2DotNet.Primary.BlueGrey600;
+            PrimaryDarkColor = MaterialSkin2DotNet.Primary.Grey900;
             PrimaryLightColor = MaterialSkin2DotNet.Primary.Pink100;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Estética Malato";
+            Load += frmPrincipal_Load;
             materialTabControl1.ResumeLayout(false);
             tabAgenda.ResumeLayout(false);
             tabClientes.ResumeLayout(false);

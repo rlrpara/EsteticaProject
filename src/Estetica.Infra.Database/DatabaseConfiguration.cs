@@ -176,8 +176,6 @@ namespace Estetica.Infra.Database
             Criar(ObterProcedureDropConstraint());
             Criar(_geradorDapper.CriarTabela<Empresa>(), false);
             Criar(_geradorDapper.CriarTabela<Usuario>(), false);
-            Criar(_geradorDapper.CriarTabela<TipoPessoa>(), false);
-            Criar(_geradorDapper.CriarTabela<TipoEndereco>(), false);
             Criar(_geradorDapper.CriarTabela<EstabelecimentoOrigem>(), false);
             Criar(_geradorDapper.CriarTabela<UF>(), false);
             Criar(_geradorDapper.CriarTabela<TipoSexo>(), false);
@@ -192,12 +190,6 @@ namespace Estetica.Infra.Database
 
             if (!ExisteDados<Usuario>())
                 Criar(_geradorDapper.GeralSqlInsertControles(ObterUsuarioPadrao()));
-
-            if (!ExisteDados<TipoPessoa>())
-                Criar(_geradorDapper.GeralSqlInsertControlesMultiplos(ObterTipoPessoaPadrao()));
-
-            if (!ExisteDados<TipoEndereco>())
-                Criar(_geradorDapper.GeralSqlInsertControlesMultiplos(ObterTipoEnderecoPadrao()));
 
             if (!ExisteDados<EstabelecimentoOrigem>())
                 Criar(_geradorDapper.GeralSqlInsertControles(ObterEstabelecimentoOrigemPadrao()));

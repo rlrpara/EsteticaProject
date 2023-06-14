@@ -30,61 +30,6 @@ namespace Estetica.Infra.Database
             Ativo = true,
             Nivel = 92
         };
-
-        public List<TipoPessoa> ObterTipoPessoaPadrao() => new()
-        {
-            new TipoPessoa() { Descricao = "FÍSICA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoPessoa() { Descricao = "JURÍDICA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true }
-        };
-
-        public List<TipoEndereco> ObterTipoEnderecoPadrao() => new()
-        {
-            new TipoEndereco() { Descricao = "AEROPORTO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "ALAMEDA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "AREA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "AVENIDA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "CAMPO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "CHACARA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "COLONIA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "CONDOMINIO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "CONJUNTO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "DISTRITO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "ESPLANADA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "ESTACAO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "ESTRADA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "FAVELA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "FAZENDA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "FEIRA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "JARDIM", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "LADEIRA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "LAGO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "LAGOA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "LARGO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "LOTEAMENTO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "MORRO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "NUCLEO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "PARQUE", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "PASSARELA" , DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true},
-            new TipoEndereco() { Descricao = "PATIO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "PRACA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "QUADRA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "RECANTO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "RESIDENCIAL", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "RODOVIA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "RUA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "SETOR" , DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true},
-            new TipoEndereco() { Descricao = "SITIO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "TRAVESSA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "TRECHO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "TREVO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "VALE", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "VEREDA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "VIA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "VIADUTO", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "VIELA", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },
-            new TipoEndereco() { Descricao = "VILA" , DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true},
-        };
-
         public EstabelecimentoOrigem ObterEstabelecimentoOrigemPadrao() => new()
         {
             Descricao = "EMPRESA PADRAO",
@@ -92,7 +37,6 @@ namespace Estetica.Infra.Database
             DataAtualizacao = DateTime.Now,
             Ativo = true
         };
-
         public List<UF> ObterUFPadrao() => new List<UF>()
         {
             new UF() { Descricao = "Acre", Sigla = "AC", DataCadastro = DateTime.Now, DataAtualizacao = DateTime.Now, Ativo = true },

@@ -10,36 +10,16 @@ namespace Estetica.Service.AutoMapper
     {
         public AutoMapperSetup()
         {
-            #region [ViewModelToDomain]
-            CreateMap<filtroEmpresaViewModel, filtroEmpresa>();
-            CreateMap<filtroPaginacaoViewModel, filtroPaginacao>();
-            CreateMap<filtroUsuarioViewModel, filtroUsuario>();
-            CreateMap<filtroClientesViewModel, filtroClientes>();
-            CreateMap<filtroTipoPessoaViewModel, filtroTipoPessoa>();
+            CreateMap<filtroEmpresaViewModel, filtroEmpresa>().ReverseMap();
+            CreateMap<filtroPaginacaoViewModel, filtroPaginacao>().ReverseMap();
+            CreateMap<filtroUsuarioViewModel, filtroUsuario>().ReverseMap();
+            CreateMap<filtroClientesViewModel, filtroClientes>().ReverseMap();
+            CreateMap<filtroTipoPessoaViewModel, filtroTipoPessoa>().ReverseMap();
 
-            CreateMap<EmpresaViewModel, Empresa>();
-            CreateMap<UsuarioViewModel, Usuario>();
-            CreateMap<LoginViewModel, Login>();
-            CreateMap<ClientesViewModel, Cliente>();
-            CreateMap<TipoPessoaViewModel, TipoPessoa>();
-            CreateMap<TipoEnderecoViewModel, TipoEndereco>();
-            #endregion
-
-
-            #region [DomainToViewModel]
-            CreateMap<filtroEmpresa, filtroEmpresaViewModel>();
-            CreateMap<filtroPaginacao, filtroPaginacaoViewModel>();
-            CreateMap<filtroUsuario, filtroUsuarioViewModel>();
-            CreateMap<filtroClientes, filtroClientesViewModel>();
-            CreateMap<filtroTipoPessoa, filtroTipoPessoaViewModel>();
-
-            CreateMap<Empresa, EmpresaViewModel>();
-            CreateMap<Usuario, UsuarioViewModel>();
-            CreateMap<Cliente, ClientesViewModel>();
-            CreateMap<Login, LoginViewModel>();
-            CreateMap<TipoPessoa, TipoPessoaViewModel>();
-            CreateMap<TipoEndereco, TipoEnderecoViewModel>();
-            #endregion
+            CreateMap<EmpresaViewModel, Empresa>().ReverseMap();
+            CreateMap<UsuarioViewModel, Usuario>().ReverseMap();
+            CreateMap<LoginViewModel, Login>().ReverseMap();
+            CreateMap<ClientesViewModel, Cliente>().ReverseMap();
         }
     }
 }

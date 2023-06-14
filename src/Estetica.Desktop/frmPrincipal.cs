@@ -15,6 +15,21 @@ namespace Estetica.Desktop
         }
         #endregion
 
+        #region [Private Methods]
+        private void ObterConfiguracaoPadrao()
+        {
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            var primaryColor = Primary.Amber800;
+            var darkColor = Primary.Amber900;
+            var lightColor = Primary.Amber50;
+            Accent accentColor = Accent.DeepOrange200;
+            var textColor = TextShade.WHITE;
+            materialSkinManager.ColorScheme = new ColorScheme(primaryColor, darkColor, lightColor, accentColor, textColor);
+        }
+        #endregion
+
         #region [Constructor]
         public frmPrincipal()
         {
@@ -24,24 +39,11 @@ namespace Estetica.Desktop
 
         #endregion
 
-        #region [Públic Form Methods]
-        private void clienteToolStripMenuItem_Click(object sender, EventArgs e)
+        #region [Public Form Methods]
+        private void frmPrincipal_Load(object sender, EventArgs e)
         {
+            ObterConfiguracaoPadrao();
         }
-
-        private void ObterConfiguracaoPadrao()
-        {
-            var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            var primaryColor = Primary.Pink800;
-            var darkColor = Primary.Pink900;
-            var lightColor = Primary.Pink50;
-            var accentColor = Accent.LightBlue200;
-            var textColor = TextShade.WHITE;
-            materialSkinManager.ColorScheme = new ColorScheme(primaryColor, darkColor, lightColor, accentColor, textColor);
-        }
-
 
         #endregion
     }
